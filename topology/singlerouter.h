@@ -15,7 +15,6 @@
 // information, see the LICENSE file in the top level directory of the
 // distribution.
 
-
 #ifndef COMPONENTS_MERLIN_TOPOLOGY_SINGLEROUTER_H
 #define COMPONENTS_MERLIN_TOPOLOGY_SINGLEROUTER_H
 
@@ -26,46 +25,36 @@
 #include "../router.h"
 
 namespace SST {
-    namespace Merlin {
+namespace Merlin {
 
+class topo_singlerouter : public Topology {
+   public:
+    SST_ELI_REGISTER_SUBCOMPONENT(topo_singlerouter, "merlin", "singlerouter",
+                                  SST_ELI_ELEMENT_VERSION(1, 0, 0),
+                                  "Simple, single-router topology object", "SST::Merlin::Topology")
 
-        class topo_singlerouter : public Topology {
+   private:
+    int num_ports;
 
-        public:
+   public:
+    topo_singlerouter(Component *comp, Params &params);
 
-            SST_ELI_REGISTER_SUBCOMPONENT(
-                topo_singlerouter,
-            "merlin",
-            "singlerouter",
-            SST_ELI_ELEMENT_VERSION(1,0,0),
-            "Simple, single-router topology object",
-            "SST::Merlin::Topology")
+    ~topo_singlerouter() override;
 
+    void route(int port, int vc, internal_router_event *ev) override;
 
-        private:
-            int num_ports;
+    auto process_input(RtrEvent *ev) -> internal_router_event * override;
 
-        public:
-            topo_singlerouter(Component *comp, Params &params);
+    void routeInitData(int port, internal_router_event *ev, std::vector<int> &outPorts) override;
 
-            ~topo_singlerouter();
+    auto process_InitData_input(RtrEvent *ev) -> internal_router_event * override;
 
-            virtual void route(int port, int vc, internal_router_event *ev);
+    auto getPortState(int port) const -> PortState override;
 
-            virtual internal_router_event *process_input(RtrEvent *ev);
+    auto getEndpointID(int port) -> int override { return port; }
+};
 
-            virtual void routeInitData(int port, internal_router_event *ev,
-                                       std::vector<int> &outPorts);
+}  // namespace Merlin
+}  // namespace SST
 
-            virtual internal_router_event *process_InitData_input(RtrEvent *ev);
-
-            virtual PortState getPortState(int port) const;
-
-            virtual int getEndpointID(int port) { return port; }
-
-        };
-
-    }
-}
-
-#endif // COMPONENTS_MERLIN_TOPOLOGY_SINGLEROUTER_H
+#endif  // COMPONENTS_MERLIN_TOPOLOGY_SINGLEROUTER_H

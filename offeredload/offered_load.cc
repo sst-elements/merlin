@@ -13,28 +13,23 @@
 // information, see the LICENSE file in the top level directory of the
 // distribution.
 
-#include <sst/core/sst_config.h>
 #include "offered_load.h"
 
 #include <sst/core/params.h>
 #include <sst/core/simulation.h>
+#include <sst/core/sst_config.h>
 #include <sst/core/timeLord.h>
 
 using namespace SST::Merlin;
 using namespace SST::Interfaces;
 
-OfferedLoad::OfferedLoad(ComponentId_t cid, Params &params) :
-    Component(cid),
-    next_time(0),
-    generation(0),
-    id(-1) {
-
+OfferedLoad::OfferedLoad(ComponentId_t cid, Params &params)
+    : Component(cid), next_time(0), generation(0), id(-1) {
     out.init(getName() + ": ", 0, 0, Output::STDOUT);
 
     try {
         params.find_array<double>("offered_load", offered_load);
-    }
-    catch (std::invalid_argument e) {
+    } catch (std::invalid_argument e) {
         bool found = false;
         double ol = params.find<double>("offered_load", found);
         if (found) {
@@ -56,10 +51,14 @@ OfferedLoad::OfferedLoad(ComponentId_t cid, Params &params) :
     if (!found) {
         out.fatal(CALL_INFO, -1, "link_bw must be set!\n");
     }
-    if (link_bw.hasUnits("B/s")) link_bw *= UnitAlgebra("8b/B");
+    if (link_bw.hasUnits("B/s")) {
+        link_bw *= UnitAlgebra("8b/B");
+    }
 
     UnitAlgebra pkt_size = params.find<UnitAlgebra>("message_size", "64b");
-    if (pkt_size.hasUnits("B")) pkt_size *= UnitAlgebra("8b/B");
+    if (pkt_size.hasUnits("B")) {
+        pkt_size *= UnitAlgebra("8b/B");
+    }
     packet_size = pkt_size.getRoundedValue();
 
     // Compute the send interval.  We do this by computing time to
@@ -70,21 +69,20 @@ OfferedLoad::OfferedLoad(ComponentId_t cid, Params &params) :
 
     // Load the specified SimpleNetwork object
     std::string link_if_str = params.find<std::string>("linkcontrol", "merlin.linkcontrol");
-    link_if = static_cast<SST::Interfaces::SimpleNetwork *>(loadSubComponent(link_if_str, this,
-                                                                             params));
+    link_if =
+        dynamic_cast<SST::Interfaces::SimpleNetwork *>(loadSubComponent(link_if_str, this, params));
 
     UnitAlgebra buf_size = params.find<UnitAlgebra>("buffer_size", "1kB");
     link_if->initialize("rtr", link_bw, 1 /* num_vns */, buf_size, buf_size);
 
     // Register functors for the SimpleNetwork IF
-    send_notify_functor = new SST::Interfaces::SimpleNetwork::Handler<OfferedLoad>(this,
-                                                                                   &OfferedLoad::send_notify);
-    recv_notify_functor = new SST::Interfaces::SimpleNetwork::Handler<OfferedLoad>(this,
-                                                                                   &OfferedLoad::handle_receives);
+    send_notify_functor =
+        new SST::Interfaces::SimpleNetwork::Handler<OfferedLoad>(this, &OfferedLoad::send_notify);
+    recv_notify_functor = new SST::Interfaces::SimpleNetwork::Handler<OfferedLoad>(
+        this, &OfferedLoad::handle_receives);
 
     // link_if->setNotifyOnSend(send_notify_functor);
     link_if->setNotifyOnReceive(recv_notify_functor);
-
 
     // Set up the communication pattern generator
     std::string pattern = params.find<std::string>("pattern", found);
@@ -92,7 +90,7 @@ OfferedLoad::OfferedLoad(ComponentId_t cid, Params &params) :
         out.fatal(CALL_INFO, -1, "pattern must be set!\n");
     }
 
-    packetDestGen = static_cast<TargetGenerator *>(loadSubComponent(pattern, this, params));
+    packetDestGen = dynamic_cast<TargetGenerator *>(loadSubComponent(pattern, this, params));
 
     UnitAlgebra warmup_time_ua = params.find<UnitAlgebra>("warmup_time", "5us");
     if (!warmup_time_ua.hasUnits("s")) {
@@ -101,14 +99,12 @@ OfferedLoad::OfferedLoad(ComponentId_t cid, Params &params) :
     warmup_time = (warmup_time_ua / UnitAlgebra("1ps")).getRoundedValue();
     start_time = warmup_time;
 
-
     UnitAlgebra collect_time_ua = params.find<UnitAlgebra>("collect_time", "20us");
     if (!collect_time_ua.hasUnits("s")) {
         out.fatal(CALL_INFO, -1, "collect_time must specified in seconds");
     }
     collect_time = (collect_time_ua / UnitAlgebra("1ps")).getRoundedValue();
     end_time = start_time + collect_time;
-
 
     UnitAlgebra drain_time_ua = params.find<UnitAlgebra>("drain_time", "50us");
     if (!collect_time_ua.hasUnits("s")) {
@@ -119,11 +115,12 @@ OfferedLoad::OfferedLoad(ComponentId_t cid, Params &params) :
     registerAsPrimaryComponent();
     primaryComponentDoNotEndSim();
     // clock_functor = new Clock::Handler<TrafficGen>(this,&TrafficGen::clock_handler);
-    // clock_tc = registerClock( params.find<std::string>("message_rate", "1GHz"), clock_functor, false);
+    // clock_tc = registerClock( params.find<std::string>("message_rate", "1GHz"), clock_functor,
+    // false);
 
     base_tc = registerTimeBase("1ps", false);
-    timing_link = configureSelfLink("timing_link", base_tc, new Event::Handler<OfferedLoad>(this,
-                                                                                            &OfferedLoad::output_timing));
+    timing_link = configureSelfLink(
+        "timing_link", base_tc, new Event::Handler<OfferedLoad>(this, &OfferedLoad::output_timing));
 
     end_link = configureSelfLink("end_link", base_tc,
                                  new Event::Handler<OfferedLoad>(this, &OfferedLoad::end_handler));
@@ -135,11 +132,7 @@ OfferedLoad::OfferedLoad(ComponentId_t cid, Params &params) :
     // out.output("end_time = %llu\n",end_time);
 }
 
-
-OfferedLoad::~OfferedLoad() {
-    delete link_if;
-}
-
+OfferedLoad::~OfferedLoad() { delete link_if; }
 
 void OfferedLoad::finish() {
     link_if->finish();
@@ -147,8 +140,8 @@ void OfferedLoad::finish() {
     if (id == 0) {
         // for ( auto ev : complete_event ) {
 
-        //     out.output("Latency Statistics for offered load = %f\n",offered_load[ev->generation]);
-        //     out.output("  sum = %llu\n",ev->sum);
+        //     out.output("Latency Statistics for offered load =
+        //     %f\n",offered_load[ev->generation]); out.output("  sum = %llu\n",ev->sum);
         //     out.output("  sum_of_squares = %llu\n",ev->sum_of_squares);
         //     out.output("  min = %llu\n",ev->min);
         //     out.output("  max = %llu\n",ev->max);
@@ -159,7 +152,6 @@ void OfferedLoad::finish() {
         //     out.output("  average = %s\n\n",average.toStringBestSI().c_str());
         // }
 
-
         // Now, write out a summary table with just the latencies
 
         out.output("%9s %9s\n", "Offered", "Average");
@@ -168,11 +160,13 @@ void OfferedLoad::finish() {
             UnitAlgebra average = UnitAlgebra("1ps") * ev->sum / ev->count;
             out.output("%9.2f %15s", offered_load[ev->generation],
                        average.toStringBestSI().c_str());
-            if (ev->backup > 0) out.output("*\n");
-            else out.output("\n");
+            if (ev->backup > 0) {
+                out.output("*\n");
+            } else {
+                out.output("\n");
+            }
         }
         out.output("\n");
-
     }
 }
 
@@ -186,35 +180,34 @@ void OfferedLoad::setup() {
     // link_bw = (link_bw * UnitAlgebra("1ps")).invert();
 
     // kick things off
-    timing_link->send(0, NULL);
-    end_link->send(end_time, NULL);
+    timing_link->send(0, nullptr);
+    end_link->send(end_time, nullptr);
 }
 
-void
-OfferedLoad::init(unsigned int phase) {
+void OfferedLoad::init(unsigned int phase) {
     link_if->init(phase);
     if (id == -1 && link_if->isNetworkInitialized()) {
         id = link_if->getEndpointID();
         packetDestGen->initialize(id, num_peers);
     }
-
 }
 
-void
-OfferedLoad::complete(unsigned int phase) {
+void OfferedLoad::complete(unsigned int phase) {
     link_if->complete(phase);
 
     if (id == 0) {
         SimpleNetwork::Request *req = link_if->recvUntimedData();
-        while (req != NULL) {
-            offered_load_complete_event *ev = static_cast<offered_load_complete_event *>(req->takePayload());
+        while (req != nullptr) {
+            auto *ev = dynamic_cast<offered_load_complete_event *>(req->takePayload());
             int generation = ev->generation;
             complete_event[generation]->sum += ev->sum;
             complete_event[generation]->sum_of_squares += ev->sum_of_squares;
-            complete_event[generation]->min = ev->min < complete_event[generation]->min ? ev->min
-                                                                                        : complete_event[generation]->min;
-            complete_event[generation]->max = ev->max > complete_event[generation]->max ? ev->max
-                                                                                        : complete_event[generation]->max;
+            complete_event[generation]->min = ev->min < complete_event[generation]->min
+                                                  ? ev->min
+                                                  : complete_event[generation]->min;
+            complete_event[generation]->max = ev->max > complete_event[generation]->max
+                                                  ? ev->max
+                                                  : complete_event[generation]->max;
             complete_event[generation]->count += ev->count;
             complete_event[generation]->backup += ev->backup;
 
@@ -229,30 +222,30 @@ OfferedLoad::complete(unsigned int phase) {
     }
 }
 
-
-bool
-OfferedLoad::handle_receives(int vn) {
+auto OfferedLoad::handle_receives(int vn) -> bool {
     SimpleNetwork::Request *req = link_if->recv(vn);
     if (req->dest != id) {
         out.fatal(CALL_INFO, -1, "Endpoint %d received a packet intended for %lld\n", id,
                   req->dest);
     }
-    if (req != NULL) {
+    if (req != nullptr) {
         SimTime_t current_time = getCurrentSimTime(base_tc);
         // Don't start counting until after warmup.  This is stored in
         // start_time.
         if (start_time <= current_time) {
-
             // Get the latency and add it to the complete_event)
             SimTime_t latency =
-                current_time - ((offered_load_event *) req->inspectPayload())->start_time;
+                current_time -
+                (dynamic_cast<offered_load_event *>(req->inspectPayload()))->start_time;
 
             complete_event[generation]->sum += latency;
             complete_event[generation]->sum_of_squares += (latency * latency);
-            complete_event[generation]->min = latency < complete_event[generation]->min ? latency
-                                                                                        : complete_event[generation]->min;
-            complete_event[generation]->max = latency > complete_event[generation]->max ? latency
-                                                                                        : complete_event[generation]->max;
+            complete_event[generation]->min = latency < complete_event[generation]->min
+                                                  ? latency
+                                                  : complete_event[generation]->min;
+            complete_event[generation]->max = latency > complete_event[generation]->max
+                                                  ? latency
+                                                  : complete_event[generation]->max;
             complete_event[generation]->count++;
         }
         delete req;
@@ -260,9 +253,7 @@ OfferedLoad::handle_receives(int vn) {
     return true;
 }
 
-
-bool
-OfferedLoad::send_notify(int vn) {
+auto OfferedLoad::send_notify(int /*vn*/) -> bool {
     // LinkControl just sent something, get current time and see if we
     // can progress and messages
     SimTime_t current_time = getCurrentSimTime(base_tc);
@@ -275,16 +266,14 @@ OfferedLoad::send_notify(int vn) {
         // Need to wait for more data to be sent.  Keep LinkControl
         // handler installed
         return true;
-    } else {
-        // Need to wake up again at next time to send packet
-        timing_link->send(next_time - current_time, NULL);
     }
+    // Need to wake up again at next time to send packet
+    timing_link->send(next_time - current_time, nullptr);
 
     return false;
 }
 
-void
-OfferedLoad::output_timing(Event *ev) {
+void OfferedLoad::output_timing(Event * /*ev*/) {
     // TraceFunction trace(CALL_INFO);
     // Time to send next message.  Get current time and see how many
     // we can progress
@@ -300,19 +289,18 @@ OfferedLoad::output_timing(Event *ev) {
         link_if->setNotifyOnSend(send_notify_functor);
     } else {
         // Need to wake up again at next time to send packet
-        timing_link->send(next_time - current_time, NULL);
+        timing_link->send(next_time - current_time, nullptr);
     }
 }
 
-void
-OfferedLoad::progress_messages(SimTime_t current_time) {
+void OfferedLoad::progress_messages(SimTime_t current_time) {
     // TraceFunction trace(CALL_INFO);
     while ((next_time <= current_time) && link_if->spaceToSend(0, packet_size)) {
         // trace.getOutput().output("loop start: %p, %p\n",packetDestGen, link_if);
-        offered_load_event *ev = new offered_load_event(next_time);
+        auto *ev = new offered_load_event(next_time);
         // trace.getOutput().output("  loop middle 1\n");
-        SimpleNetwork::Request *req = new SimpleNetwork::Request(packetDestGen->getNextValue(), id,
-                                                                 packet_size, true, true, ev);
+        auto *req = new SimpleNetwork::Request(packetDestGen->getNextValue(), id, packet_size, true,
+                                               true, ev);
         // trace.getOutput().output("  loop middle 2\n");
         link_if->send(req, 0);
 
@@ -320,9 +308,7 @@ OfferedLoad::progress_messages(SimTime_t current_time) {
     }
 }
 
-void
-OfferedLoad::end_handler(Event *ev) {
-
+void OfferedLoad::end_handler(Event * /*ev*/) {
     // Compute backup metric and put it in event
     SimTime_t current_time = getCurrentSimTime(base_tc);
 
@@ -336,7 +322,6 @@ OfferedLoad::end_handler(Event *ev) {
     if (complete_event.size() == offered_load.size()) {
         primaryComponentOKToEndSim();
     } else {
-
         // Need to set things up for the next iteration
         SimTime_t current_time = getCurrentSimTime(base_tc);
 
@@ -361,7 +346,7 @@ OfferedLoad::end_handler(Event *ev) {
         // Need to send the next event to end this round.  The total
         // time to the next ending is drain_time + warmup_time +
         // collect_time
-        end_link->send(drain_time + warmup_time + collect_time, NULL);
+        end_link->send(drain_time + warmup_time + collect_time, nullptr);
     }
 
     // if ( id == 0 ) {
@@ -372,7 +357,4 @@ OfferedLoad::end_handler(Event *ev) {
     //     out.output("  send_interval = %llu\n",send_interval);
     //     out.output("  next end is %llu from now\n",drain_time+warmup_time+collect_time);
     // }
-
-
-
 }

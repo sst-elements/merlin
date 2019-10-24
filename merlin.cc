@@ -13,20 +13,19 @@
 // information, see the LICENSE file in the top level directory of the
 // distribution.
 
-#include <sst/core/sst_config.h>
-
 #include "merlin.h"
 
+#include <sst/core/sst_config.h>
 
 /*
   This are header file only classes, so need to be included here to
   get compiled.
  */
-#include "hr_router/xbar_arb_rr.h"
-#include "hr_router/xbar_arb_lru.h"
 #include "hr_router/xbar_arb_age.h"
-#include "hr_router/xbar_arb_rand.h"
+#include "hr_router/xbar_arb_lru.h"
 #include "hr_router/xbar_arb_lru_infx.h"
+#include "hr_router/xbar_arb_rand.h"
+#include "hr_router/xbar_arb_rr.h"
 
 /*
   Install the python library
@@ -39,17 +38,12 @@ char pymerlin[] = {
     0x00};
 
 class MerlinPyModule : public SSTElementPythonModule {
-public:
-    MerlinPyModule(std::string library) :
-        SSTElementPythonModule(library) {
+   public:
+    explicit MerlinPyModule(std::string library) : SSTElementPythonModule(library) {
         addPrimaryModule(pymerlin);
     }
 
-    SST_ELI_REGISTER_PYTHON_MODULE(
-        MerlinPyModule,
-    "merlin",
-    SST_ELI_ELEMENT_VERSION(1,0,0)
-    )
+    SST_ELI_REGISTER_PYTHON_MODULE(MerlinPyModule, "merlin", SST_ELI_ELEMENT_VERSION(1, 0, 0))
 };
 
 /*
@@ -71,4 +65,3 @@ public:
 //         NULL // generators,
 //     };
 // }
-

@@ -15,30 +15,28 @@
 // information, see the LICENSE file in the top level directory of the
 // distribution.
 
-
 #ifndef COMPONENTS_MERLIN_TARGET_GENERATOR_TARGET_GENERATOR_H
 #define COMPONENTS_MERLIN_TARGET_GENERATOR_TARGET_GENERATOR_H
 
 #include <sst/core/subcomponent.h>
 
 namespace SST {
-    namespace Merlin {
+namespace Merlin {
 
-        class TargetGenerator : public SubComponent {
-        public:
-            TargetGenerator(Component *parent) :
-                SubComponent(parent) {}
+class TargetGenerator : public SubComponent {
+   public:
+    explicit TargetGenerator(Component *parent) : SubComponent(parent) {}
 
-            ~TargetGenerator() {}
+    ~TargetGenerator() override = default;
 
-            virtual void initialize(int id, int num_peers) {}
+    virtual void initialize(int id, int num_peers) {}
 
-            virtual int getNextValue(void) = 0;
+    virtual auto getNextValue() -> int = 0;
 
-            virtual void seed(uint32_t val) {}
-        };
+    virtual void seed(uint32_t val) {}
+};
 
-    } //namespace Merlin
-} //namespace SST
+}  // namespace Merlin
+}  // namespace SST
 
 #endif

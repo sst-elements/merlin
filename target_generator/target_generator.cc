@@ -15,12 +15,9 @@
 // information, see the LICENSE file in the top level directory of the
 // distribution.
 
-#include "uniform.h"
 #include "bit_complement.h"
+#include "uniform.h"
 
 namespace SST {
-    namespace Merlin {
-
-    } //namespace Merlin
-} //namespace SST
-
+namespace Merlin {}  // namespace Merlin
+}  // namespace SST

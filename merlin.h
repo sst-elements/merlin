@@ -15,27 +15,26 @@
 // information, see the LICENSE file in the top level directory of the
 // distribution.
 
-
 #ifndef COMPONENTS_MERLIN_MERLIN_H
 #define COMPONENTS_MERLIN_MERLIN_H
 
-#include <cctype>
-#include <string>
+#include <sst/core/output.h>
 #include <sst/core/simulation.h>
 #include <sst/core/timeConverter.h>
-#include <sst/core/output.h>
 
+#include <cctype>
+#include <string>
 
 using namespace SST;
 
 namespace SST {
-    namespace Merlin {
+namespace Merlin {
 
-        // Library wide Output object.  Mostly used for fatal() calls
-        static Output merlin_abort("Merlin: ", 5, -1, Output::STDERR);
-        static Output merlin_abort_full("Merlin: @f, line @l: ", 5, -1, Output::STDOUT);
+// Library wide Output object.  Mostly used for fatal() calls
+static Output merlin_abort("Merlin: ", 5, -1, Output::STDERR);
+static Output merlin_abort_full("Merlin: @f, line @l: ", 5, -1, Output::STDOUT);
 
-    }
-}
+}  // namespace Merlin
+}  // namespace SST
 
-#endif // COMPONENTS_MERLIN_MERLIN_H
+#endif  // COMPONENTS_MERLIN_MERLIN_H

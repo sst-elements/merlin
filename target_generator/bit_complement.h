@@ -15,54 +15,39 @@
 // information, see the LICENSE file in the top level directory of the
 // distribution.
 
-
 #ifndef COMPONENTS_MERLIN_TARGET_GENERATOR_BIT_COMPLEMENT_H
 #define COMPONENTS_MERLIN_TARGET_GENERATOR_BIT_COMPLEMENT_H
 
 #include "target_generator.h"
 
 namespace SST {
-    namespace Merlin {
+namespace Merlin {
 
+class BitComplementDist : public TargetGenerator {
+   public:
+    SST_ELI_REGISTER_SUBCOMPONENT(BitComplementDist, "merlin", "targetgen.bit_complement",
+                                  SST_ELI_ELEMENT_VERSION(0, 0, 1),
+                                  "Generates a generalized bit complement pattern.  Returns the "
+                                  "same value of num_peers - 1 - id.",
+                                  "SST::Merlin::DestGenerator")
 
-        class BitComplementDist : public TargetGenerator {
+    SST_ELI_DOCUMENT_PARAMS()
 
-        public:
+    int dest{};
 
-            SST_ELI_REGISTER_SUBCOMPONENT(
-                BitComplementDist,
-            "merlin",
-            "targetgen.bit_complement",
-            SST_ELI_ELEMENT_VERSION(0,0,1),
-            "Generates a generalized bit complement pattern.  Returns the same value of num_peers - 1 - id.",
-            "SST::Merlin::DestGenerator")
+   public:
+    BitComplementDist(Component *parent, Params & /*params*/) : TargetGenerator(parent) {}
 
-            SST_ELI_DOCUMENT_PARAMS(
-            )
+    ~BitComplementDist() override = default;
 
-            int dest;
+    void initialize(int id, int num_peers) override { dest = num_peers - 1 - id; }
 
-        public:
-            BitComplementDist(Component *parent, Params &params) :
-                TargetGenerator(parent) {
-            }
+    auto getNextValue() -> int override { return dest; }
 
-            ~BitComplementDist() {
-            }
+    void seed(uint32_t val) override {}
+};
 
-            void initialize(int id, int num_peers) {
-                dest = num_peers - 1 - id;
-            }
-
-            int getNextValue(void) {
-                return dest;
-            }
-
-            void seed(uint32_t val) {
-            }
-        };
-
-    } //namespace Merlin
-} //namespace SST
+}  // namespace Merlin
+}  // namespace SST
 
 #endif

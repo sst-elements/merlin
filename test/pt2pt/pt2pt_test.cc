@@ -1,10 +1,10 @@
 // Copyright 2009-2019 NTESS. Under the terms
 // of Contract DE-NA0003525 with NTESS, the U.S.
 // Government retains certain rights in this software.
-// 
+//
 // Copyright (c) 2009-2019, NTESS
 // All rights reserved.
-// 
+//
 // Portions are copyright of other developers:
 // See the file CONTRIBUTORS.TXT in the top level directory
 // the distribution for more information.
@@ -12,25 +12,23 @@
 // This file is part of the SST software package. For license
 // information, see the LICENSE file in the top level directory of the
 // distribution.
-#include <sst/core/sst_config.h>
+#include "pt2pt_test.h"
 
 #include <sst/core/params.h>
 #include <sst/core/simulation.h>
+#include <sst/core/sst_config.h>
 #include <sst/core/timeLord.h>
 #include <sst/core/unitAlgebra.h>
 
-#include "merlin.h"
-#include "linkControl.h"
-#include "pt2pt_test.h"
+#include "../../linkControl.h"
+#include "../../merlin.h"
 
 using namespace std;
 using namespace SST::Merlin;
 using namespace SST::Interfaces;
 
-pt2pt_test::pt2pt_test(ComponentId_t cid, Params &params) :
-    Component(cid),
-    id(-1),
-    packets_sent(0) {
+pt2pt_test::pt2pt_test(ComponentId_t cid, Params &params)
+    : Component(cid), id(-1), packets_sent(0) {
     out.init(getName() + ": ", 0, 0, Output::STDOUT);
 
     UnitAlgebra link_bw = params.find<UnitAlgebra>("link_bw", UnitAlgebra("2GB/s"));
@@ -38,11 +36,14 @@ pt2pt_test::pt2pt_test(ComponentId_t cid, Params &params) :
     UnitAlgebra packet_size_ua = params.find<UnitAlgebra>("packet_size", UnitAlgebra("512b"));
 
     if (!packet_size_ua.hasUnits("b") && !packet_size_ua.hasUnits("B")) {
-        merlin_abort.fatal(CALL_INFO, -1, "packet_size must be specified in either "
-                                          "bits or bytes: %s\n",
+        merlin_abort.fatal(CALL_INFO, -1,
+                           "packet_size must be specified in either "
+                           "bits or bytes: %s\n",
                            packet_size_ua.toStringBestSI().c_str());
     }
-    if (packet_size_ua.hasUnits("B")) packet_size_ua *= UnitAlgebra("8b/B");
+    if (packet_size_ua.hasUnits("B")) {
+        packet_size_ua *= UnitAlgebra("8b/B");
+    }
     packet_size = packet_size_ua.getRoundedValue();
 
     packets_to_send = params.find<int>("packets_to_send", 100);
@@ -50,7 +51,9 @@ pt2pt_test::pt2pt_test(ComponentId_t cid, Params &params) :
 
     buffer_size = params.find<UnitAlgebra>("buffer_size", "128B");
 
-    if (buffer_size.hasUnits("B")) buffer_size *= UnitAlgebra("8b/B");
+    if (buffer_size.hasUnits("B")) {
+        buffer_size *= UnitAlgebra("8b/B");
+    }
 
     if (packet_size > buffer_size.getRoundedValue()) {
         merlin_abort.fatal(CALL_INFO, -1,
@@ -60,20 +63,22 @@ pt2pt_test::pt2pt_test(ComponentId_t cid, Params &params) :
     std::string link_control_name = params.find<std::string>("linkcontrol", "merlin.linkcontrol");
 
     // Create a LinkControl object
-    link_control = (SimpleNetwork *) loadSubComponent(link_control_name, this, params);
+    link_control = dynamic_cast<SimpleNetwork *>(loadSubComponent(link_control_name, this, params));
 
     link_control->initialize("rtr", link_bw, 1, buffer_size, buffer_size);
 
     // // Register a clock
-    // registerClock( "1GHz", new Clock::Handler<pt2pt_test>(this,&pt2pt_test::clock_handler), false);
+    // registerClock( "1GHz", new Clock::Handler<pt2pt_test>(this,&pt2pt_test::clock_handler),
+    // false);
 
     params.find_array<int>("src", src);
 
     params.find_array<int>("dest", dest);
 
-    if (src.size() == 0 || dest.size() == 0 || src.size() != dest.size()) {
+    if (src.empty() || dest.empty() || src.size() != dest.size()) {
         merlin_abort.fatal(CALL_INFO, -1,
-                           "pt2pt_test: must specify params \"src\" and \"dest\" and they must be the same length arrays\n");
+                           "pt2pt_test: must specify params \"src\" and \"dest\" and they must be "
+                           "the same length arrays\n");
     }
 
     // if ( id == 1 ) {
@@ -92,7 +97,6 @@ pt2pt_test::pt2pt_test(ComponentId_t cid, Params &params) :
 
     registerAsPrimaryComponent();
     primaryComponentDoNotEndSim();
-
 }
 
 void pt2pt_test::finish() {
@@ -106,7 +110,7 @@ void pt2pt_test::finish() {
             Simulation::getSimulation()->getTimeLord()->getTimeBase() * x.second.first_arrival;
         UnitAlgebra end_time =
             Simulation::getSimulation()->getTimeLord()->getTimeBase() * x.second.end_arrival;
-        // TODO: Still need to tweak to account for serialization latency of the last packet
+        // TODO(sabbir): Still need to tweak to account for serialization latency of the last packet
         UnitAlgebra total_time = Simulation::getSimulation()->getTimeLord()->getTimeBase() *
                                  (x.second.end_arrival - x.second.first_arrival);
 
@@ -117,11 +121,8 @@ void pt2pt_test::finish() {
             "  First packet received at: %s\n"
             "  Last packet received at: %s\n"
             "  Bandwidth: %s (%s)\n\n",
-            x.first, id,
-            start_time.toStringBestSI().c_str(),
-            end_time.toStringBestSI().c_str(),
+            x.first, id, start_time.toStringBestSI().c_str(), end_time.toStringBestSI().c_str(),
             bw.toStringBestSI().c_str(), (bw / UnitAlgebra("8 b/B")).toStringBestSI().c_str());
-
     }
 }
 
@@ -132,7 +133,7 @@ void pt2pt_test::setup() {
         link_control->setNotifyOnSend(
             new SimpleNetwork::Handler<pt2pt_test>(this, &pt2pt_test::send_handler));
         while (link_control->spaceToSend(0, packet_size) && packets_sent < packets_to_send) {
-            SimpleNetwork::Request *req = new SimpleNetwork::Request();
+            auto *req = new SimpleNetwork::Request();
 
             req->dest = my_dest;
             req->src = id;
@@ -163,8 +164,7 @@ void pt2pt_test::setup() {
     // }
 }
 
-void
-pt2pt_test::init(unsigned int phase) {
+void pt2pt_test::init(unsigned int phase) {
     link_control->init(phase);
     if (link_control->isNetworkInitialized() && id == -1) {
         id = link_control->getEndpointID();
@@ -173,9 +173,9 @@ pt2pt_test::init(unsigned int phase) {
         for (int i = 0; i < src.size(); ++i) {
             if (src[i] == id) {
                 if (my_dest != -1) {
-                    merlin_abort.fatal(CALL_INFO, -1,
-                                       "Multiple destinations specified for id %d, can only specify one\n",
-                                       id);
+                    merlin_abort.fatal(
+                        CALL_INFO, -1,
+                        "Multiple destinations specified for id %d, can only specify one\n", id);
                 }
                 my_dest = dest[i];
             }
@@ -194,11 +194,10 @@ pt2pt_test::init(unsigned int phase) {
     }
 }
 
-bool
-pt2pt_test::send_handler(int vn) {
+auto pt2pt_test::send_handler(int /*vn*/) -> bool {
     // TraceFunction trace(CALL_INFO);
     while (link_control->spaceToSend(0, packet_size) && packets_sent < packets_to_send) {
-        SimpleNetwork::Request *req = new SimpleNetwork::Request();
+        auto *req = new SimpleNetwork::Request();
 
         req->dest = my_dest;
         req->src = id;
@@ -209,25 +208,26 @@ pt2pt_test::send_handler(int vn) {
         req->setTraceID(id * 100 + packets_sent);
 
         link_control->send(req, 0);
-        // std::cout << id << ": Sending packet to: " << my_dest << " at " << Simulation::getSimulation()->getCurrentSimCycle() << std::endl;
+        // std::cout << id << ": Sending packet to: " << my_dest << " at " <<
+        // Simulation::getSimulation()->getCurrentSimCycle() << std::endl;
         ++packets_sent;
     }
 
     if (packets_sent == packets_to_send) {
         primaryComponentOKToEndSim();
-        return false; // remove myself from the handler list
+        return false;  // remove myself from the handler list
     }
     return true;
 }
 
-bool
-pt2pt_test::recv_handler(int vn) {
+auto pt2pt_test::recv_handler(int /*vn*/) -> bool {
     // TraceFunction trace(CALL_INFO);
     SimpleNetwork::Request *req = link_control->recv(0);
 
     int src = req->src;
 
-    // std::cout << "Recived packet from: " << src << " at " << Simulation::getSimulation()->getCurrentSimCycle() << std::endl;
+    // std::cout << "Recived packet from: " << src << " at " <<
+    // Simulation::getSimulation()->getCurrentSimCycle() << std::endl;
 
     auto data_it = my_recvs.find(src);
     if (data_it == my_recvs.end()) {
@@ -261,44 +261,44 @@ bool
 pt2pt_test::clock_handler(Cycle_t cycle)
 {
     if ( id == 0 ) {
-	// ID 0 is the sender
+        // ID 0 is the sender
 
-	// Do a bandwidth test
-	if ( packets_sent == packets_to_send ) {
+        // Do a bandwidth test
+        if ( packets_sent == packets_to_send ) {
       primaryComponentOKToEndSim();
-	    
-	    cout << "0: Done" << endl;
-	    return true;  // Take myself off clock list
-	}
-	
-	if (  link_control->spaceToSend(1,packet_size) ) {
-	    pt2pt_test_event* ev = new pt2pt_test_event();
-	    ev->dest = 1;
-	    ev->vn = 1;
-	    ev->size_in_flits = packet_size;
-	    link_control->send(ev,1);
-	    ++packets_sent;
-	}
-    }
-    
-    else {
-	// ID 1 is the receiver
-	pt2pt_test_event* rec_ev = static_cast<pt2pt_test_event*>(link_control->recv(1));
-	if ( rec_ev != NULL ) {
-	    if ( packets_recd == 0 ) start_time = getCurrentSimTimeNano();
-	    ++packets_recd;
 
-	    if ( packets_recd == packets_to_send ) {
-		// Need to send this event to a self link to account
-		// for serialization latency.  This will trigger an
-		// event handler that will compute the BW.
-		self_link->send(packet_size,rec_ev);
-		return true;
-	    }
-	    else {
-		delete rec_ev;
-	    }
-	}
+            cout << "0: Done" << endl;
+            return true;  // Take myself off clock list
+        }
+
+        if (  link_control->spaceToSend(1,packet_size) ) {
+            pt2pt_test_event* ev = new pt2pt_test_event();
+            ev->dest = 1;
+            ev->vn = 1;
+            ev->size_in_flits = packet_size;
+            link_control->send(ev,1);
+            ++packets_sent;
+        }
+    }
+
+    else {
+        // ID 1 is the receiver
+        pt2pt_test_event* rec_ev = static_cast<pt2pt_test_event*>(link_control->recv(1));
+        if ( rec_ev != NULL ) {
+            if ( packets_recd == 0 ) start_time = getCurrentSimTimeNano();
+            ++packets_recd;
+
+            if ( packets_recd == packets_to_send ) {
+                // Need to send this event to a self link to account
+                // for serialization latency.  This will trigger an
+                // event handler that will compute the BW.
+                self_link->send(packet_size,rec_ev);
+                return true;
+            }
+            else {
+                delete rec_ev;
+            }
+        }
     }
 
     return false;
@@ -333,7 +333,7 @@ pt2pt_test::clock_handler(Cycle_t cycle)
 //             link_control->send(req,0);
 //             ++packets_sent;
 //         }
-//     }    
+//     }
 //     else {
 //         // ID 1 is the receiver
 //         if ( link_control->requestToReceive(0) ) {
@@ -351,7 +351,7 @@ pt2pt_test::clock_handler(Cycle_t cycle)
 //                 // for serialization latency.  This will trigger an
 //                 // event handler that will compute the BW.
 //                 std::cout << getCurrentSimTimeNano() << ", " << packet_size << std::endl;
-//                 self_link->send(1,rec_ev); 
+//                 self_link->send(1,rec_ev);
 //                 delete req;
 //                 return true;
 //             }
@@ -373,7 +373,7 @@ pt2pt_test::clock_handler(Cycle_t cycle)
 //         //         // Need to send this event to a self link to account
 //         //         // for serialization latency.  This will trigger an
 //         //         // event handler that will compute the BW.
-//         //         self_link->send(packet_size,rec_ev); 
+//         //         self_link->send(packet_size,rec_ev);
 //         //         return true;
 //         //     }
 //         //     else {
@@ -407,4 +407,3 @@ pt2pt_test::clock_handler(Cycle_t cycle)
 //     primaryComponentOKToEndSim();
 
 // }
-

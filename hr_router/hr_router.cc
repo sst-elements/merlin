@@ -1,10 +1,10 @@
 // Copyright 2009-2019 NTESS. Under the terms
 // of Contract DE-NA0003525 with NTESS, the U.S.
 // Government retains certain rights in this software.
-// 
+//
 // Copyright (c) 2009-2019, NTESS
 // All rights reserved.
-// 
+//
 // Portions are copyright of other developers:
 // See the file CONTRIBUTORS.TXT in the top level directory
 // the distribution for more information.
@@ -12,18 +12,17 @@
 // This file is part of the SST software package. For license
 // information, see the LICENSE file in the top level directory of the
 // distribution.
-#include <sst/core/sst_config.h>
 #include "hr_router.h"
 
 #include <sst/core/params.h>
 #include <sst/core/simulation.h>
+#include <sst/core/sst_config.h>
 #include <sst/core/timeLord.h>
 #include <sst/core/unitAlgebra.h>
 
+#include <csignal>
 #include <sstream>
 #include <string>
-
-#include <signal.h>
 
 #include "../merlin.h"
 #include "../portControl.h"
@@ -36,23 +35,30 @@ int hr_router::num_routers = 0;
 int hr_router::print_debug = 0;
 
 // Helper functions used only in this file
-static string trim(string str) {
+static auto trim(string str) -> string {
     // Find whitespace in front
     int front_index = 0;
-    while (isspace(str[front_index])) { front_index++; }
+    while (isspace(str[front_index]) != 0) {
+        front_index++;
+    }
 
     // Find whitespace in back
     int back_index = str.length() - 1;
-    while (isspace(str[back_index])) { back_index--; }
+    while (isspace(str[back_index]) != 0) {
+        back_index--;
+    }
 
     return str.substr(front_index, back_index - front_index + 1);
 }
 
-static void split(string input, string delims, vector <string> &tokens) {
-    if (input.length() == 0) return;
+static void split(string input, string delims, vector<string> &tokens) {
+    if (input.length() == 0) {
+        return;
+    }
     size_t start = 0;
-    size_t stop = 0;;
-    vector <string> ret;
+    size_t stop = 0;
+    ;
+    vector<string> ret;
 
     do {
         stop = input.find_first_of(delims, start);
@@ -60,13 +66,13 @@ static void split(string input, string delims, vector <string> &tokens) {
         start = stop + 1;
     } while (stop != string::npos);
 
-    for (unsigned int i = 0; i < tokens.size(); i++) {
-        tokens[i] = trim(tokens[i]);
+    for (auto &token : tokens) {
+        token = trim(token);
     }
 }
 
-static std::string getLogicalGroupParam(const Params &params, Topology *topo, int port,
-                                        std::string param, std::string default_val = "") {
+static auto getLogicalGroupParam(const Params &params, Topology *topo, int port, std::string param,
+                                 std::string default_val = "") -> std::string {
     // Use topology object to get the group for the port
     std::string group = topo->getPortLogicalGroup(port);
 
@@ -76,10 +82,10 @@ static std::string getLogicalGroupParam(const Params &params, Topology *topo, in
 
     std::string value = params.find<std::string>(key);
 
-    if (value == "") {
+    if (value.empty()) {
         // Look for default value
         value = params.find<std::string>(param, default_val);
-        if (value == "") {
+        if (value.empty()) {
             // Abort
             merlin_abort.fatal(CALL_INFO, -1, "hr_router requires %s to be specified\n",
                                param.c_str());
@@ -88,9 +94,8 @@ static std::string getLogicalGroupParam(const Params &params, Topology *topo, in
     return value;
 }
 
-static UnitAlgebra getLogicalGroupParamUA(const Params &params, Topology *topo, int port,
-                                          std::string param, std::string default_val = "") {
-
+static auto getLogicalGroupParamUA(const Params &params, Topology *topo, int port,
+                                   std::string param, std::string default_val = "") -> UnitAlgebra {
     std::string value = getLogicalGroupParam(params, topo, port, param, default_val);
 
     UnitAlgebra ua(value);
@@ -101,7 +106,6 @@ static UnitAlgebra getLogicalGroupParamUA(const Params &params, Topology *topo, 
 
     return ua;
 }
-
 
 // Start class functions
 hr_router::~hr_router() {
@@ -118,11 +122,11 @@ hr_router::~hr_router() {
     delete arb;
 }
 
-hr_router::hr_router(ComponentId_t cid, Params &params) :
-    Router(cid),
-    num_vcs(-1),
-    vcs_initialized(false),
-    output(Simulation::getSimulation()->getSimulationOutput()) {
+hr_router::hr_router(ComponentId_t cid, Params &params)
+    : Router(cid),
+      num_vcs(-1),
+      vcs_initialized(false),
+      output(Simulation::getSimulation()->getSimulationOutput()) {
     // Get the options for the router
     id = params.find<int>("id", -1);
     if (id == -1) {
@@ -137,20 +141,21 @@ hr_router::hr_router(ComponentId_t cid, Params &params) :
     num_vcs = params.find<int>("num_vcs", -1);
     if (num_vcs != -1) {
         // merlin_abort.fatal(CALL_INFO,-1,"ERROR: hr_router requires num_vcs to be specified\n");
-        merlin_abort.output("WARNING: hr_router no longer uses parameter num_vcs,\n"
-                            "the number of VCs is derived from the number of VNs the\n"
-                            "endpoint requests.\n");
+        merlin_abort.output(
+            "WARNING: hr_router no longer uses parameter num_vcs,\n"
+            "the number of VCs is derived from the number of VNs the\n"
+            "endpoint requests.\n");
     }
 
     // Get the topology
     std::string topology = params.find<std::string>("topology");
 
-    if (topology == "") {
+    if (topology.empty()) {
         merlin_abort.fatal(CALL_INFO, -1, "hr_router requires topology to be specified\n");
     }
 
     topo = dynamic_cast<Topology *>(loadSubComponent(topology, this, params));
-    if (!topo) {
+    if (topo == nullptr) {
         merlin_abort.fatal(CALL_INFO, -1, "Unable to find topology '%s'\n", topology.c_str());
     }
 
@@ -160,7 +165,7 @@ hr_router::hr_router(ComponentId_t cid, Params &params) :
 
     // Flit size
     std::string flit_size_s = params.find<std::string>("flit_size");
-    if (flit_size_s == "") {
+    if (flit_size_s.empty()) {
         merlin_abort.fatal(CALL_INFO, -1, "hr_router requires flit_size to be specified\n");
         abort();
     }
@@ -182,7 +187,7 @@ hr_router::hr_router(ComponentId_t cid, Params &params) :
 
     // Cross bar bandwidth
     std::string xbar_bw_s = params.find<std::string>("xbar_bw");
-    if (xbar_bw_s == "") {
+    if (xbar_bw_s.empty()) {
         merlin_abort.fatal(CALL_INFO, -1, "hr_router requires xbar_bw to be specified\n");
     }
 
@@ -195,17 +200,14 @@ hr_router::hr_router(ComponentId_t cid, Params &params) :
     UnitAlgebra xbar_clock;
     xbar_clock = xbar_bw_ua / flit_size;
 
-
     std::string input_latency = params.find<std::string>("input_latency", "0ns");
     std::string output_latency = params.find<std::string>("output_latency", "0ns");
-
 
     // Create all the PortControl blocks
     ports = new PortControl *[num_ports];
 
     std::string input_buf_size = params.find<std::string>("input_buf_size", "0");
     std::string output_buf_size = params.find<std::string>("output_buf_size", "0");
-
 
     // Naming convention is from point of view of the xbar.  So,
     // in_port_busy is >0 if someone is writing to that xbar port and
@@ -238,25 +240,20 @@ hr_router::hr_router(ComponentId_t cid, Params &params) :
         // ports[i] = new PortControl(this, id, port_name.str(), i, link_bw, flit_size, topo,
         //                            1, input_latency, 1, output_latency,
         //                            input_buf_size, output_buf_size, inspector_names);
-        ports[i] = new PortControl(this, id, port_name.str(), i,
-                                   getLogicalGroupParamUA(params, topo, i, "link_bw"),
-                                   flit_size, topo,
-                                   1, getLogicalGroupParam(params, topo, i, "input_latency", "0ns"),
-                                   1,
-                                   getLogicalGroupParam(params, topo, i, "output_latency", "0ns"),
-                                   getLogicalGroupParam(params, topo, i, "input_buf_size"),
-                                   getLogicalGroupParam(params, topo, i, "output_buf_size"),
-                                   inspector_names,
-                                   std::stof(
-                                       getLogicalGroupParam(params, topo, i, "dlink_thresh", "-1")),
-                                   oql_track_port, oql_track_remote);
-
+        ports[i] = new PortControl(
+            this, id, port_name.str(), i, getLogicalGroupParamUA(params, topo, i, "link_bw"),
+            flit_size, topo, 1, getLogicalGroupParam(params, topo, i, "input_latency", "0ns"), 1,
+            getLogicalGroupParam(params, topo, i, "output_latency", "0ns"),
+            getLogicalGroupParam(params, topo, i, "input_buf_size"),
+            getLogicalGroupParam(params, topo, i, "output_buf_size"), inspector_names,
+            std::stof(getLogicalGroupParam(params, topo, i, "dlink_thresh", "-1")), oql_track_port,
+            oql_track_remote);
     }
     params.enableVerify(true);
 
     // Get the Xbar arbitration
-    Params empty_params; // Empty params sent to subcomponents
-    arb = static_cast<XbarArbitration *>(loadSubComponent(xbar_arb, this, empty_params));
+    Params empty_params;  // Empty params sent to subcomponents
+    arb = dynamic_cast<XbarArbitration *>(loadSubComponent(xbar_arb, this, empty_params));
 
     // if ( params.find_integer("debug", 0) ) {
     //     if ( num_routers == 0 ) {
@@ -280,12 +277,12 @@ hr_router::hr_router(ComponentId_t cid, Params &params) :
     if (xbar_bw_ua < link_bw) {
         std::cout << "ERROR: hr_router requires xbar_bw to be greater than or equal to link_bw"
                   << std::endl;
-        std::cout << "  xbar_bw = " << xbar_bw_ua.toStringBestSI() << ", link_bw = "
-                  << link_bw.toStringBestSI() << std::endl;
+        std::cout << "  xbar_bw = " << xbar_bw_ua.toStringBestSI()
+                  << ", link_bw = " << link_bw.toStringBestSI() << std::endl;
         abort();
     }
     // Register statistics
-    xbar_stalls = new Statistic <uint64_t> *[num_ports];
+    xbar_stalls = new Statistic<uint64_t> *[num_ports];
     for (int i = 0; i < num_ports; i++) {
         std::string port_name("port");
         port_name = port_name + std::to_string(i);
@@ -293,20 +290,17 @@ hr_router::hr_router(ComponentId_t cid, Params &params) :
     }
 }
 
-
-void
-hr_router::notifyEvent() {
+void hr_router::notifyEvent() {
     setRequestNotifyOnEvent(false);
 
 #if VERIFY_DECLOCKING
     clocking = true;
-    Cycle_t next_cycle = getNextClockCycle( xbar_tc );
+    Cycle_t next_cycle = getNextClockCycle(xbar_tc);
 #else
     Cycle_t next_cycle = reregisterClock(xbar_tc, my_clock_handler);
 #endif
 
     int64_t elapsed_cycles = next_cycle - unclocked_cycle;
-
 
 #if !VERIFY_DECLOCKING
     // Fix up the busy variables
@@ -314,35 +308,35 @@ hr_router::notifyEvent() {
         // Should stop at zero, need to find a clean way to do this
         // with no branch.  For now it should work.
         int64_t tmp = in_port_busy[i] - elapsed_cycles;
-        if (tmp < 0) in_port_busy[i] = 0;
-        else in_port_busy[i] = tmp;
+        if (tmp < 0) {
+            in_port_busy[i] = 0;
+        } else {
+            in_port_busy[i] = tmp;
+        }
         tmp = out_port_busy[i] - elapsed_cycles;
-        if (tmp < 0) out_port_busy[i] = 0;
-        else out_port_busy[i] = tmp;
+        if (tmp < 0) {
+            out_port_busy[i] = 0;
+        } else {
+            out_port_busy[i] = tmp;
+        }
     }
 #endif
     // Report skipped cycles to arbitration unit.
     arb->reportSkippedCycles(elapsed_cycles);
 }
 
-void
-hr_router::sigHandler(int signal) {
-    print_debug = num_routers * 5;
-}
+void hr_router::sigHandler(int /*signal*/) { print_debug = num_routers * 5; }
 
-void
-hr_router::dumpState(std::ostream &stream) {
+void hr_router::dumpState(std::ostream &stream) {
     stream << "Router id: " << id << std::endl;
     for (int i = 0; i < num_ports; i++) {
         ports[i]->dumpState(stream);
         stream << "  Output_busy: " << out_port_busy[i] << std::endl;
         stream << "  Input_Busy: " << in_port_busy[i] << std::endl;
     }
-
 }
 
-void
-hr_router::printStatus(Output &out) {
+void hr_router::printStatus(Output &out) {
     out.output("Start Router:  id = %d\n", id);
     for (int i = 0; i < num_ports; i++) {
         ports[i]->printStatus(out, out_port_busy[i], in_port_busy[i]);
@@ -355,24 +349,22 @@ hr_router::printStatus(Output &out) {
 // {
 //     if ( print_debug > 0 ) {
 //         /* TODO:  PRINT DEBUGGING */
-//         // Change cycle to a long long unsigned int from a uint64_t (which is a unsigned long long int) to avoid a compile warning
-//         printf("Debug output for %s at cycle %llu\n", getName().c_str(), (long long unsigned int)cycle);
-//         dumpState(std::cout);
-//         print_debug--;
+//         // Change cycle to a long long unsigned int from a uint64_t (which is a unsigned long
+//         long int) to avoid a compile warning printf("Debug output for %s at cycle %llu\n",
+//         getName().c_str(), (long long unsigned int)cycle); dumpState(std::cout); print_debug--;
 //     }
 
 //     return clock_handler(cycle);
 // }
 
-bool
-hr_router::clock_handler(Cycle_t cycle) {
+auto hr_router::clock_handler(Cycle_t cycle) -> bool {
     // If there are no events in the input queues, then we can remove
     // ourselves from the clock queue, as long as the arbitration unit
     // says it's okay.
     if (get_vcs_with_data() == 0) {
 #if VERIFY_DECLOCKING
-        if ( clocking ) {
-            if ( arb->isOkayToPauseClock() ) {
+        if (clocking) {
+            if (arb->isOkayToPauseClock()) {
                 setRequestNotifyOnEvent(true);
                 unclocked_cycle = cycle;
                 clocking = false;
@@ -383,9 +375,8 @@ hr_router::clock_handler(Cycle_t cycle) {
             setRequestNotifyOnEvent(true);
             unclocked_cycle = cycle;
             return true;
-        } else {
-            return false;
         }
+        return false;
 
 #endif
     }
@@ -394,7 +385,7 @@ hr_router::clock_handler(Cycle_t cycle) {
     int index = 0;
     for (int i = 0; i < num_ports; i++) {
         for (int j = 0; j < num_vcs; j++) {
-            if (vc_heads[index] != NULL) {
+            if (vc_heads[index] != nullptr) {
                 topo->reroute(i, j, vc_heads[index]);
             }
             index++;
@@ -403,7 +394,7 @@ hr_router::clock_handler(Cycle_t cycle) {
 
     // All we need to do is arbitrate the crossbar
 #if VERIFY_DECLOCKING
-    arb->arbitrate(ports,in_port_busy,out_port_busy,progress_vcs,clocking);
+    arb->arbitrate(ports, in_port_busy, out_port_busy, progress_vcs, clocking);
 #else
     arb->arbitrate(ports, in_port_busy, out_port_busy, progress_vcs);
 #endif
@@ -418,22 +409,13 @@ hr_router::clock_handler(Cycle_t cycle) {
             // 	" for port " << i << " to port " << ev->getNextPort() << std::endl;
 
             if (ev->getTraceType() == SimpleNetwork::Request::FULL) {
-                output.output("TRACE(%d): %"
-                PRIu64
-                " ns: Copying event (src = %d, dest = %d) "
-                "over crossbar in router %d (%s) from port %d, VC %d to port"
-                " %d, VC %d.\n",
-                    ev->getTraceID(),
-                    getCurrentSimTimeNano(),
-                    ev->getSrc(),
-                    ev->getDest(),
-                    id,
-                    getName().c_str(),
-                    i,
-                    progress_vcs[i],
-                    ev->getNextPort(),
-                    ev->getVC());
-
+                output.output("TRACE(%d): %" PRIu64
+                              " ns: Copying event (src = %d, dest = %d) "
+                              "over crossbar in router %d (%s) from port %d, VC %d to port"
+                              " %d, VC %d.\n",
+                              ev->getTraceID(), getCurrentSimTimeNano(), ev->getSrc(),
+                              ev->getDest(), id, getName().c_str(), i, progress_vcs[i],
+                              ev->getNextPort(), ev->getVC());
 
                 // std::cout << "TRACE(" << ev->getTraceID() << "): " << getCurrentSimTimeNano()
                 //            << " ns: Copying event (src = " << ev->getSrc() << ","
@@ -450,8 +432,12 @@ hr_router::clock_handler(Cycle_t cycle) {
 
         // Should stop at zero, need to find a clean way to do this
         // with no branch.  For now it should work.
-        if (in_port_busy[i] != 0) in_port_busy[i]--;
-        if (out_port_busy[i] != 0) out_port_busy[i]--;
+        if (in_port_busy[i] != 0) {
+            in_port_busy[i]--;
+        }
+        if (out_port_busy[i] != 0) {
+            out_port_busy[i]--;
+        }
     }
 
     return false;
@@ -467,34 +453,32 @@ void hr_router::finish() {
     for (int i = 0; i < num_ports; i++) {
         ports[i]->finish();
     }
-
 }
 
-void
-hr_router::init(unsigned int phase) {
+void hr_router::init(unsigned int phase) {
     for (int i = 0; i < num_ports; i++) {
         // std::cout << "Calling init on port: " << i << ", in phase " << phase << std::endl;
         ports[i]->init(phase);
-        Event *ev = NULL;
-        while ((ev = ports[i]->recvInitData()) != NULL) {
-            internal_router_event *ire = dynamic_cast<internal_router_event *>(ev);
-            if (ire == NULL) {
-                ire = topo->process_InitData_input(static_cast<RtrEvent *>(ev));
+        Event *ev = nullptr;
+        while ((ev = ports[i]->recvInitData()) != nullptr) {
+            auto *ire = dynamic_cast<internal_router_event *>(ev);
+            if (ire == nullptr) {
+                ire = topo->process_InitData_input(dynamic_cast<RtrEvent *>(ev));
             }
             std::vector<int> outPorts;
             topo->routeInitData(i, ire, outPorts);
-            for (std::vector<int>::iterator j = outPorts.begin(); j != outPorts.end(); ++j) {
+            for (int &outPort : outPorts) {
                 /* Little tricky here.  Need to clone both the event, and the
                  * encapsulated event.
                  */
-                switch (topo->getPortState(*j)) {
+                switch (topo->getPortState(outPort)) {
                     case Topology::R2N:
-                        ports[*j]->sendUntimedData(ire->getEncapsulatedEvent()->clone());
+                        ports[outPort]->sendUntimedData(ire->getEncapsulatedEvent()->clone());
                         break;
                     case Topology::R2R: {
                         internal_router_event *new_ire = ire->clone();
                         new_ire->setEncapsulatedEvent(ire->getEncapsulatedEvent()->clone());
-                        ports[*j]->sendUntimedData(new_ire);
+                        ports[outPort]->sendUntimedData(new_ire);
                         break;
                     }
                     default:
@@ -504,7 +488,6 @@ hr_router::init(unsigned int phase) {
             delete ire;
         }
     }
-
 
     // Always do the above.  A few specific things to do during init
 
@@ -520,34 +503,32 @@ hr_router::init(unsigned int phase) {
     if (num_vcs != -1 && !vcs_initialized) {
         init_vcs();
     }
-
 }
 
-void
-hr_router::complete(unsigned int phase) {
+void hr_router::complete(unsigned int phase) {
     for (int i = 0; i < num_ports; i++) {
         // std::cout << "Calling init on port: " << i << ", in phase " << phase << std::endl;
         ports[i]->complete(phase);
-        Event *ev = NULL;
-        while ((ev = ports[i]->recvInitData()) != NULL) {
-            internal_router_event *ire = dynamic_cast<internal_router_event *>(ev);
-            if (ire == NULL) {
-                ire = topo->process_InitData_input(static_cast<RtrEvent *>(ev));
+        Event *ev = nullptr;
+        while ((ev = ports[i]->recvInitData()) != nullptr) {
+            auto *ire = dynamic_cast<internal_router_event *>(ev);
+            if (ire == nullptr) {
+                ire = topo->process_InitData_input(dynamic_cast<RtrEvent *>(ev));
             }
             std::vector<int> outPorts;
             topo->routeInitData(i, ire, outPorts);
-            for (std::vector<int>::iterator j = outPorts.begin(); j != outPorts.end(); ++j) {
+            for (int &outPort : outPorts) {
                 /* Little tricky here.  Need to clone both the event, and the
                  * encapsulated event.
                  */
-                switch (topo->getPortState(*j)) {
+                switch (topo->getPortState(outPort)) {
                     case Topology::R2N:
-                        ports[*j]->sendUntimedData(ire->getEncapsulatedEvent()->clone());
+                        ports[outPort]->sendUntimedData(ire->getEncapsulatedEvent()->clone());
                         break;
                     case Topology::R2R: {
                         internal_router_event *new_ire = ire->clone();
                         new_ire->setEncapsulatedEvent(ire->getEncapsulatedEvent()->clone());
-                        ports[*j]->sendUntimedData(new_ire);
+                        ports[outPort]->sendUntimedData(new_ire);
                         break;
                     }
                     default:
@@ -559,21 +540,17 @@ hr_router::complete(unsigned int phase) {
     }
 }
 
-void
-hr_router::sendTopologyEvent(int port, TopologyEvent *ev) {
+void hr_router::sendTopologyEvent(int port, TopologyEvent *ev) {
     // Event just gets forwarded to appropriate PortControl object
     ports[port]->sendTopologyEvent(ev);
 }
 
-void
-hr_router::recvTopologyEvent(int port, TopologyEvent *ev) {
+void hr_router::recvTopologyEvent(int port, TopologyEvent *ev) {
     // Event just get's sent on to topolgy object
     topo->recvTopologyEvent(port, ev);
-
 }
 
-void
-hr_router::reportRequestedVNs(int port, int vns) {
+void hr_router::reportRequestedVNs(int /*port*/, int vns) {
     // if ( vns > requested_vns) requested_vns = vns;
 
     // For now all the vn requests need to be identical.  Will work on
@@ -583,13 +560,11 @@ hr_router::reportRequestedVNs(int port, int vns) {
     }
 }
 
-void
-hr_router::reportSetVCs(int port, int vcs) {
+void hr_router::reportSetVCs(int /*port*/, int vcs) {
     if (num_vcs == -1) {
         num_vcs = vcs;
     }
 }
-
 
 // void
 // hr_router::init_vcs()
@@ -610,16 +585,14 @@ hr_router::reportSetVCs(int port, int vcs) {
 
 //     for ( int i = 0; i < num_ports; i++ ) {
 //         ports[i]->initVCs(num_vcs,&vc_heads[i*num_vcs],&xbar_in_credits[i*num_vcs],in_buf_sizes,out_buf_sizes);
-//     }    
+//     }
 
 //     // Now that we have the number of VCs we can finish initializing
 //     // arbitration logic
 //     arb->setPorts(num_ports,num_vcs);
 // }
 
-void
-hr_router::init_vcs() {
-
+void hr_router::init_vcs() {
     // int in_buf_sizes[num_vcs];
     // int out_buf_sizes[num_vcs];
 
@@ -632,7 +605,7 @@ hr_router::init_vcs() {
     xbar_in_credits = new int[num_ports * num_vcs];
     output_queue_lengths = new int[num_ports * num_vcs];
     for (int i = 0; i < num_ports * num_vcs; i++) {
-        vc_heads[i] = NULL;
+        vc_heads[i] = nullptr;
         xbar_in_credits[i] = 0;
         output_queue_lengths[i] = 0;
     }
@@ -650,5 +623,4 @@ hr_router::init_vcs() {
     arb->setPorts(num_ports, num_vcs);
 
     vcs_initialized = true;
-
 }

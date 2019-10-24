@@ -15,7 +15,6 @@
 // information, see the LICENSE file in the top level directory of the
 // distribution.
 
-
 #ifndef COMPONENTS_MERLIN_PYMODULE_H
 #define COMPONENTS_MERLIN_PYMODULE_H
 
@@ -28,4 +27,4 @@ void *genMerlinPyModule(void);
 #ifdef __cplusplus
 }
 #endif
-#endif // COMPONENTS_MERLIN_PYMODULE_H
+#endif  // COMPONENTS_MERLIN_PYMODULE_H

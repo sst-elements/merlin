@@ -13,15 +13,16 @@
 // information, see the LICENSE file in the top level directory of the
 // distribution.
 
-#include <sst/core/sst_config.h>
 #include "trafficgen.h"
-#include <unistd.h>
-#include <climits>
-#include <signal.h>
 
 #include <sst/core/params.h>
 #include <sst/core/simulation.h>
+#include <sst/core/sst_config.h>
 #include <sst/core/timeLord.h>
+#include <unistd.h>
+
+#include <climits>
+#include <csignal>
 
 #include "../linkControl.h"
 
@@ -36,17 +37,16 @@ int TrafficGen::max_lat = 0;
 int TrafficGen::mean_sum = 0;
 #endif
 
-TrafficGen::TrafficGen(ComponentId_t cid, Params &params) :
-    Component(cid),
-//    last_vc(0),
-    packets_sent(0),
-    packets_recd(0),
-    done(false),
-    packet_delay(0),
-    packetDestGen(NULL),
-    packetSizeGen(NULL),
-    packetDelayGen(NULL) {
-
+TrafficGen::TrafficGen(ComponentId_t cid, Params &params)
+    : Component(cid),
+      //    last_vc(0),
+      packets_sent(0),
+      packets_recd(0),
+      done(false),
+      packet_delay(0),
+      packetDestGen(nullptr),
+      packetSizeGen(nullptr),
+      packetDelayGen(nullptr) {
     out.init(getName() + ": ", 0, 0, Output::STDOUT);
 
     id = params.find<int>("id", -1);
@@ -66,7 +66,7 @@ TrafficGen::TrafficGen(ComponentId_t cid, Params &params) :
     num_vns = 1;
 
     std::string link_bw_s = params.find<std::string>("link_bw");
-    if (link_bw_s == "") {
+    if (link_bw_s.empty()) {
         out.fatal(CALL_INFO, -1, "link_bw must be set!\n");
     }
     // TimeConverter* tc = Simulation::getSimulation()->getTimeLord()->getTimeConverter(link_bw);
@@ -86,7 +86,8 @@ TrafficGen::TrafficGen(ComponentId_t cid, Params &params) :
 
     UnitAlgebra buf_size(buf_len);
 
-    link_control = (Merlin::LinkControl *) loadSubComponent("merlin.linkcontrol", this, params);
+    link_control =
+        dynamic_cast<Merlin::LinkControl *>(loadSubComponent("merlin.linkcontrol", this, params));
     link_control->initialize("rtr", link_bw, num_vns, buf_len, buf_len);
     // delete [] buf_size;
 
@@ -100,7 +101,9 @@ TrafficGen::TrafficGen(ComponentId_t cid, Params &params) :
     /* Packet size */
     // base_packet_size = params.find_integer("packet_size", 64); // In Bits
     packetSizeGen = buildGenerator("PacketSize", params);
-    if (packetSizeGen) packetSizeGen->seed(id);
+    if (packetSizeGen != nullptr) {
+        packetSizeGen->seed(id);
+    }
 
     std::string packet_size_s = params.find<std::string>("packet_size", "8B");
     UnitAlgebra packet_size(packet_size_s);
@@ -114,10 +117,11 @@ TrafficGen::TrafficGen(ComponentId_t cid, Params &params) :
 
     base_packet_size = packet_size.getRoundedValue();
 
-
     // base_packet_delay = params.find_integer("delay_between_packets", 0);
     packetDelayGen = buildGenerator("PacketDelay", params);
-    if (packetDelayGen) packetDelayGen->seed(id);
+    if (packetDelayGen != nullptr) {
+        packetDelayGen->seed(id);
+    }
 
     std::string packet_delay_s = params.find<std::string>("delay_between_packets", "0s");
     UnitAlgebra packet_delay(packet_delay_s);
@@ -131,8 +135,8 @@ TrafficGen::TrafficGen(ComponentId_t cid, Params &params) :
     registerAsPrimaryComponent();
     primaryComponentDoNotEndSim();
     clock_functor = new Clock::Handler<TrafficGen>(this, &TrafficGen::clock_handler);
-    clock_tc = registerClock(params.find<std::string>("message_rate", "1GHz"), clock_functor,
-                             false);
+    clock_tc =
+        registerClock(params.find<std::string>("message_rate", "1GHz"), clock_functor, false);
 
     // Register a receive handler which will simply strip the events as they arrive
     link_control->setNotifyOnReceive(
@@ -140,55 +144,55 @@ TrafficGen::TrafficGen(ComponentId_t cid, Params &params) :
     send_notify_functor = new LinkControl::Handler<TrafficGen>(this, &TrafficGen::send_notify);
 }
 
+TrafficGen::~TrafficGen() { delete link_control; }
 
-TrafficGen::~TrafficGen() {
-    delete link_control;
-}
-
-
-TrafficGen::Generator *TrafficGen::buildGenerator(const std::string &prefix, Params &params) {
-    Generator *gen = NULL;
+auto TrafficGen::buildGenerator(const std::string &prefix, Params &params)
+    -> TrafficGen::Generator * {
+    Generator *gen = nullptr;
     std::string pattern = params.find<std::string>(prefix + ":pattern");
-    std::pair<int, int> range = std::make_pair(
-        params.find<int>(prefix + ":RangeMin", 0),
-        params.find<int>(prefix + ":RangeMax", INT_MAX));
+    std::pair<int, int> range = std::make_pair(params.find<int>(prefix + ":RangeMin", 0),
+                                               params.find<int>(prefix + ":RangeMax", INT_MAX));
 
-    uint32_t rng_seed = params.find<uint32_t>(prefix + ":Seed", 1010101);
+    auto rng_seed = params.find<uint32_t>(prefix + ":Seed", 1010101);
 
-    if (!pattern.compare("NearestNeighbor")) {
+    if (pattern == "NearestNeighbor") {
         std::string shape = params.find<std::string>(prefix + ":NearestNeighbor:3DSize");
-        int maxX, maxY, maxZ;
+        int maxX;
+
+        int maxY;
+
+        int maxZ;
         assert(sscanf(shape.c_str(), "%d %d %d", &maxX, &maxY, &maxZ) == 3);
         gen = new NearestNeighbor(new UniformDist(0, 5), id, maxX, maxY, maxZ, 6);
-    } else if (!pattern.compare("Uniform")) {
+    } else if (pattern == "Uniform") {
         gen = new UniformDist(range.first, range.second - 1);
-    } else if (!pattern.compare("HotSpot")) {
+    } else if (pattern == "HotSpot") {
         int target = params.find<int>(prefix + ":HotSpot:target");
-        float targetProb = params.find<float>(prefix + ":HotSpot:targetProbability");
+        auto targetProb = params.find<float>(prefix + ":HotSpot:targetProbability");
         gen = new DiscreteDist(range.first, range.second, target, targetProb);
-    } else if (!pattern.compare("Normal")) {
-        float mean = params.find<float>(prefix + ":Normal:Mean", range.second / 2.0f);
-        float sigma = params.find<float>(prefix + ":Normal:Sigma", 1.0f);
+    } else if (pattern == "Normal") {
+        auto mean = params.find<float>(prefix + ":Normal:Mean", range.second / 2.0F);
+        auto sigma = params.find<float>(prefix + ":Normal:Sigma", 1.0F);
         gen = new NormalDist(range.first, range.second, mean, sigma);
-    } else if (!pattern.compare("Exponential")) {
-        float lambda = params.find<float>(prefix + ":Exponential:Lambda", range.first);
+    } else if (pattern == "Exponential") {
+        auto lambda = params.find<float>(prefix + ":Exponential:Lambda", range.first);
         gen = new ExponentialDist(lambda);
-    } else if (!pattern.compare("Binomial")) {
+    } else if (pattern == "Binomial") {
         int trials = params.find<int>(prefix + ":Binomial:Mean", range.second);
-        float probability = params.find<float>(prefix + ":Binomial:Sigma", 0.5f);
+        auto probability = params.find<float>(prefix + ":Binomial:Sigma", 0.5F);
         gen = new BinomialDist(range.first, range.second, trials, probability);
-    } else if (pattern.compare("")) { // Allow none - non-pattern
+    } else if (!pattern.empty()) {  // Allow none - non-pattern
         out.fatal(CALL_INFO, -1, "Unknown pattern '%s'\n", pattern.c_str());
     }
 
-    if (gen) gen->seed(rng_seed);
+    if (gen != nullptr) {
+        gen->seed(rng_seed);
+    }
 
     return gen;
 }
 
-void TrafficGen::finish() {
-    link_control->finish();
-}
+void TrafficGen::finish() { link_control->finish(); }
 
 void TrafficGen::setup() {
     link_control->setup();
@@ -197,22 +201,19 @@ void TrafficGen::setup() {
 #endif
 }
 
-void
-TrafficGen::init(unsigned int phase) {
-    return link_control->init(phase);
-}
+void TrafficGen::init(unsigned int phase) { return link_control->init(phase); }
 
-
-bool
-TrafficGen::clock_handler(Cycle_t cycle) {
-    if (done) return true;
-    else if (packets_sent >= packets_to_send) {
+auto TrafficGen::clock_handler(Cycle_t /*cycle*/) -> bool {
+    if (done) {
+        return true;
+    }
+    if (packets_sent >= packets_to_send) {
         // out.output("Node %d done sending.\n", id);
         primaryComponentOKToEndSim();
         done = true;
     }
 
-    if (packet_delay) {
+    if (packet_delay != 0) {
         --packet_delay;
     } else {
         // Send packets
@@ -221,8 +222,7 @@ TrafficGen::clock_handler(Cycle_t cycle) {
             if (link_control->spaceToSend(0, packet_size)) {
                 int target = getPacketDest();
 
-
-                SimpleNetwork::Request *req = new SimpleNetwork::Request();
+                auto *req = new SimpleNetwork::Request();
                 // req->givePayload(NULL);
                 req->head = true;
                 req->tail = true;
@@ -256,14 +256,13 @@ TrafficGen::clock_handler(Cycle_t cycle) {
     return false;
 }
 
-
-int TrafficGen::fattree_ID_to_IP(int id) {
+auto TrafficGen::fattree_ID_to_IP(int id) -> int {
     union Addr {
         uint8_t x[4];
         int32_t s;
     };
 
-    Addr addr;
+    Addr addr{};
 
     int edge_switch = (id / ft_loading);
     int pod = edge_switch / (ft_radix / 2);
@@ -281,14 +280,13 @@ int TrafficGen::fattree_ID_to_IP(int id) {
     return addr.s;
 }
 
-
-int TrafficGen::IP_to_fattree_ID(int ip) {
+auto TrafficGen::IP_to_fattree_ID(int ip) -> int {
     union Addr {
         uint8_t x[4];
         int32_t s;
     };
 
-    Addr addr;
+    Addr addr{};
     addr.s = ip;
 
     int id = 0;
@@ -299,47 +297,36 @@ int TrafficGen::IP_to_fattree_ID(int ip) {
     return id;
 }
 
-bool
-TrafficGen::handle_receives(int vn) {
+auto TrafficGen::handle_receives(int vn) -> bool {
     SimpleNetwork::Request *req = link_control->recv(vn);
-    if (req != NULL) {
+    if (req != nullptr) {
         packets_recd++;
         delete req;
     }
     return true;
 }
 
-
-bool
-TrafficGen::send_notify(int vn) {
+auto TrafficGen::send_notify(int /*vn*/) -> bool {
     reregisterClock(clock_tc, clock_functor);
     return false;
 }
 
-
-int TrafficGen::getPacketDest(void) {
+auto TrafficGen::getPacketDest() -> int {
     int dest = packetDestGen->getNextValue();
     assert(dest >= 0);
     return dest;
 }
 
-
-int TrafficGen::getPacketSize(void) {
-    if (packetSizeGen) {
+auto TrafficGen::getPacketSize() -> int {
+    if (packetSizeGen != nullptr) {
         return packetSizeGen->getNextValue();
-    } else {
-        return base_packet_size;
     }
+    return base_packet_size;
 }
 
-
-int TrafficGen::getDelayNextPacket(void) {
-    if (packetDelayGen) {
+auto TrafficGen::getDelayNextPacket() -> int {
+    if (packetDelayGen != nullptr) {
         return packetDelayGen->getNextValue();
-    } else {
-        return base_packet_delay;
     }
+    return base_packet_delay;
 }
-
-
-
