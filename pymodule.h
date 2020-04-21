@@ -15,7 +15,6 @@
 // information, see the LICENSE file in the top level directory of the
 // distribution.
 
-
 #ifndef COMPONENTS_MERLIN_PYMODULE_H
 #define COMPONENTS_MERLIN_PYMODULE_H
 
@@ -23,7 +22,7 @@
 extern "C" {
 #endif
 
-void* genMerlinPyModule(void);
+void *genMerlinPyModule(void);
 
 #ifdef __cplusplus
 }

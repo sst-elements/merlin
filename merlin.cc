@@ -17,19 +17,18 @@
 
 #include "merlin.h"
 
-
 /*
   This are header file only classes, so need to be included here to
   get compiled.
  */
-#include "hr_router/xbar_arb_rr.h"
-#include "hr_router/xbar_arb_lru.h"
 #include "hr_router/xbar_arb_age.h"
-#include "hr_router/xbar_arb_rand.h"
+#include "hr_router/xbar_arb_lru.h"
 #include "hr_router/xbar_arb_lru_infx.h"
+#include "hr_router/xbar_arb_rand.h"
+#include "hr_router/xbar_arb_rr.h"
 
-#include "arbitration/single_arb_rr.h"
 #include "arbitration/single_arb_lru.h"
+#include "arbitration/single_arb_rr.h"
 
 /*
   Install the python library
@@ -49,20 +48,14 @@ char pymerlin_topology[] = {
     0x00};
 
 class MerlinPyModule : public SSTElementPythonModule {
-public:
-    MerlinPyModule(std::string library) :
-        SSTElementPythonModule(library)
-    {
-        auto primary_module = createPrimaryModule(pymerlin,"pymerlin.py");
-        primary_module->addSubModule("base",pymerlin_base,"pymerlin-base.py");
-        primary_module->addSubModule("topology",pymerlin_topology,"topology/pymerlin-topology.py");
+  public:
+    MerlinPyModule(std::string library) : SSTElementPythonModule(library) {
+        auto primary_module = createPrimaryModule(pymerlin, "pymerlin.py");
+        primary_module->addSubModule("base", pymerlin_base, "pymerlin-base.py");
+        primary_module->addSubModule("topology", pymerlin_topology, "topology/pymerlin-topology.py");
     }
 
-    SST_ELI_REGISTER_PYTHON_MODULE(
-        MerlinPyModule,
-        "merlin",
-        SST_ELI_ELEMENT_VERSION(1,0,0)
-    )
+    SST_ELI_REGISTER_PYTHON_MODULE(MerlinPyModule, "merlin", SST_ELI_ELEMENT_VERSION(1, 0, 0))
 };
 
 /*
@@ -84,4 +77,3 @@ public:
 //         NULL // generators,
 //     };
 // }
-

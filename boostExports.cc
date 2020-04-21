@@ -15,11 +15,11 @@
 
 #include <sst/core/sst_config.h>
 
-#include "topology/mesh.h"
-#include "topology/torus.h"
+#include "interfaces/reorderLinkControl.h"
 #include "topology/dragonfly.h"
 #include "topology/dragonfly2.h"
-#include "reorderLinkControl.h"
+#include "topology/mesh.h"
+#include "topology/torus.h"
 
 // put all of the exports for events derived from interal_router_event
 // in one file because when located in seperate files the serialization

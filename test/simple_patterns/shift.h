@@ -15,16 +15,14 @@
 // information, see the LICENSE file in the top level directory of the
 // distribution.
 
-
 #ifndef COMPONENTS_MERLIN_TEST_SIMPLE_PATTERNS_SHIFT_H
 #define COMPONENTS_MERLIN_TEST_SIMPLE_PATTERNS_SHIFT_H
 
 #include <sst/core/component.h>
 #include <sst/core/event.h>
+#include <sst/core/interfaces/simpleNetwork.h>
 #include <sst/core/link.h>
 #include <sst/core/timeConverter.h>
-#include <sst/core/interfaces/simpleNetwork.h>
-
 
 namespace SST {
 
@@ -32,37 +30,24 @@ namespace Merlin {
 
 class shift_nic : public Component {
 
-public:
+  public:
+    SST_ELI_REGISTER_COMPONENT(shift_nic, "merlin", "shift_nic", SST_ELI_ELEMENT_VERSION(0, 9, 0),
+                               "Simple pattern NIC doing a shift pattern.", COMPONENT_CATEGORY_NETWORK)
 
-    SST_ELI_REGISTER_COMPONENT(
-        shift_nic,
-        "merlin",
-        "shift_nic",
-        SST_ELI_ELEMENT_VERSION(0,9,0),
-        "Simple pattern NIC doing a shift pattern.",
-        COMPONENT_CATEGORY_NETWORK)
+    SST_ELI_DOCUMENT_PARAMS({"id", "Network ID of endpoint."}, {"num_peers", "Total number of endpoints in network."},
+                            {"shift",
+                             "Number of logical network endpoints to shift to use as destination for packets."},
+                            {"packets_to_send", "Number of packets to send in the test.", "10"},
+                            {"packet_size", "Packet size specified in either b or B (can include SI prefix).", "64B"},
+                            {"link_bw",
+                             "Bandwidth of the router link specified in either b/s or B/s (can include SI prefix)."},
+                            {"remap", "Creates a logical to physical mapping shifted by remap amount.", "0"})
 
-    SST_ELI_DOCUMENT_PARAMS(
-        {"id",              "Network ID of endpoint."},
-        {"num_peers",       "Total number of endpoints in network."},
-        {"shift",           "Number of logical network endpoints to shift to use as destination for packets."},
-        {"packets_to_send", "Number of packets to send in the test.","10"},
-        {"packet_size",     "Packet size specified in either b or B (can include SI prefix).","64B"},
-        {"link_bw",         "Bandwidth of the router link specified in either b/s or B/s (can include SI prefix)."},
-        {"remap",           "Creates a logical to physical mapping shifted by remap amount.", "0"}
-    )
+    SST_ELI_DOCUMENT_PORTS({"rtr", "Port that hooks up to router.", {"merlin.RtrEvent", "merlin.credit_event"}})
 
-    SST_ELI_DOCUMENT_PORTS(
-        {"rtr",  "Port that hooks up to router.", { "merlin.RtrEvent", "merlin.credit_event" } }
-    )
+    SST_ELI_DOCUMENT_SUBCOMPONENT_SLOTS({"networkIF", "Network interface", "SST::Interfaces::SimpleNetwork"})
 
-    SST_ELI_DOCUMENT_SUBCOMPONENT_SLOTS(
-        {"networkIF", "Network interface", "SST::Interfaces::SimpleNetwork" }
-    )
-
-
-private:
-
+  private:
     int id;
     int net_id;
     int num_peers;
@@ -83,28 +68,26 @@ private:
     bool recv_done;
     bool initialized;
 
-    SST::Interfaces::SimpleNetwork* link_control;
+    SST::Interfaces::SimpleNetwork *link_control;
 
     int remap;
 
-    Output& output;
+    Output &output;
 
-public:
-    shift_nic(ComponentId_t cid, Params& params);
-    ~shift_nic();
+  public:
+    shift_nic(ComponentId_t cid, Params &params);
+    ~shift_nic() override;
 
-    void init(unsigned int phase);
-    void setup();
-    void finish();
+    void init(unsigned int phase) override;
+    void setup() override;
+    void finish() override;
 
-
-private:
+  private:
     bool clock_handler(Cycle_t cycle);
     bool handle_event(int vn);
-
 };
 
-}
-}
+} // namespace Merlin
+} // namespace SST
 
 #endif // COMPONENTS_MERLIN_TEST_SIMPLE_PATTERNS_SHIFT_H

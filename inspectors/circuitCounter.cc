@@ -25,9 +25,8 @@ namespace Merlin {
 SST::Core::ThreadSafe::Spinlock CircNetworkInspector::mapLock;
 CircNetworkInspector::setMap_t CircNetworkInspector::setMap;
 
-CircNetworkInspector::CircNetworkInspector(SST::ComponentId_t id,
-                                           SST::Params &params, const std::string& sub_id) :
-        SimpleNetwork::NetworkInspector(id) {
+CircNetworkInspector::CircNetworkInspector(SST::ComponentId_t id, SST::Params &params, const std::string & /*sub_id*/)
+    : SimpleNetwork::NetworkInspector(id) {
     outFileName = params.find<std::string>("output_file");
     if (outFileName.empty()) {
         outFileName = "RouterCircuits";
@@ -43,12 +42,12 @@ CircNetworkInspector::CircNetworkInspector(SST::ComponentId_t id,
         // Nmae of router is the name before the first :
         int index = fullname.find(":");
 
-        const string &key = index == string::npos ? fullname : fullname.substr(0,index);
+        const string &key = index == string::npos ? fullname : fullname.substr(0, index);
         // look up our key
-        setMap_t::iterator iter = setMap.find(key);
+        auto iter = setMap.find(key);
         if (iter == setMap.end()) {
             // we're first!
-            pairSet_t *ps = new pairSet_t;
+            auto *ps = new pairSet_t;
             setMap[key] = ps;
             uniquePaths = ps;
         } else {
@@ -60,9 +59,8 @@ CircNetworkInspector::CircNetworkInspector(SST::ComponentId_t id,
     }
 }
 
-
 #ifndef SST_ENABLE_PREVIEW_BUILD
-void CircNetworkInspector::initialize(string id) {
+void CircNetworkInspector::initialize(string /*id*/) {
     // critical section for accessing the map
     {
         mapLock.lock();
@@ -74,12 +72,12 @@ void CircNetworkInspector::initialize(string id) {
         // Nmae of router is the name before the first :
         int index = fullname.find(":");
 
-        const string &key = index == string::npos ? fullname : fullname.substr(0,index);
+        const string &key = index == string::npos ? fullname : fullname.substr(0, index);
         // look up our key
-        setMap_t::iterator iter = setMap.find(key);
+        auto iter = setMap.find(key);
         if (iter == setMap.end()) {
             // we're first!
-            pairSet_t *ps = new pairSet_t;
+            auto *ps = new pairSet_t;
             setMap[key] = ps;
             uniquePaths = ps;
         } else {
@@ -92,7 +90,7 @@ void CircNetworkInspector::initialize(string id) {
 }
 #endif
 
-void CircNetworkInspector::inspectNetworkData(SimpleNetwork::Request* req) {
+void CircNetworkInspector::inspectNetworkData(SimpleNetwork::Request *req) {
     uniquePaths->insert(SDPair(req->src, req->dest));
 }
 
@@ -105,18 +103,14 @@ void CircNetworkInspector::finish() {
 
         if (!setMap.empty()) {
             // create new file
-            SST::Output* output_file = new SST::Output("",0,0,
-                                                       SST::Output::FILE,
-                                                       outFileName);
+            auto *output_file = new SST::Output("", 0, 0, SST::Output::FILE, outFileName);
 
-            for(setMap_t::iterator i = setMap.begin();
-                i != setMap.end(); ++i) {
+            for (auto &i : setMap) {
                 // print
-                output_file->output(CALL_INFO, "%s %" PRIu64 "\n",
-                                    i->first.c_str(),
-                                    (unsigned long long)i->second->size());
+                output_file->output(CALL_INFO, "%s %" PRIu64 "\n", i.first.c_str(),
+                                    (unsigned long long)i.second->size());
                 // clean up
-                delete(i->second);
+                delete (i.second);
             }
         }
 

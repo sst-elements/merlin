@@ -15,7 +15,6 @@
 // information, see the LICENSE file in the top level directory of the
 // distribution.
 
-
 #ifndef COMPONENTS_MERLIN_TEST_ROUTE_TEST_H
 #define COMPONENTS_MERLIN_TEST_ROUTE_TEST_H
 
@@ -24,70 +23,53 @@
 #include <sst/core/link.h>
 #include <sst/core/timeConverter.h>
 
-
 namespace SST {
 
 namespace Interfaces {
-    class SimpleNetwork;
+class SimpleNetwork;
 }
 
 namespace Merlin {
 
-
 class route_test : public Component {
 
-public:
+  public:
+    SST_ELI_REGISTER_COMPONENT(route_test, "merlin", "route_test", SST_ELI_ELEMENT_VERSION(1, 0, 0),
+                               "Simple NIC to test routing.", COMPONENT_CATEGORY_NETWORK)
 
-    SST_ELI_REGISTER_COMPONENT(
-        route_test,
-        "merlin",
-        "route_test",
-        SST_ELI_ELEMENT_VERSION(1,0,0),
-        "Simple NIC to test routing.",
-        COMPONENT_CATEGORY_NETWORK)
+    SST_ELI_DOCUMENT_PARAMS({"id", "Network ID of endpoint."}, {"num_peers", "Total number of endpoints in network."},
+                            {"link_bw",
+                             "Bandwidth of the router link specified in either b/s or B/s (can include SI prefix)."})
 
-    SST_ELI_DOCUMENT_PARAMS(
-        {"id",        "Network ID of endpoint."},
-        {"num_peers", "Total number of endpoints in network."},
-        {"link_bw",   "Bandwidth of the router link specified in either b/s or B/s (can include SI prefix)."}
-    )
+    SST_ELI_DOCUMENT_PORTS({"rtr", "Port that hooks up to router.", {"merlin.RtrEvent", "merlin.credit_event"}})
 
-    SST_ELI_DOCUMENT_PORTS(
-        {"rtr",  "Port that hooks up to router.", { "merlin.RtrEvent", "merlin.credit_event" } }
-    )
+    SST_ELI_DOCUMENT_SUBCOMPONENT_SLOTS({"networkIF", "Network interface", "SST::Interfaces::SimpleNetwork"})
 
-    SST_ELI_DOCUMENT_SUBCOMPONENT_SLOTS(
-        {"networkIF", "Network interface", "SST::Interfaces::SimpleNetwork" }
-    )
-
-private:
-
+  private:
     int id;
     int num_peers;
     bool sending;
 
-
     bool done;
     bool initialized;
 
-    SST::Interfaces::SimpleNetwork* link_control;
+    SST::Interfaces::SimpleNetwork *link_control;
 
-public:
-    route_test(ComponentId_t cid, Params& params);
-    ~route_test();
+  public:
+    route_test(ComponentId_t cid, Params &params);
+    ~route_test() override;
 
-    void init(unsigned int phase);
-    void setup();
-    void finish();
+    void init(unsigned int phase) override;
+    void setup() override;
+    void finish() override;
 
-
-private:
+  private:
     bool clock_handler(Cycle_t cycle);
 
     bool handle_event(int vn);
 };
 
-}
-}
+} // namespace Merlin
+} // namespace SST
 
 #endif // COMPONENTS_MERLIN_TEST_ROUTE_TEST_H

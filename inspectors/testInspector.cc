@@ -20,20 +20,15 @@
 namespace SST {
 namespace Merlin {
 
-TestNetworkInspector::TestNetworkInspector(ComponentId_t id, Params& params, const std::string& sub_id) :
-    SimpleNetwork::NetworkInspector(id)
-{
+TestNetworkInspector::TestNetworkInspector(ComponentId_t id, Params & /*params*/, const std::string &sub_id)
+    : SimpleNetwork::NetworkInspector(id) {
     test_count = registerStatistic<uint64_t>("test_count", sub_id);
 }
 
 #ifndef SST_ENABLE_PREVIEW_BUILD
-void TestNetworkInspector::initialize(string id) {
-    test_count = registerStatistic<uint64_t>("test_count", id);
-}
+void TestNetworkInspector::initialize(string id) { test_count = registerStatistic<uint64_t>("test_count", id); }
 #endif
-void TestNetworkInspector::inspectNetworkData(SimpleNetwork::Request* req) {
-    test_count->addData(1);
-}
+void TestNetworkInspector::inspectNetworkData(SimpleNetwork::Request * /*req*/) { test_count->addData(1); }
 
 } // namespace Merlin
 } // namespace SST

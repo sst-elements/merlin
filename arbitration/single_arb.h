@@ -15,7 +15,6 @@
 // information, see the LICENSE file in the top level directory of the
 // distribution.
 
-
 #ifndef COMPONENTS_MERLIN_ARBITRATION_SINGLE_ARB_H
 #define COMPONENTS_MERLIN_ARBITRATION_SINGLE_ARB_H
 
@@ -26,21 +25,19 @@ namespace Merlin {
 
 class SingleArbitration : public Module {
 
-public:
-
+  public:
     // Params are: num_vcs
-    SST_ELI_REGISTER_MODULE_API(SST::Merlin::SingleArbitration,int16_t)
+    SST_ELI_REGISTER_MODULE_API(SST::Merlin::SingleArbitration, int16_t)
 
     SingleArbitration() : Module() {}
-    virtual ~SingleArbitration() {}
+    ~SingleArbitration() override = default;
 
     virtual int next() = 0;
     virtual void satisfied() = 0;
     // virtual void print() {}
 };
 
-
-}
-}
+} // namespace Merlin
+} // namespace SST
 
 #endif // COMPONENTS_MERLIN_ROUTER_H

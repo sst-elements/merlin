@@ -15,7 +15,6 @@
 // information, see the LICENSE file in the top level directory of the
 // distribution.
 
-
 #ifndef COMPONENTS_MERLIN_ARBITRATION_SINGLE_ARB_RR_H
 #define COMPONENTS_MERLIN_ARBITRATION_SINGLE_ARB_RR_H
 
@@ -28,48 +27,37 @@ namespace Merlin {
 
 class single_arb_rr : public SingleArbitration {
 
-public:
+  public:
+    SST_ELI_REGISTER_MODULE_DERIVED(single_arb_rr, "merlin", "arb.base.single.roundrobin",
+                                    SST_ELI_ELEMENT_VERSION(1, 0, 0),
+                                    "Base round robin module used when only one match per round is needed.",
+                                    SST::Merlin::SingleArbitration)
 
-    SST_ELI_REGISTER_MODULE_DERIVED(
-        single_arb_rr,
-        "merlin",
-        "arb.base.single.roundrobin",
-        SST_ELI_ELEMENT_VERSION(1,0,0),
-        "Base round robin module used when only one match per round is needed.",
-        SST::Merlin::SingleArbitration
-    )
-
-private:
+  private:
     int16_t size;
     int16_t current;
 
-
-public:
-    single_arb_rr(Params& params) :
-        SingleArbitration()
-    {
-        Simulation::getSimulationOutput().fatal(CALL_INFO_LONG,1,"single_arb_rr: module is only loadable with new API\n");
+  public:
+    single_arb_rr(Params & /*params*/) : SingleArbitration() {
+        Simulation::getSimulationOutput().fatal(CALL_INFO_LONG, 1,
+                                                "single_arb_rr: module is only loadable with new API\n");
     }
 
-    single_arb_rr(Params& params, int16_t size) :
-        SingleArbitration(),
-        size(size),
-        current(-1)
-    {}
+    single_arb_rr(Params & /*params*/, int16_t size) : SingleArbitration(), size(size), current(-1) {}
 
-    ~single_arb_rr() { }
+    ~single_arb_rr() override = default;
 
-    int next() {
+    int next() override {
         current++;
-        if ( current == size ) current = 0;
+        if (current == size)
+            current = 0;
         return current;
     }
 
-    void satisfied() {}
+    void satisfied() override {}
 };
 
-
-}
-}
+} // namespace Merlin
+} // namespace SST
 
 #endif // COMPONENTS_MERLIN_ROUTER_H

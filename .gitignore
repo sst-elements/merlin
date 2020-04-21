@@ -1,5 +1,6 @@
 *.so
 *.pyc
+*.inc
 .idea/
 build/
 cmake-build-debug/

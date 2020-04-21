@@ -14,7 +14,7 @@
 // distribution.
 #include <sst/core/sst_config.h>
 
-#include <stdlib.h>
+#include <cstdlib>
 
 #include <algorithm>
 
@@ -22,39 +22,25 @@
 
 using namespace SST::Merlin;
 
-#define DPRINTF( fmt, args...) __DBG( DBG_NETWORK, topo_singlerouter, fmt, ## args )
+#define DPRINTF(fmt, args...) __DBG(DBG_NETWORK, topo_singlerouter, fmt, ##args)
 
-topo_singlerouter::topo_singlerouter(ComponentId_t cid, Params& params, int num_ports, int rtr_id) :
-    Topology(cid),
-    num_ports(num_ports)
-{
-}
+topo_singlerouter::topo_singlerouter(ComponentId_t cid, Params & /*params*/, int num_ports, int /*rtr_id*/)
+    : Topology(cid), num_ports(num_ports) {}
 
-topo_singlerouter::~topo_singlerouter()
-{
-}
+topo_singlerouter::~topo_singlerouter() = default;
 
-void
-topo_singlerouter::route(int port, int vc, internal_router_event* ev)
-{
-    ev->setNextPort(ev->getDest());
-}
+void topo_singlerouter::route(int /*port*/, int /*vc*/, internal_router_event *ev) { ev->setNextPort(ev->getDest()); }
 
-
-internal_router_event*
-topo_singlerouter::process_input(RtrEvent* ev)
-{
-    internal_router_event* ire = new internal_router_event(ev);
+internal_router_event *topo_singlerouter::process_input(RtrEvent *ev) {
+    auto *ire = new internal_router_event(ev);
     ire->setVC(ire->getVN());
     return ire;
 }
 
-
-void topo_singlerouter::routeInitData(int port, internal_router_event* ev, std::vector<int> &outPorts)
-{
-    if ( ev->getDest() == INIT_BROADCAST_ADDR ) {
-        for ( int i = 0 ; i < num_ports ; i++ ) {
-            if ( i != port )
+void topo_singlerouter::routeInitData(int port, internal_router_event *ev, std::vector<int> &outPorts) {
+    if (ev->getDest() == INIT_BROADCAST_ADDR) {
+        for (int i = 0; i < num_ports; i++) {
+            if (i != port)
                 outPorts.push_back(i);
         }
 
@@ -64,17 +50,10 @@ void topo_singlerouter::routeInitData(int port, internal_router_event* ev, std::
     }
 }
 
+internal_router_event *topo_singlerouter::process_InitData_input(RtrEvent *ev) { return new internal_router_event(ev); }
 
-internal_router_event* topo_singlerouter::process_InitData_input(RtrEvent* ev)
-{
-    return new internal_router_event(ev);
-}
-
-
-Topology::PortState
-topo_singlerouter::getPortState(int port) const
-{
-    if ( port < num_ports ) return R2N;
+Topology::PortState topo_singlerouter::getPortState(int port) const {
+    if (port < num_ports)
+        return R2N;
     return UNCONNECTED;
 }
-

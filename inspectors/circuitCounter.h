@@ -16,8 +16,8 @@
 #ifndef COMPONENTS_MERLIN_CIRCUITCOUNTER_H
 #define COMPONENTS_MERLIN_CIRCUITCOUNTER_H
 
-#include <sst/core/subcomponent.h>
 #include <sst/core/interfaces/simpleNetwork.h>
+#include <sst/core/subcomponent.h>
 #include <sst/core/threadsafe.h>
 
 namespace SST {
@@ -26,42 +26,35 @@ namespace Merlin {
 
 class CircNetworkInspector : public SimpleNetwork::NetworkInspector {
 
-public:
-
+  public:
     SST_ELI_REGISTER_SUBCOMPONENT_DERIVED(
-        CircNetworkInspector,
-        "merlin",
-        "circuit_network_inspector",
-        SST_ELI_ELEMENT_VERSION(1,0,0),
+        CircNetworkInspector, "merlin", "circuit_network_inspector", SST_ELI_ELEMENT_VERSION(1, 0, 0),
         "Used to count the number of network circuits (as in 'circuit switched' circuits)",
         SST::Interfaces::SimpleNetwork::NetworkInspector)
 
-
-private:
+  private:
     typedef std::pair<SimpleNetwork::nid_t, SimpleNetwork::nid_t> SDPair;
-    typedef std::set<SDPair> pairSet_t;
+    using pairSet_t = std::set<SDPair>;
     pairSet_t *uniquePaths;
     std::string outFileName;
 
-    typedef std::map<std::string, pairSet_t*> setMap_t;
+    using setMap_t = std::map<std::string, pairSet_t *>;
     // Map which makes sure that all the inspectors on one router use
     // the same pairSet. This structure can be accessed by multiple
     // threads during intiailize, so it needs to be protected.
     static setMap_t setMap;
     static SST::Core::ThreadSafe::Spinlock mapLock;
-public:
-    CircNetworkInspector(SST::ComponentId_t, SST::Params &params, const std::string& sub_id);
+
+  public:
+    CircNetworkInspector(SST::ComponentId_t, SST::Params &params, const std::string &sub_id);
 
 #ifndef SST_ENABLE_PREVIEW_BUILD
     void initialize(std::string id);
 #endif
-    void finish();
+    void finish() override;
 
-    void inspectNetworkData(SimpleNetwork::Request* req);
-
-
+    void inspectNetworkData(SimpleNetwork::Request *req) override;
 };
-
 
 } // namespace Merlin
 } // namespace SST

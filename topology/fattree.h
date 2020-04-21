@@ -15,7 +15,6 @@
 // information, see the LICENSE file in the top level directory of the
 // distribution.
 
-
 #ifndef COMPONENTS_MERLIN_TOPOLOGY_FATTREE_H
 #define COMPONENTS_MERLIN_TOPOLOGY_FATTREE_H
 
@@ -28,30 +27,23 @@
 namespace SST {
 namespace Merlin {
 
-class topo_fattree: public Topology {
+class topo_fattree : public Topology {
 
-public:
+  public:
+    SST_ELI_REGISTER_SUBCOMPONENT_DERIVED(topo_fattree, "merlin", "fattree", SST_ELI_ELEMENT_VERSION(1, 0, 0),
+                                          "Fattree topology object", SST::Merlin::Topology)
 
-    SST_ELI_REGISTER_SUBCOMPONENT_DERIVED(
-        topo_fattree,
-        "merlin",
-        "fattree",
-        SST_ELI_ELEMENT_VERSION(1,0,0),
-        "Fattree topology object",
-        SST::Merlin::Topology)
+    SST_ELI_DOCUMENT_PARAMS({"fattree:shape", "Shape of the fattree"},
+                            {"fattree:routing_alg", "Routing algorithm to use. [deterministic | adaptive]",
+                             "deterministic"},
+                            {"fattree:adaptive_threshold",
+                             "Threshold used to determine if a packet will adaptively route."},
 
-    SST_ELI_DOCUMENT_PARAMS(
-        {"fattree:shape",               "Shape of the fattree"},
-        {"fattree:routing_alg",         "Routing algorithm to use. [deterministic | adaptive]","deterministic"},
-        {"fattree:adaptive_threshold",  "Threshold used to determine if a packet will adaptively route."},
+                            {"shape", "Shape of the fattree"},
+                            {"routing_alg", "Routing algorithm to use. [deterministic | adaptive]", "deterministic"},
+                            {"adaptive_threshold", "Threshold used to determine if a packet will adaptively route."})
 
-        {"shape",               "Shape of the fattree"},
-        {"routing_alg",         "Routing algorithm to use. [deterministic | adaptive]","deterministic"},
-        {"adaptive_threshold",  "Threshold used to determine if a packet will adaptively route."}
-    )
-
-
-private:
+  private:
     int rtr_level;
     int level_id;
     int level_group;
@@ -61,43 +53,41 @@ private:
 
     int down_route_factor;
 
-//    int levels;
+    //    int levels;
     int id;
     int up_ports;
     int down_ports;
     int num_ports;
     int num_vcs;
 
-    int const* outputCredits;
-    int* thresholds;
+    int const *outputCredits;
+    int *thresholds;
     bool allow_adaptive;
     double adaptive_threshold;
 
     void parseShape(const std::string &shape, int *downs, int *ups) const;
 
+  public:
+    topo_fattree(ComponentId_t cid, Params &params, int num_ports, int rtr_id);
+    ~topo_fattree() override;
 
-public:
-    topo_fattree(ComponentId_t cid, Params& params, int num_ports, int rtr_id);
-    ~topo_fattree();
+    void route(int port, int vc, internal_router_event *ev) override;
+    void reroute(int port, int vc, internal_router_event *ev) override;
+    internal_router_event *process_input(RtrEvent *ev) override;
 
-    virtual void route(int port, int vc, internal_router_event* ev);
-    virtual void reroute(int port, int vc, internal_router_event* ev);
-    virtual internal_router_event* process_input(RtrEvent* ev);
+    void routeInitData(int port, internal_router_event *ev, std::vector<int> &outPorts) override;
+    internal_router_event *process_InitData_input(RtrEvent *ev) override;
 
-    virtual void routeInitData(int port, internal_router_event* ev, std::vector<int> &outPorts);
-    virtual internal_router_event* process_InitData_input(RtrEvent* ev);
+    int getEndpointID(int port) override;
 
-    virtual int getEndpointID(int port);
+    PortState getPortState(int port) const override;
 
-    virtual PortState getPortState(int port) const;
+    void setOutputBufferCreditArray(int const *array, int vcs) override;
 
-    virtual void setOutputBufferCreditArray(int const* array, int vcs);
-
-    virtual int computeNumVCs(int vns) {return vns;}
-
+    int computeNumVCs(int vns) override { return vns; }
 };
 
-}
-}
+} // namespace Merlin
+} // namespace SST
 
 #endif // COMPONENTS_MERLIN_TOPOLOGY_FATTREE_H

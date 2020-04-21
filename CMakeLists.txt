@@ -51,15 +51,21 @@ add_custom_target(
 
 # -------------------- SST EXECUTABLES --------------------
 # execute command:
-# od -v -t x1 < pymerlin.py | sed -e 's/^[^ ]*[ ]*//g' -e '/^\s*$/d' -e 's/\([0-9a-f]*\)[ $]*/0x\1,/g' > pymerlin.inc
-execute_process(
-    COMMAND od -v -t x1 ${CMAKE_CURRENT_SOURCE_DIR}/pymerlin.py
-    COMMAND sed -e "s/^[^ ]*[ ]*//g"
-    COMMAND sed -e "/^\\s*$/d"
-    COMMAND sed -r -e "s/\([0-9a-f]*\)[ $]*/0x\\1,/g"
-    OUTPUT_STRIP_TRAILING_WHITESPACE
-    OUTPUT_FILE ${CMAKE_CURRENT_SOURCE_DIR}/pymerlin.inc
-)
+# od -v -t x1 < FILE.py | sed -e 's/^[^ ]*[ ]*//g' -e '/^\s*$/d' -e 's/\([0-9a-f]*\)[ $]*/0x\1,/g' > FILE.inc
+macro(octal_dump _name)
+    execute_process(
+        COMMAND od -v -t x1 ${CMAKE_CURRENT_SOURCE_DIR}/${_name}.py
+        COMMAND sed -e "s/^[^ ]*[ ]*//g"
+        COMMAND sed -e "/^\\s*$/d"
+        COMMAND sed -r -e "s/\([0-9a-f]*\)[ $]*/0x\\1,/g"
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+        OUTPUT_FILE ${CMAKE_CURRENT_SOURCE_DIR}/${_name}.inc
+    )
+endmacro()
+octal_dump(pymerlin)
+octal_dump(pymerlin-base)
+octal_dump(topology/pymerlin-topology)
+
 set(
     SOURCES
     bridge.cc

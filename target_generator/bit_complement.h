@@ -15,7 +15,6 @@
 // information, see the LICENSE file in the top level directory of the
 // distribution.
 
-
 #ifndef COMPONENTS_MERLIN_TARGET_GENERATOR_BIT_COMPLEMENT_H
 #define COMPONENTS_MERLIN_TARGET_GENERATOR_BIT_COMPLEMENT_H
 
@@ -24,48 +23,33 @@
 namespace SST {
 namespace Merlin {
 
-
 class BitComplementDist : public TargetGenerator {
 
-public:
-
+  public:
     SST_ELI_REGISTER_SUBCOMPONENT_DERIVED(
-        BitComplementDist,
-        "merlin",
-        "targetgen.bit_complement",
-        SST_ELI_ELEMENT_VERSION(0,0,1),
+        BitComplementDist, "merlin", "targetgen.bit_complement", SST_ELI_ELEMENT_VERSION(0, 0, 1),
         "Generates a generalized bit complement pattern.  Returns the same value of num_peers - 1 - id.",
         SST::Merlin::TargetGenerator)
 
-    SST_ELI_DOCUMENT_PARAMS(
-    )
+    SST_ELI_DOCUMENT_PARAMS()
 
     int dest;
 
-public:
-
-    BitComplementDist(ComponentId_t cid, Params &params, int id, int num_peers) :
-        TargetGenerator(cid)
-    {
+  public:
+    BitComplementDist(ComponentId_t cid, Params & /*params*/, int id, int num_peers) : TargetGenerator(cid) {
         dest = num_peers - 1 - id;
     }
 
-    ~BitComplementDist() {
-    }
+    ~BitComplementDist() override = default;
 
-    void initialize(int id, int num_peers) {
-        dest = num_peers - 1 - id;
-    }
+    void initialize(int id, int num_peers) override { dest = num_peers - 1 - id; }
 
-    int getNextValue(void) {
-        return dest;
-    }
+    int getNextValue() override { return dest; }
 
-    void seed(uint32_t val) {
-    }
+    void seed(uint32_t val) override {}
 };
 
-} //namespace Merlin
-} //namespace SST
+} // namespace Merlin
+} // namespace SST
 
 #endif

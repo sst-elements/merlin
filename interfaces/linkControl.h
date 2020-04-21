@@ -15,7 +15,6 @@
 // information, see the LICENSE file in the top level directory of the
 // distribution.
 
-
 #ifndef COMPONENTS_MERLIN_LINKCONTROL_H
 #define COMPONENTS_MERLIN_LINKCONTROL_H
 
@@ -39,68 +38,59 @@ namespace Merlin {
 // Whole class definition needs to be in the header file so that other
 // libraries can use the class to talk with the merlin routers.
 
-typedef std::queue<RtrEvent*> network_queue_t;
+typedef std::queue<RtrEvent *> network_queue_t;
 
 // Class to manage link between NIC and router.  A single NIC can have
 // more than one link_control (and thus link to router).
 class LinkControl : public SST::Interfaces::SimpleNetwork {
 
-public:
-
-    SST_ELI_REGISTER_SUBCOMPONENT_DERIVED(
-        LinkControl,
-        "merlin",
-        "linkcontrol",
-        SST_ELI_ELEMENT_VERSION(1,0,0),
-        "Link Control module for building Merlin-enabled NICs",
-        SST::Interfaces::SimpleNetwork)
+  public:
+    SST_ELI_REGISTER_SUBCOMPONENT_DERIVED(LinkControl, "merlin", "linkcontrol", SST_ELI_ELEMENT_VERSION(1, 0, 0),
+                                          "Link Control module for building Merlin-enabled NICs",
+                                          SST::Interfaces::SimpleNetwork)
 
     SST_ELI_DOCUMENT_PARAMS(
-        {"port_name",          "Port name to connect to.  Only used when loaded anonymously",""},
-        {"link_bw",            "Bandwidth of the links specified in either b/s or B/s (can include SI prefix)."},
-        {"input_buf_size",     "Size of input buffers specified in b or B (can include SI prefix)."},
-        {"output_buf_size",    "Size of output buffers specified in b or B (can include SI prefix)."},
+        {"port_name", "Port name to connect to.  Only used when loaded anonymously", ""},
+        {"link_bw", "Bandwidth of the links specified in either b/s or B/s (can include SI prefix)."},
+        {"input_buf_size", "Size of input buffers specified in b or B (can include SI prefix)."},
+        {"output_buf_size", "Size of output buffers specified in b or B (can include SI prefix)."},
         // {"network_inspectors", "Comma separated list of network inspectors to put on output ports.", ""},
-        {"job_id",             "ID of the job this enpoint is part of.", "" },
-        {"Job_size",           "Number of nodes in the job this endpoint is part of.",""},
-        {"logical_nid",        "My logical NID", "" },
-        {"use_nid_remap",      "If true, will remap logical nids in job to physical ids", "false" },
-        {"nid_map_name",       "Base name of shared region where my NID map will be located.  If empty, no NID map will be used.",""},
-        {"vn_remap",           "Remap VNs onto/off of the network.  If empty, no vn remapping is done", "" },
+        {"job_id", "ID of the job this enpoint is part of.", ""},
+        {"Job_size", "Number of nodes in the job this endpoint is part of.", ""}, {"logical_nid", "My logical NID", ""},
+        {"use_nid_remap", "If true, will remap logical nids in job to physical ids", "false"},
+        {"nid_map_name",
+         "Base name of shared region where my NID map will be located.  If empty, no NID map will be used.", ""},
+        {"vn_remap", "Remap VNs onto/off of the network.  If empty, no vn remapping is done", ""},
 
     )
 
-    SST_ELI_DOCUMENT_STATISTICS(
-        { "packet_latency",     "Histogram of latencies for received packets", "latency", 1},
-        { "send_bit_count",     "Count number of bits sent on link", "bits", 1},
-        { "output_port_stalls", "Time output port is stalled (in units of core timebase)", "time in stalls", 1},
-        { "idle_time",          "Number of (in unites of core timebas) that port was idle", "time spent idle", 1},
-    )
+    SST_ELI_DOCUMENT_STATISTICS({"packet_latency", "Histogram of latencies for received packets", "latency", 1},
+                                {"send_bit_count", "Count number of bits sent on link", "bits", 1},
+                                {"output_port_stalls", "Time output port is stalled (in units of core timebase)",
+                                 "time in stalls", 1},
+                                {"idle_time", "Number of (in unites of core timebas) that port was idle",
+                                 "time spent idle", 1}, )
 
-    SST_ELI_DOCUMENT_PORTS(
-        {"rtr_port", "Port that connects to router", { "merlin.RtrEvent", "merlin.credit_event", "" } },
-    )
+    SST_ELI_DOCUMENT_PORTS({"rtr_port",
+                            "Port that connects to router",
+                            {"merlin.RtrEvent", "merlin.credit_event", ""}}, )
 
-
-private:
-
+  private:
     struct output_queue_bundle_t {
         network_queue_t queue;
-        int vn;
-        int credits;
+        int vn{-1};
+        int credits{0};
 
-        output_queue_bundle_t() :
-            vn(-1),
-            credits(0)
-            {}
+        output_queue_bundle_t()
+
+        {}
     };
 
-
     // Link to router
-    Link* rtr_link;
+    Link *rtr_link;
     // Self link for timing output.  This is how we manage bandwidth
     // usage
-    Link* output_timing;
+    Link *output_timing;
 
     // Perforamne paramters
     UnitAlgebra link_bw;
@@ -110,27 +100,27 @@ private:
     UnitAlgebra flit_size_ua;
 
     // Initialization events received from network
-    std::deque<RtrEvent*> init_events;
+    std::deque<RtrEvent *> init_events;
 
     // Number of virtual networks
-    int req_vns; // VNs requested be endpoint in constructor
-    int used_vns; // VNs actually used based on VN mapping
+    int req_vns;   // VNs requested be endpoint in constructor
+    int used_vns;  // VNs actually used based on VN mapping
     int total_vns; // Total VNs in the network
 
-    int* vn_out_map;
+    int *vn_out_map;
 
     /******************************************************************
      * Data structures to hold output quewus/credits and mapping data
      *****************************************************************/
     // Holds the mapping from user VN to network VN.  Size is req_vns
-    output_queue_bundle_t** vn_remap_out;
+    output_queue_bundle_t **vn_remap_out;
 
     // Holds the queues to output to network.  Size is used_vns
-    output_queue_bundle_t* output_queues;
+    output_queue_bundle_t *output_queues;
 
     // Holds the credits for the router input buffers.  Size is
     // total_vns.
-    int* router_credits;
+    int *router_credits;
 
     /******************************************************************
      * Data structures to hold input quewus
@@ -138,16 +128,15 @@ private:
 
     // Holds the credits to return to the router for my input buffers.
     // Size is total_vns.
-    int* router_return_credits;
+    int *router_return_credits;
 
     // Input queues.  Size is req_vn
-    network_queue_t* input_queues;
-
+    network_queue_t *input_queues;
 
     nid_t id;
     nid_t logical_nid;
-    SharedRegion* nid_map_shm;
-    const nid_t* nid_map;
+    SharedRegion *nid_map_shm;
+    const nid_t *nid_map;
 
     // Doing a round robin on the output.  Need to keep track of the
     // current virtual channel.
@@ -170,86 +159,81 @@ private:
 
     // Functors for notifying the parent when there is more space in
     // output queue or when a new packet arrives
-    HandlerBase* receiveFunctor;
-    HandlerBase* sendFunctor;
+    HandlerBase *receiveFunctor;
+    HandlerBase *sendFunctor;
 
     // Component* parent;
 
     // PacketStats stats;
     // Statistics
-    Statistic<uint64_t>* packet_latency;
-    Statistic<uint64_t>* send_bit_count;
-    Statistic<uint64_t>* output_port_stalls;
-    Statistic<uint64_t>* idle_time;
+    Statistic<uint64_t> *packet_latency;
+    Statistic<uint64_t> *send_bit_count;
+    Statistic<uint64_t> *output_port_stalls;
+    Statistic<uint64_t> *idle_time;
 
-    Output& output;
+    Output &output;
 
-public:
+  public:
     LinkControl(ComponentId_t cid, Params &params, int vns);
 
-    ~LinkControl();
+    ~LinkControl() override;
 
 #ifndef SST_ENABLE_PREVIEW_BUILD
     // Must be called before any other functions to configure the link.
     // Preferably during the owning component's constructor
     // time_base is a frequency which represents the bandwidth of the link in flits/second.
-    bool initialize(const std::string& port_name, const UnitAlgebra& link_bw_in,
-                    int vns, const UnitAlgebra& in_buf_size,
-                    const UnitAlgebra& out_buf_size);
+    bool initialize(const std::string &port_name, const UnitAlgebra &link_bw_in, int vns,
+                    const UnitAlgebra &in_buf_size, const UnitAlgebra &out_buf_size);
 #endif
-    void setup();
-    void init(unsigned int phase);
-    void complete(unsigned int phase);
-    void finish();
+    void setup() override;
+    void init(unsigned int phase) override;
+    void complete(unsigned int phase) override;
+    void finish() override;
 
     // Returns true if there is space in the output buffer and false
     // otherwise.
-    bool send(SST::Interfaces::SimpleNetwork::Request* req, int vn);
+    bool send(SST::Interfaces::SimpleNetwork::Request *req, int vn) override;
 
     // Returns true if there is space in the output buffer and false
     // otherwise.
-    bool spaceToSend(int vn, int flits);
+    bool spaceToSend(int vn, int flits) override;
 
     // Returns NULL if no event in input_buf[vn]. Otherwise, returns
     // the next event.
-    SST::Interfaces::SimpleNetwork::Request* recv(int vn);
+    SST::Interfaces::SimpleNetwork::Request *recv(int vn) override;
 
     // Returns true if there is an event in the input buffer and false
     // otherwise.
-    bool requestToReceive( int vn ) { return ! input_queues[vn].empty(); }
+    bool requestToReceive(int vn) override { return !input_queues[vn].empty(); }
 
-    void sendInitData(SST::Interfaces::SimpleNetwork::Request* ev);
-    SST::Interfaces::SimpleNetwork::Request* recvInitData();
+    void sendInitData(SST::Interfaces::SimpleNetwork::Request *ev) override;
+    SST::Interfaces::SimpleNetwork::Request *recvInitData() override;
 
-    void sendUntimedData(SST::Interfaces::SimpleNetwork::Request* ev);
-    SST::Interfaces::SimpleNetwork::Request* recvUntimedData();
+    void sendUntimedData(SST::Interfaces::SimpleNetwork::Request *ev) override;
+    SST::Interfaces::SimpleNetwork::Request *recvUntimedData() override;
 
-    inline void setNotifyOnReceive(HandlerBase* functor) { receiveFunctor = functor; }
-    inline void setNotifyOnSend(HandlerBase* functor) { sendFunctor = functor; }
+    inline void setNotifyOnReceive(HandlerBase *functor) override { receiveFunctor = functor; }
+    inline void setNotifyOnSend(HandlerBase *functor) override { sendFunctor = functor; }
 
-    inline bool isNetworkInitialized() const { return network_initialized; }
+    inline bool isNetworkInitialized() const override { return network_initialized; }
     // inline nid_t getEndpointID() const { return id; }
-    inline nid_t getEndpointID() const {
-        if ( nid_map ) {
+    inline nid_t getEndpointID() const override {
+        if (nid_map) {
             return logical_nid;
-        }
-        else {
+        } else {
             return id;
         }
     }
-    inline const UnitAlgebra& getLinkBW() const { return link_bw; }
+    inline const UnitAlgebra &getLinkBW() const override { return link_bw; }
 
-
-private:
+  private:
     bool network_initialized;
 
-    void handle_input(Event* ev);
-    void handle_output(Event* ev);
-
-
+    void handle_input(Event *ev);
+    void handle_output(Event *ev);
 };
 
-}
-}
+} // namespace Merlin
+} // namespace SST
 
 #endif // COMPONENTS_MERLIN_LINKCONTROL_H

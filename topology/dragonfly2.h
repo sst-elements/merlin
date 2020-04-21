@@ -15,7 +15,6 @@
 // information, see the LICENSE file in the top level directory of the
 // distribution.
 
-
 #ifndef COMPONENTS_MERLIN_TOPOLOGY_DRAGONFLY2_H
 #define COMPONENTS_MERLIN_TOPOLOGY_DRAGONFLY2_H
 
@@ -25,8 +24,6 @@
 #include <sst/core/rng/sstrng.h>
 
 #include "../router.h"
-
-
 
 namespace SST {
 class SharedRegion;
@@ -39,66 +36,57 @@ struct RouterPortPair2 {
     uint16_t router;
     uint16_t port;
 
-    RouterPortPair2(int router, int port) :
-        router(router),
-        port(port)
-        {}
+    RouterPortPair2(int router, int port) : router(router), port(port) {}
 
-    RouterPortPair2() {}
+    RouterPortPair2() = default;
 };
 
 class RouteToGroup2 {
-private:
-    const RouterPortPair2* data;
-    SharedRegion* region;
+  private:
+    const RouterPortPair2 *data;
+    SharedRegion *region;
     size_t groups;
     size_t routes;
 
+  public:
+    RouteToGroup2() = default;
 
-public:
-    RouteToGroup2() {}
+    void init(SharedRegion *sr, size_t g, size_t r);
 
-    void init(SharedRegion* sr, size_t g, size_t r);
+    const RouterPortPair2 &getRouterPortPair(int group, int route_number);
 
-    const RouterPortPair2& getRouterPortPair(int group, int route_number);
-
-    void setRouterPortPair(int group, int route_number, const RouterPortPair2& pair);
+    void setRouterPortPair(int group, int route_number, const RouterPortPair2 &pair);
 };
 
+class topo_dragonfly2 : public Topology {
 
-class topo_dragonfly2: public Topology {
-
-public:
-
+  public:
     SST_ELI_REGISTER_SUBCOMPONENT_DERIVED(
-        topo_dragonfly2,
-        "merlin",
-        "dragonfly2",
-        SST_ELI_ELEMENT_VERSION(1,0,0),
+        topo_dragonfly2, "merlin", "dragonfly2", SST_ELI_ELEMENT_VERSION(1, 0, 0),
         "Dragonfly2 topology object.  Implements a dragonfly with a single all to all pattern within the group.",
         SST::Merlin::Topology)
 
     SST_ELI_DOCUMENT_PARAMS(
-        {"dragonfly:hosts_per_router",      "Number of hosts connected to each router."},
-        {"dragonfly:routers_per_group",     "Number of links used to connect to routers in same group."},
+        {"dragonfly:hosts_per_router", "Number of hosts connected to each router."},
+        {"dragonfly:routers_per_group", "Number of links used to connect to routers in same group."},
         {"dragonfly:intergroup_per_router", "Number of links per router connected to other groups."},
-        {"dragonfly:intergroup_links",      "Number of links between each pair of groups."},
-        {"dragonfly:num_groups",            "Number of groups in network."},
-        {"dragonfly:algorithm",             "Routing algorithm to use [minmal (default) | valiant].", "minimal"},
-        {"dragonfly:adaptive_threshold",    "Threshold to use when make adaptive routing decisions.", "2.0"},
-        {"dragonfly:global_link_map",       "Array specifying connectivity of global links in each dragonfly group."},
-        {"dragonfly:global_route_mode",     "Mode for intepreting global link map [absolute (default) | relative].","absolute"},
+        {"dragonfly:intergroup_links", "Number of links between each pair of groups."},
+        {"dragonfly:num_groups", "Number of groups in network."},
+        {"dragonfly:algorithm", "Routing algorithm to use [minmal (default) | valiant].", "minimal"},
+        {"dragonfly:adaptive_threshold", "Threshold to use when make adaptive routing decisions.", "2.0"},
+        {"dragonfly:global_link_map", "Array specifying connectivity of global links in each dragonfly group."},
+        {"dragonfly:global_route_mode", "Mode for intepreting global link map [absolute (default) | relative].",
+         "absolute"},
 
-        {"hosts_per_router",      "Number of hosts connected to each router."},
-        {"routers_per_group",     "Number of links used to connect to routers in same group."},
+        {"hosts_per_router", "Number of hosts connected to each router."},
+        {"routers_per_group", "Number of links used to connect to routers in same group."},
         {"intergroup_per_router", "Number of links per router connected to other groups."},
-        {"intergroup_links",      "Number of links between each pair of groups."},
-        {"num_groups",            "Number of groups in network."},
-        {"algorithm",             "Routing algorithm to use [minmal (default) | valiant].", "minimal"},
-        {"adaptive_threshold",    "Threshold to use when make adaptive routing decisions.", "2.0"},
-        {"global_link_map",       "Array specifying connectivity of global links in each dragonfly group."},
-        {"global_route_mode",     "Mode for intepreting global link map [absolute (default) | relative].","absolute"},
-    )
+        {"intergroup_links", "Number of links between each pair of groups."},
+        {"num_groups", "Number of groups in network."},
+        {"algorithm", "Routing algorithm to use [minmal (default) | valiant].", "minimal"},
+        {"adaptive_threshold", "Threshold to use when make adaptive routing decisions.", "2.0"},
+        {"global_link_map", "Array specifying connectivity of global links in each dragonfly group."},
+        {"global_route_mode", "Mode for intepreting global link map [absolute (default) | relative].", "absolute"}, )
 
     /* Assumed connectivity of each router:
      * ports [0, p-1]:      Hosts
@@ -107,19 +95,15 @@ public:
      */
 
     struct dgnfly2Params {
-        uint32_t p;  /* # of hosts / router */
-        uint32_t a;  /* # of routers / group */
-        uint32_t k;  /* Router Radix */
-        uint32_t h;  /* # of ports / router to connect to other groups */
-        uint32_t g;  /* # of Groups */
-        uint32_t n;  /* # of links between groups in a pair */
+        uint32_t p; /* # of hosts / router */
+        uint32_t a; /* # of routers / group */
+        uint32_t k; /* Router Radix */
+        uint32_t h; /* # of ports / router to connect to other groups */
+        uint32_t g; /* # of Groups */
+        uint32_t n; /* # of links between groups in a pair */
     };
 
-    enum RouteAlgo {
-        MINIMAL,
-        VALIANT,
-        ADAPTIVE_LOCAL
-    };
+    enum RouteAlgo { MINIMAL, VALIANT, ADAPTIVE_LOCAL };
 
     RouteToGroup2 group_to_global_port;
 
@@ -129,15 +113,15 @@ public:
     uint32_t group_id;
     uint32_t router_id;
 
-    RNG::SSTRandom* rng;
+    RNG::SSTRandom *rng;
 
-    int const* output_credits;
+    int const *output_credits;
     int num_vcs;
 
     enum global_route_mode_t { ABSOLUTE, RELATIVE };
     global_route_mode_t global_route_mode;
 
-public:
+  public:
     struct dgnfly2Addr {
         uint32_t group;
         uint32_t mid_group;
@@ -146,72 +130,62 @@ public:
         uint32_t host;
     };
 
-    topo_dragonfly2(ComponentId_t cid, Params& p, int num_ports, int rtr_id);
-    ~topo_dragonfly2();
+    topo_dragonfly2(ComponentId_t cid, Params &p, int num_ports, int rtr_id);
+    ~topo_dragonfly2() override;
 
-    virtual void route(int port, int vc, internal_router_event* ev);
-    virtual void reroute(int port, int vc, internal_router_event* ev);
-    virtual internal_router_event* process_input(RtrEvent* ev);
+    void route(int port, int vc, internal_router_event *ev) override;
+    void reroute(int port, int vc, internal_router_event *ev) override;
+    internal_router_event *process_input(RtrEvent *ev) override;
 
-    virtual PortState getPortState(int port) const;
-    virtual std::string getPortLogicalGroup(int port) const;
+    PortState getPortState(int port) const override;
+    std::string getPortLogicalGroup(int port) const override;
 
-    virtual void routeInitData(int port, internal_router_event* ev, std::vector<int> &outPorts);
-    virtual internal_router_event* process_InitData_input(RtrEvent* ev);
+    void routeInitData(int port, internal_router_event *ev, std::vector<int> &outPorts) override;
+    internal_router_event *process_InitData_input(RtrEvent *ev) override;
 
-    virtual int computeNumVCs(int vns) { return vns * 3; }
-    virtual int getEndpointID(int port);
+    int computeNumVCs(int vns) override { return vns * 3; }
+    int getEndpointID(int port) override;
 
-    virtual void setOutputBufferCreditArray(int const* array, int vcs);
+    void setOutputBufferCreditArray(int const *array, int vcs) override;
 
-private:
+  private:
     void idToLocation(int id, dgnfly2Addr *location);
     uint32_t router_to_group(uint32_t group);
     uint32_t port_for_router(uint32_t router);
     uint32_t port_for_group(uint32_t group, uint32_t global_slice, int id = -1);
-
 };
-
-
-
 
 class topo_dragonfly2_event : public internal_router_event {
 
-public:
+  public:
     uint32_t src_group;
     topo_dragonfly2::dgnfly2Addr dest;
     uint16_t global_slice;
     uint16_t global_slice_shadow;
 
-    topo_dragonfly2_event() { }
-    topo_dragonfly2_event(const topo_dragonfly2::dgnfly2Addr &dest) :
-        dest(dest), global_slice(0)
-        {}
-    ~topo_dragonfly2_event() { }
+    topo_dragonfly2_event() = default;
+    topo_dragonfly2_event(const topo_dragonfly2::dgnfly2Addr &dest) : dest(dest), global_slice(0) {}
+    ~topo_dragonfly2_event() override = default;
 
-    virtual internal_router_event *clone(void) override
-    {
-        return new topo_dragonfly2_event(*this);
-    }
+    internal_router_event *clone() override { return new topo_dragonfly2_event(*this); }
 
-    void serialize_order(SST::Core::Serialization::serializer &ser)  override {
+    void serialize_order(SST::Core::Serialization::serializer &ser) override {
         internal_router_event::serialize_order(ser);
-        ser & src_group;
-        ser & dest.group;
-        ser & dest.mid_group;
-        ser & dest.mid_group_shadow;
-        ser & dest.router;
-        ser & dest.host;
-        ser & global_slice;
-        ser & global_slice_shadow;
+        ser &src_group;
+        ser &dest.group;
+        ser &dest.mid_group;
+        ser &dest.mid_group_shadow;
+        ser &dest.router;
+        ser &dest.host;
+        ser &global_slice;
+        ser &global_slice_shadow;
     }
 
-private:
+  private:
     ImplementSerializable(SST::Merlin::topo_dragonfly2_event)
-
 };
 
-}
-}
+} // namespace Merlin
+} // namespace SST
 
 #endif // COMPONENTS_MERLIN_TOPOLOGY_DRAGONFLY2_H

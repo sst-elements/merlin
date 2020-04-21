@@ -12,11 +12,11 @@
 // This file is part of the SST software package. For license
 // information, see the LICENSE file in the top level directory of the
 // distribution.
+#include "route_test.h"
 #include <sst/core/sst_config.h>
-#include "test/route_test/route_test.h"
 
+#include <csignal>
 #include <unistd.h>
-#include <signal.h>
 
 #include <sst/core/event.h>
 #include <sst/core/params.h>
@@ -31,40 +31,34 @@ using namespace SST::Interfaces;
 
 namespace Merlin {
 
-
-route_test::route_test(ComponentId_t cid, Params& params) :
-    Component(cid),
-    sending(false),
-    done(false),
-    initialized(false)
-{
-    id = params.find<int>("id",-1);
-    if ( id == -1 ) {
+route_test::route_test(ComponentId_t cid, Params &params)
+    : Component(cid), sending(false), done(false), initialized(false) {
+    id = params.find<int>("id", -1);
+    if (id == -1) {
     }
 
-    num_peers = params.find<int>("num_peers",-1);
-    if ( num_peers == -1 ) {
+    num_peers = params.find<int>("num_peers", -1);
+    if (num_peers == -1) {
     }
 
     // Create a LinkControl object
     // First see if it is defined in the python
-    link_control = loadUserSubComponent<SST::Interfaces::SimpleNetwork>
-        ("networkIF", ComponentInfo::SHARE_NONE, 1 /* vns */);
+    link_control =
+        loadUserSubComponent<SST::Interfaces::SimpleNetwork>("networkIF", ComponentInfo::SHARE_NONE, 1 /* vns */);
 
-    if ( !link_control ) {
+    if (!link_control) {
         // Just use the default linkcontrol (merlin.linkcontrol)
         Params if_params;
 
-        if_params.insert("link_bw",params.find<std::string>("link_bw"));
-        if_params.insert("input_buf_size","1kB");
-        if_params.insert("output_buf_size","1kB");
-        if_params.insert("port_name","rtr");
+        if_params.insert("link_bw", params.find<std::string>("link_bw"));
+        if_params.insert("input_buf_size", "1kB");
+        if_params.insert("output_buf_size", "1kB");
+        if_params.insert("port_name", "rtr");
 
-        link_control = loadAnonymousSubComponent<SST::Interfaces::SimpleNetwork>
-            ("merlin.linkcontrol", "networkIF", 0,
-             ComponentInfo::SHARE_PORTS | ComponentInfo::INSERT_STATS, if_params, 1 /* vns */);
+        link_control = loadAnonymousSubComponent<SST::Interfaces::SimpleNetwork>(
+            "merlin.linkcontrol", "networkIF", 0, ComponentInfo::SHARE_PORTS | ComponentInfo::INSERT_STATS, if_params,
+            1 /* vns */);
     }
-
 
     // // Register a clock
     // registerClock( "1GHz", new Clock::Handler<route_test>(this,&route_test::clock_handler), false);
@@ -72,36 +66,26 @@ route_test::route_test(ComponentId_t cid, Params& params) :
     registerAsPrimaryComponent();
     primaryComponentDoNotEndSim();
 
-    link_control->setNotifyOnReceive(new SST::Interfaces::SimpleNetwork::Handler<route_test>(this,&route_test::handle_event));
+    link_control->setNotifyOnReceive(
+        new SST::Interfaces::SimpleNetwork::Handler<route_test>(this, &route_test::handle_event));
 }
 
+route_test::~route_test() { delete link_control; }
 
-route_test::~route_test()
-{
-    delete link_control;
-}
+void route_test::finish() { link_control->finish(); }
 
-void route_test::finish()
-{
-    link_control->finish();
-}
-
-void
-route_test::init(unsigned int phase) {
+void route_test::init(unsigned int phase) {
     link_control->init(phase);
-    if ( id == 0 && !initialized ) {
-        if ( link_control->isNetworkInitialized() ) {
+    if (id == 0 && !initialized) {
+        if (link_control->isNetworkInitialized()) {
             initialized = true;
 
-            SimpleNetwork::Request* req =
-                new SimpleNetwork::Request(SimpleNetwork::INIT_BROADCAST_ADDR, id,
-                                           0, true, true);
+            auto *req = new SimpleNetwork::Request(SimpleNetwork::INIT_BROADCAST_ADDR, id, 0, true, true);
             link_control->sendInitData(req);
         }
-    }
-    else {
-        SimpleNetwork::Request* req = link_control->recvInitData();
-        if ( req != NULL ) {
+    } else {
+        SimpleNetwork::Request *req = link_control->recvInitData();
+        if (req != nullptr) {
             // std::cout << "ROUTE_TEST " << id << " Received an init event in phase " << phase << "!" << std::endl;
             delete req;
             initialized = true;
@@ -109,81 +93,71 @@ route_test::init(unsigned int phase) {
     }
 }
 
-void route_test::setup()
-{
+void route_test::setup() {
     link_control->setup();
-    if ( link_control->getEndpointID() != id ) {
-        std::cout << "NIC ids don't match: param = " << id << ", LinkControl = "
-                          << link_control->getEndpointID() << std::endl;
+    if (link_control->getEndpointID() != id) {
+        std::cout << "NIC ids don't match: param = " << id << ", LinkControl = " << link_control->getEndpointID()
+                  << std::endl;
     }
-    if ( !initialized ) {
+    if (!initialized) {
         std::cout << "Nic " << id << ": Broadcast failed!" << std::endl;
     }
 
-    if ( 0 == id ){
+    if (0 == id) {
         sending = true;
         // Send first event to kick things off
-        SST::Interfaces::SimpleNetwork::Request* req =
-            new SST::Interfaces::SimpleNetwork::Request(num_peers - 1, 0, 64, true, true);
-        link_control->send(req,0);
+        auto *req = new SST::Interfaces::SimpleNetwork::Request(num_peers - 1, 0, 64, true, true);
+        link_control->send(req, 0);
         // std::cout << req->src << " sending to " << req->dest << std::endl;
     }
 }
 
-bool route_test::handle_event(int vn)
-{
-    SST::Interfaces::SimpleNetwork::Request* req = link_control->recv(vn);
-    if ( sending ) {
-        if ( id == num_peers - 1 ) {
+bool route_test::handle_event(int vn) {
+    SST::Interfaces::SimpleNetwork::Request *req = link_control->recv(vn);
+    if (sending) {
+        if (id == num_peers - 1) {
             primaryComponentOKToEndSim();
         }
         // If we are set to sending and this is from node id-1, then
         // we are starting from the top
-        else if ( req->src == id - 1 ) {
+        else if (req->src == id - 1) {
             req->dest = num_peers - 1;
             req->src = id;
-            link_control->send(req,0);
+            link_control->send(req, 0);
             // std::cout << req->src << " sending to " << req->dest << std::endl;
-        }
-        else {
+        } else {
             // Send to the next lowest host
             SST::Interfaces::SimpleNetwork::nid_t next = req->src - 1;
-            if ( next == id ) {
+            if (next == id) {
                 sending = false;
                 primaryComponentOKToEndSim();
                 // Also, send an ack back to start the other person
                 // sending
                 req->dest = req->src;
                 req->src = id;
-                link_control->send(req,0);
+                link_control->send(req, 0);
                 // std::cout << req->src << " sending to " << req->dest << std::endl;
-            }
-            else {
+            } else {
                 req->dest = next;
                 req->src = id;
-                link_control->send(req,0);
+                link_control->send(req, 0);
                 // std::cout << req->src << " sending to " << req->dest << std::endl;
             }
         }
-    }
-    else {
+    } else {
         // If we aren't sending, then we just send an ack
         req->dest = req->src;
         req->src = id;
-        link_control->send(req,0);
+        link_control->send(req, 0);
         // std::cout << req->src << " sending to " << req->dest << std::endl;
         // However, if we just received this from id - 1, then it's
         // our turn to start sending.
-        if ( req->dest == id - 1 ) {
+        if (req->dest == id - 1) {
             sending = true;
         }
     }
     return true;
 }
 
-
-
-
 } // namespace Merlin
 } // namespace SST
-

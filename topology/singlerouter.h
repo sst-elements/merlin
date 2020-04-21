@@ -15,7 +15,6 @@
 // information, see the LICENSE file in the top level directory of the
 // distribution.
 
-
 #ifndef COMPONENTS_MERLIN_TOPOLOGY_SINGLEROUTER_H
 #define COMPONENTS_MERLIN_TOPOLOGY_SINGLEROUTER_H
 
@@ -28,40 +27,31 @@
 namespace SST {
 namespace Merlin {
 
+class topo_singlerouter : public Topology {
 
-class topo_singlerouter: public Topology {
+  public:
+    SST_ELI_REGISTER_SUBCOMPONENT_DERIVED(topo_singlerouter, "merlin", "singlerouter", SST_ELI_ELEMENT_VERSION(1, 0, 0),
+                                          "Simple, single-router topology object", SST::Merlin::Topology)
 
-public:
-
-    SST_ELI_REGISTER_SUBCOMPONENT_DERIVED(
-        topo_singlerouter,
-        "merlin",
-        "singlerouter",
-        SST_ELI_ELEMENT_VERSION(1,0,0),
-        "Simple, single-router topology object",
-        SST::Merlin::Topology)
-
-
-private:
+  private:
     int num_ports;
 
-public:
-    topo_singlerouter(ComponentId_t cid, Params& params, int num_ports, int rtr_id);
-    ~topo_singlerouter();
+  public:
+    topo_singlerouter(ComponentId_t cid, Params &params, int num_ports, int rtr_id);
+    ~topo_singlerouter() override;
 
-    virtual void route(int port, int vc, internal_router_event* ev);
-    virtual internal_router_event* process_input(RtrEvent* ev);
+    void route(int port, int vc, internal_router_event *ev) override;
+    internal_router_event *process_input(RtrEvent *ev) override;
 
-    virtual void routeInitData(int port, internal_router_event* ev, std::vector<int> &outPorts);
-    virtual internal_router_event* process_InitData_input(RtrEvent* ev);
+    void routeInitData(int port, internal_router_event *ev, std::vector<int> &outPorts) override;
+    internal_router_event *process_InitData_input(RtrEvent *ev) override;
 
-    virtual PortState getPortState(int port) const;
+    PortState getPortState(int port) const override;
 
-    virtual int getEndpointID(int port) { return port; }
-
+    int getEndpointID(int port) override { return port; }
 };
 
-}
-}
+} // namespace Merlin
+} // namespace SST
 
 #endif // COMPONENTS_MERLIN_TOPOLOGY_SINGLEROUTER_H
