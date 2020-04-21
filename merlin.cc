@@ -1,8 +1,8 @@
-// Copyright 2009-2019 NTESS. Under the terms
+// Copyright 2009-2020 NTESS. Under the terms
 // of Contract DE-NA0003525 with NTESS, the U.S.
 // Government retains certain rights in this software.
 //
-// Copyright (c) 2009-2019, NTESS
+// Copyright (c) 2009-2020, NTESS
 // All rights reserved.
 //
 // Portions are copyright of other developers:
@@ -13,19 +13,23 @@
 // information, see the LICENSE file in the top level directory of the
 // distribution.
 
+#include <sst/core/sst_config.h>
+
 #include "merlin.h"
 
-#include <sst/core/sst_config.h>
 
 /*
   This are header file only classes, so need to be included here to
   get compiled.
  */
-#include "hr_router/xbar_arb_age.h"
-#include "hr_router/xbar_arb_lru.h"
-#include "hr_router/xbar_arb_lru_infx.h"
-#include "hr_router/xbar_arb_rand.h"
 #include "hr_router/xbar_arb_rr.h"
+#include "hr_router/xbar_arb_lru.h"
+#include "hr_router/xbar_arb_age.h"
+#include "hr_router/xbar_arb_rand.h"
+#include "hr_router/xbar_arb_lru_infx.h"
+
+#include "arbitration/single_arb_rr.h"
+#include "arbitration/single_arb_lru.h"
 
 /*
   Install the python library
@@ -34,16 +38,31 @@
 
 char pymerlin[] = {
 #include "pymerlin.inc"
+    0x00};
 
+char pymerlin_base[] = {
+#include "pymerlin-base.inc"
+    0x00};
+
+char pymerlin_topology[] = {
+#include "topology/pymerlin-topology.inc"
     0x00};
 
 class MerlinPyModule : public SSTElementPythonModule {
-   public:
-    explicit MerlinPyModule(std::string library) : SSTElementPythonModule(library) {
-        addPrimaryModule(pymerlin);
+public:
+    MerlinPyModule(std::string library) :
+        SSTElementPythonModule(library)
+    {
+        auto primary_module = createPrimaryModule(pymerlin,"pymerlin.py");
+        primary_module->addSubModule("base",pymerlin_base,"pymerlin-base.py");
+        primary_module->addSubModule("topology",pymerlin_topology,"topology/pymerlin-topology.py");
     }
 
-    SST_ELI_REGISTER_PYTHON_MODULE(MerlinPyModule, "merlin", SST_ELI_ELEMENT_VERSION(1, 0, 0))
+    SST_ELI_REGISTER_PYTHON_MODULE(
+        MerlinPyModule,
+        "merlin",
+        SST_ELI_ELEMENT_VERSION(1,0,0)
+    )
 };
 
 /*
@@ -65,3 +84,4 @@ class MerlinPyModule : public SSTElementPythonModule {
 //         NULL // generators,
 //     };
 // }
+

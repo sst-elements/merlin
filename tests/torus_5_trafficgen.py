@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 #
-# Copyright 2009-2015 NTESS. Under the terms
+# Copyright 2009-2020 NTESS. Under the terms
 # of Contract DE-NA0003525 with NTESS, the U.S.
 # Government retains certain rights in this software.
 #
-# Copyright (c) 2009-2015, NTESS
+# Copyright (c) 2009-2020, NTESS
 # All rights reserved.
 #
 # This file is part of the SST software package. For license
@@ -12,9 +12,8 @@
 # distribution.
 
 import sst
-
 sst.setStatisticLoadLevel(3)
-sst.setStatisticOutput("sst.statOutputCSV", {"filepath": "./TestOutput.csv", "separator": ","})
+sst.setStatisticOutput("sst.statOutputCSV", {"filepath" : "./TestOutput.csv","separator" : "," } )
 
 from sst.merlin import *
 
@@ -28,10 +27,10 @@ sst.merlin._params["output_buf_size"] = "16.0KB"
 sst.merlin._params["link_lat"] = "5000ns"
 
 merlintorusparams = {}
-merlintorusparams["num_dims"] = 1
-merlintorusparams["torus:shape"] = "5"
-merlintorusparams["torus:width"] = "1"
-merlintorusparams["torus:local_ports"] = 1
+merlintorusparams["num_dims"]=1
+merlintorusparams["torus:shape"]="5"
+merlintorusparams["torus:width"]="1"
+merlintorusparams["torus:local_ports"]=1
 sst.merlin._params.update(merlintorusparams)
 topo = topoTorus()
 topo.prepParams()
@@ -57,4 +56,4 @@ endPoint.prepParams()
 topo.setEndPoint(endPoint)
 topo.build()
 
-sst.enableAllStatisticsForAllComponents({"type": "sst.AccumulatorStatistic", "rate": "0ns"})
+sst.enableAllStatisticsForAllComponents({"type":"sst.AccumulatorStatistic","rate":"0ns"})

@@ -1,1 +1,5 @@
-pymerlin.inc
+*.so
+*.pyc
+.idea/
+build/
+cmake-build-debug/

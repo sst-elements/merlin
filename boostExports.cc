@@ -1,8 +1,8 @@
-// Copyright 2013-2018 NTESS. Under the terms
+// Copyright 2013-2020 NTESS. Under the terms
 // of Contract DE-NA0003525 with NTESS, the U.S.
 // Government retains certain rights in this software.
 //
-// Copyright (c) 2013-2018, NTESS
+// Copyright (c) 2013-2020, NTESS
 // All rights reserved.
 //
 // Portions are copyright of other developers:
@@ -15,11 +15,11 @@
 
 #include <sst/core/sst_config.h>
 
-#include "reorderLinkControl.h"
-#include "topology/dragonfly.h"
-#include "topology/dragonfly2.h"
 #include "topology/mesh.h"
 #include "topology/torus.h"
+#include "topology/dragonfly.h"
+#include "topology/dragonfly2.h"
+#include "reorderLinkControl.h"
 
 // put all of the exports for events derived from interal_router_event
 // in one file because when located in seperate files the serialization

@@ -1,10 +1,10 @@
 // -*- mode: c++ -*-
 
-// Copyright 2009-2019 NTESS. Under the terms
+// Copyright 2009-2020 NTESS. Under the terms
 // of Contract DE-NA0003525 with NTESS, the U.S.
 // Government retains certain rights in this software.
 //
-// Copyright (c) 2009-2019, NTESS
+// Copyright (c) 2009-2020, NTESS
 // All rights reserved.
 //
 // Portions are copyright of other developers:
@@ -14,6 +14,7 @@
 // This file is part of the SST software package. For license
 // information, see the LICENSE file in the top level directory of the
 // distribution.
+
 
 #ifndef COMPONENTS_MERLIN_OFFERED_LOAD_H
 #define COMPONENTS_MERLIN_OFFERED_LOAD_H
@@ -29,101 +30,129 @@
 #include <sst/core/component.h>
 #include <sst/core/event.h>
 #include <sst/core/link.h>
-#include <sst/core/output.h>
 #include <sst/core/timeConverter.h>
+#include <sst/core/output.h>
+#include "sst/core/interfaces/simpleNetwork.h"
 
 #include "../target_generator/target_generator.h"
-#include "sst/core/interfaces/simpleNetwork.h"
 
 namespace SST {
 namespace Merlin {
 
+
 class offered_load_event : public Event {
-   public:
-    SimTime_t start_time{};
+public:
+    SimTime_t start_time;
 
-    offered_load_event() = default;
+    offered_load_event() : Event() {}
+    offered_load_event(SimTime_t start_time) :
+        Event(),
+        start_time(start_time)
+    {}
 
-    explicit offered_load_event(SimTime_t start_time) : start_time(start_time) {}
+    virtual ~offered_load_event() {  }
 
-    ~offered_load_event() override = default;
-
-    void serialize_order(SST::Core::Serialization::serializer &ser) override {
+    void serialize_order(SST::Core::Serialization::serializer &ser)  override {
         Event::serialize_order(ser);
-        ser &start_time;
+        ser & start_time;
     }
 
-   private:
+private:
     ImplementSerializable(SST::Merlin::offered_load_event)
+
 };
 
+
 class offered_load_complete_event : public Event {
-   public:
-    int generation{};
-    SimTime_t sum{};
-    SimTime_t sum_of_squares{};
-    SimTime_t min{};
-    SimTime_t max{};
-    uint64_t count{};
-    SimTime_t backup{};
+public:
+    int generation;
+    SimTime_t sum;
+    SimTime_t sum_of_squares;
+    SimTime_t min;
+    SimTime_t max;
+    uint64_t  count;
+    SimTime_t backup;
 
-    explicit offered_load_complete_event(int generation)
-        : generation(generation),
+    offered_load_complete_event(int generation) :
+        Event(),
+        generation(generation),
+        sum(0),
+        sum_of_squares(0),
+        min(MAX_SIMTIME_T),
+        max(0),
+        count(0)
+        {}
 
-          min(MAX_SIMTIME_T) {}
+    virtual ~offered_load_complete_event() {  }
 
-    ~offered_load_complete_event() override = default;
-
-    auto clone() -> offered_load_complete_event * override {
-        auto *ret = new offered_load_complete_event(*this);
+    virtual offered_load_complete_event* clone(void)  override {
+        offered_load_complete_event *ret = new offered_load_complete_event(*this);
         return ret;
     }
 
-    void serialize_order(SST::Core::Serialization::serializer &ser) override {
+
+    void serialize_order(SST::Core::Serialization::serializer &ser)  override {
         Event::serialize_order(ser);
-        ser &generation;
-        ser &sum;
-        ser &sum_of_squares;
-        ser &min;
-        ser &max;
-        ser &count;
-        ser &backup;
+        ser & generation;
+        ser & sum;
+        ser & sum_of_squares;
+        ser & min;
+        ser & max;
+        ser & count;
+        ser & backup;
     }
 
-   private:
-    offered_load_complete_event() = default;
+private:
+
+    offered_load_complete_event() : Event() {}
 
     ImplementSerializable(SST::Merlin::offered_load_complete_event)
+
 };
 
+
+
 class OfferedLoad : public Component {
-   public:
+
+public:
+
     SST_ELI_REGISTER_COMPONENT(
-        OfferedLoad, "merlin", "offered_load", SST_ELI_ELEMENT_VERSION(0, 0, 1),
+        OfferedLoad,
+        "merlin",
+        "offered_load",
+        SST_ELI_ELEMENT_VERSION(0,0,1),
         "Pattern-based traffic generator to study latency versus offered load.",
         COMPONENT_CATEGORY_NETWORK)
 
     SST_ELI_DOCUMENT_PARAMS(
-        {"num_peers", "Total number of endpoints in network."},
-        {"link_bw",
-         "Bandwidth of the router link specified in either b/s or B/s (can include SI prefix)."},
-        {"linkcontrol", "SimpleNetwork object to use as interface to network.",
-         "merlin.linkcontrol"},
-        {"buffer_size", "Size of input and output buffers.", "1kB"},
-        {"packet_size", "Packet size specified in either b or B (can include SI prefix).", "32B"},
-        {"pattern", "Traffic pattern to use.", "merlin.targetgen.uniform"},
-        {"offered_load", "Load to be offered to network.  Valid range: 0 < offered_load <= 1.0."},
-        {"warmup_time", "Time to wait before recording latencies", "1us"},
-        {"collect_time", "Time to collect data after warmup", "20us"},
-        {"drain_time", "Time to drain network before stating next round", "50us"}, )
+        {"num_peers",        "Total number of endpoints in network."},
+        {"link_bw",          "Bandwidth of the router link specified in either b/s or B/s (can include SI prefix)."},
+        {"linkcontrol",      "SimpleNetwork object to use as interface to network.","merlin.linkcontrol"},
+        {"buffer_size",      "Size of input and output buffers.","1kB"},
+        {"packet_size",      "Packet size specified in either b or B (can include SI prefix).","32B"},
+        {"pattern",          "Traffic pattern to use.","merlin.targetgen.uniform"},
+        {"offered_load",     "Load to be offered to network.  Valid range: 0 < offered_load <= 1.0."},
+        {"warmup_time",      "Time to wait before recording latencies","1us"},
+        {"collect_time",     "Time to collect data after warmup","20us"},
+        {"drain_time",       "Time to drain network before stating next round","50us"},
+    )
 
-    SST_ELI_DOCUMENT_PORTS({"rtr",
-                            "Port that hooks up to router.",
-                            {"merlin.RtrEvent", "merlin.credit_event"}})
+    SST_ELI_DOCUMENT_PORTS(
+        {"rtr",  "Port that hooks up to router.", { "merlin.RtrEvent", "merlin.credit_event" } }
+    )
 
-   private:
+    SST_ELI_DOCUMENT_SUBCOMPONENT_SLOTS(
+        {"networkIF", "Network interface", "SST::Interfaces::SimpleNetwork" },
+        {"pattern_gen", "Target address generator", "SST::Merlin::TargetGenerator" }
+    )
+
+
+private:
+
     std::vector<double> offered_load;
     UnitAlgebra link_bw;
+
+    Params* pattern_params;
 
     UnitAlgebra serialization_time;
 
@@ -139,56 +168,53 @@ class OfferedLoad : public Component {
 
     int generation;
 
-    TimeConverter *base_tc;
+    TimeConverter* base_tc;
 
-    SST::Interfaces::SimpleNetwork *link_if;
-    SST::Interfaces::SimpleNetwork::Handler<OfferedLoad> *send_notify_functor;
-    SST::Interfaces::SimpleNetwork::Handler<OfferedLoad> *recv_notify_functor;
+    SST::Interfaces::SimpleNetwork* link_if;
+    SST::Interfaces::SimpleNetwork::Handler<OfferedLoad>* send_notify_functor;
+    SST::Interfaces::SimpleNetwork::Handler<OfferedLoad>* recv_notify_functor;
+
 
     TargetGenerator *packetDestGen;
 
     Output out;
     int id;
     int num_peers;
-    int packet_size;  // in bits
+    int packet_size; // in bits
 
-    uint64_t packets_sent{};
-    uint64_t packets_recd{};
+    uint64_t packets_sent;
+    uint64_t packets_recd;
 
-    Link *timing_link;
-    Link *end_link;
+    Link* timing_link;
+    Link* end_link;
 
     // Generator *packetSizeGen;
     // Generator *packetDelayGen;
 
-    std::vector<offered_load_complete_event *> complete_event;
+    std::vector<offered_load_complete_event*> complete_event;
 
-   public:
-    OfferedLoad(ComponentId_t cid, Params &params);
+public:
+    OfferedLoad(ComponentId_t cid, Params& params);
+    ~OfferedLoad();
 
-    ~OfferedLoad() override;
+    void init(unsigned int phase);
+    void setup();
+    void complete(unsigned int phase);
+    void finish();
 
-    void init(unsigned int phase) override;
 
-    void setup() override;
+private:
+    bool handle_receives(int vn);
+    bool send_notify(int vn);
 
-    void complete(unsigned int phase) override;
-
-    void finish() override;
-
-   private:
-    auto handle_receives(int vn) -> bool;
-
-    auto send_notify(int vn) -> bool;
-
-    void output_timing(Event *ev);
-
+    void output_timing(Event* ev);
     void progress_messages(SimTime_t current_time);
 
-    void end_handler(Event *ev);
+    void end_handler(Event* ev);
+
 };
 
-}  // namespace Merlin
-}  // namespace SST
+} //namespace Merlin
+} //namespace SST
 
 #endif

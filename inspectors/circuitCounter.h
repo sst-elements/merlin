@@ -1,8 +1,8 @@
-// Copyright 2009-2019 NTESS. Under the terms
+// Copyright 2009-2020 NTESS. Under the terms
 // of Contract DE-NA0003525 with NTESS, the U.S.
 // Government retains certain rights in this software.
 //
-// Copyright (c) 2009-2019, NTESS
+// Copyright (c) 2009-2020, NTESS
 // All rights reserved.
 //
 // Portions are copyright of other developers:
@@ -16,8 +16,8 @@
 #ifndef COMPONENTS_MERLIN_CIRCUITCOUNTER_H
 #define COMPONENTS_MERLIN_CIRCUITCOUNTER_H
 
-#include <sst/core/interfaces/simpleNetwork.h>
 #include <sst/core/subcomponent.h>
+#include <sst/core/interfaces/simpleNetwork.h>
 #include <sst/core/threadsafe.h>
 
 namespace SST {
@@ -25,36 +25,44 @@ using namespace SST::Interfaces;
 namespace Merlin {
 
 class CircNetworkInspector : public SimpleNetwork::NetworkInspector {
-   public:
-    SST_ELI_REGISTER_SUBCOMPONENT(
-        CircNetworkInspector, "merlin", "circuit_network_inspector",
-        SST_ELI_ELEMENT_VERSION(1, 0, 0),
-        "Used to count the number of network circuits (as in 'circuit switched' circuits)",
-        "SST::Interfaces::SimpleNetwork:NetworkInspector")
 
-   private:
+public:
+
+    SST_ELI_REGISTER_SUBCOMPONENT_DERIVED(
+        CircNetworkInspector,
+        "merlin",
+        "circuit_network_inspector",
+        SST_ELI_ELEMENT_VERSION(1,0,0),
+        "Used to count the number of network circuits (as in 'circuit switched' circuits)",
+        SST::Interfaces::SimpleNetwork::NetworkInspector)
+
+
+private:
     typedef std::pair<SimpleNetwork::nid_t, SimpleNetwork::nid_t> SDPair;
-    using pairSet_t = std::set<SDPair>;
-    pairSet_t *uniquePaths{};
+    typedef std::set<SDPair> pairSet_t;
+    pairSet_t *uniquePaths;
     std::string outFileName;
 
-    typedef std::map<std::string, pairSet_t *> setMap_t;
+    typedef std::map<std::string, pairSet_t*> setMap_t;
     // Map which makes sure that all the inspectors on one router use
     // the same pairSet. This structure can be accessed by multiple
     // threads during intiailize, so it needs to be protected.
     static setMap_t setMap;
     static SST::Core::ThreadSafe::Spinlock mapLock;
+public:
+    CircNetworkInspector(SST::ComponentId_t, SST::Params &params, const std::string& sub_id);
 
-   public:
-    CircNetworkInspector(SST::Component *parent, SST::Params &params);
+#ifndef SST_ENABLE_PREVIEW_BUILD
+    void initialize(std::string id);
+#endif
+    void finish();
 
-    void initialize(std::string id) override;
+    void inspectNetworkData(SimpleNetwork::Request* req);
 
-    void finish() override;
 
-    void inspectNetworkData(SimpleNetwork::Request *req) override;
 };
 
-}  // namespace Merlin
-}  // namespace SST
+
+} // namespace Merlin
+} // namespace SST
 #endif

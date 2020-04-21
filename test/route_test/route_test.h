@@ -1,10 +1,10 @@
 // -*- mode: c++ -*-
 
-// Copyright 2009-2019 NTESS. Under the terms
+// Copyright 2009-2020 NTESS. Under the terms
 // of Contract DE-NA0003525 with NTESS, the U.S.
 // Government retains certain rights in this software.
 //
-// Copyright (c) 2009-2019, NTESS
+// Copyright (c) 2009-2020, NTESS
 // All rights reserved.
 //
 // Portions are copyright of other developers:
@@ -15,6 +15,7 @@
 // information, see the LICENSE file in the top level directory of the
 // distribution.
 
+
 #ifndef COMPONENTS_MERLIN_TEST_ROUTE_TEST_H
 #define COMPONENTS_MERLIN_TEST_ROUTE_TEST_H
 
@@ -23,56 +24,70 @@
 #include <sst/core/link.h>
 #include <sst/core/timeConverter.h>
 
+
 namespace SST {
 
 namespace Interfaces {
-class SimpleNetwork;
+    class SimpleNetwork;
 }
 
 namespace Merlin {
 
+
 class route_test : public Component {
-   public:
-    SST_ELI_REGISTER_COMPONENT(route_test, "merlin", "route_test", SST_ELI_ELEMENT_VERSION(1, 0, 0),
-                               "Simple NIC to test routing.", COMPONENT_CATEGORY_NETWORK)
+
+public:
+
+    SST_ELI_REGISTER_COMPONENT(
+        route_test,
+        "merlin",
+        "route_test",
+        SST_ELI_ELEMENT_VERSION(1,0,0),
+        "Simple NIC to test routing.",
+        COMPONENT_CATEGORY_NETWORK)
 
     SST_ELI_DOCUMENT_PARAMS(
-        {"id", "Network ID of endpoint."}, {"num_peers", "Total number of endpoints in network."},
-        {"link_bw",
-         "Bandwidth of the router link specified in either b/s or B/s (can include SI prefix)."})
+        {"id",        "Network ID of endpoint."},
+        {"num_peers", "Total number of endpoints in network."},
+        {"link_bw",   "Bandwidth of the router link specified in either b/s or B/s (can include SI prefix)."}
+    )
 
-    SST_ELI_DOCUMENT_PORTS({"rtr",
-                            "Port that hooks up to router.",
-                            {"merlin.RtrEvent", "merlin.credit_event"}})
+    SST_ELI_DOCUMENT_PORTS(
+        {"rtr",  "Port that hooks up to router.", { "merlin.RtrEvent", "merlin.credit_event" } }
+    )
 
-   private:
+    SST_ELI_DOCUMENT_SUBCOMPONENT_SLOTS(
+        {"networkIF", "Network interface", "SST::Interfaces::SimpleNetwork" }
+    )
+
+private:
+
     int id;
     int num_peers;
     bool sending;
 
+
     bool done;
     bool initialized;
 
-    SST::Interfaces::SimpleNetwork *link_control;
+    SST::Interfaces::SimpleNetwork* link_control;
 
-   public:
-    route_test(ComponentId_t cid, Params &params);
+public:
+    route_test(ComponentId_t cid, Params& params);
+    ~route_test();
 
-    ~route_test() override;
+    void init(unsigned int phase);
+    void setup();
+    void finish();
 
-    void init(unsigned int phase) override;
 
-    void setup() override;
+private:
+    bool clock_handler(Cycle_t cycle);
 
-    void finish() override;
-
-   private:
-    auto clock_handler(Cycle_t cycle) -> bool;
-
-    auto handle_event(int vn) -> bool;
+    bool handle_event(int vn);
 };
 
-}  // namespace Merlin
-}  // namespace SST
+}
+}
 
-#endif  // COMPONENTS_MERLIN_TEST_ROUTE_TEST_H
+#endif // COMPONENTS_MERLIN_TEST_ROUTE_TEST_H

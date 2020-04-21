@@ -1,10 +1,10 @@
 // -*- mode: c++ -*-
 
-// Copyright 2009-2019 NTESS. Under the terms
+// Copyright 2009-2020 NTESS. Under the terms
 // of Contract DE-NA0003525 with NTESS, the U.S.
 // Government retains certain rights in this software.
 //
-// Copyright (c) 2009-2019, NTESS
+// Copyright (c) 2009-2020, NTESS
 // All rights reserved.
 //
 // Portions are copyright of other developers:
@@ -14,6 +14,7 @@
 // This file is part of the SST software package. For license
 // information, see the LICENSE file in the top level directory of the
 // distribution.
+
 
 #ifndef COMPONENTS_MERLIN_TOPOLOGY_SINGLEROUTER_H
 #define COMPONENTS_MERLIN_TOPOLOGY_SINGLEROUTER_H
@@ -27,34 +28,40 @@
 namespace SST {
 namespace Merlin {
 
-class topo_singlerouter : public Topology {
-   public:
-    SST_ELI_REGISTER_SUBCOMPONENT(topo_singlerouter, "merlin", "singlerouter",
-                                  SST_ELI_ELEMENT_VERSION(1, 0, 0),
-                                  "Simple, single-router topology object", "SST::Merlin::Topology")
 
-   private:
+class topo_singlerouter: public Topology {
+
+public:
+
+    SST_ELI_REGISTER_SUBCOMPONENT_DERIVED(
+        topo_singlerouter,
+        "merlin",
+        "singlerouter",
+        SST_ELI_ELEMENT_VERSION(1,0,0),
+        "Simple, single-router topology object",
+        SST::Merlin::Topology)
+
+
+private:
     int num_ports;
 
-   public:
-    topo_singlerouter(Component *comp, Params &params);
+public:
+    topo_singlerouter(ComponentId_t cid, Params& params, int num_ports, int rtr_id);
+    ~topo_singlerouter();
 
-    ~topo_singlerouter() override;
+    virtual void route(int port, int vc, internal_router_event* ev);
+    virtual internal_router_event* process_input(RtrEvent* ev);
 
-    void route(int port, int vc, internal_router_event *ev) override;
+    virtual void routeInitData(int port, internal_router_event* ev, std::vector<int> &outPorts);
+    virtual internal_router_event* process_InitData_input(RtrEvent* ev);
 
-    auto process_input(RtrEvent *ev) -> internal_router_event * override;
+    virtual PortState getPortState(int port) const;
 
-    void routeInitData(int port, internal_router_event *ev, std::vector<int> &outPorts) override;
+    virtual int getEndpointID(int port) { return port; }
 
-    auto process_InitData_input(RtrEvent *ev) -> internal_router_event * override;
-
-    auto getPortState(int port) const -> PortState override;
-
-    auto getEndpointID(int port) -> int override { return port; }
 };
 
-}  // namespace Merlin
-}  // namespace SST
+}
+}
 
-#endif  // COMPONENTS_MERLIN_TOPOLOGY_SINGLEROUTER_H
+#endif // COMPONENTS_MERLIN_TOPOLOGY_SINGLEROUTER_H
