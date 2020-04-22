@@ -124,7 +124,7 @@ class xbar_arb_rand : public XbarArbitration {
 #else
         PortInterface **ports, int *in_port_busy, int *out_port_busy, int *progress_vc
 #endif
-    ) override {
+        ) override {
 
         for (int i = 0; i < num_ports; i++)
             progress_vc[i] = -1;

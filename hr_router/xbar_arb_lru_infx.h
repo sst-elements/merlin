@@ -89,7 +89,7 @@ class xbar_arb_lru_infx : public XbarArbitration {
 #else
         PortInterface **ports, int * /*in_port_busy*/, int * /*out_port_busy*/, int *progress_vc
 #endif
-    ) override {
+        ) override {
         // TraceFunction trace(CALL_INFO_LONG);
 
         for (int i = 0; i < num_ports; i++)

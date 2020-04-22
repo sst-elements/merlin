@@ -84,7 +84,7 @@ class xbar_arb_rr : public XbarArbitration {
 #else
         PortInterface **ports, int *in_port_busy, int *out_port_busy, int *progress_vc
 #endif
-    ) override {
+        ) override {
         // Run through each of the ports, giving first pick in a round robin fashion
         // for ( int port = rr_port, pcount = 0; pcount < num_ports; port = (port+1) % num_ports, pcount++ ) {
         for (int port = rr_port, pcount = 0; pcount < num_ports;
