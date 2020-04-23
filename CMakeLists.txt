@@ -66,6 +66,10 @@ octal_dump(pymerlin)
 octal_dump(pymerlin-base)
 octal_dump(pymerlin-endpoint)
 octal_dump(topology/pymerlin-topology)
+octal_dump(topology/pymerlin-topo-dragonfly)
+octal_dump(topology/pymerlin-topo-hyperx)
+octal_dump(topology/pymerlin-topo-fattree)
+octal_dump(topology/pymerlin-topo-mesh)
 
 set(
     SOURCES

@@ -907,11 +907,11 @@ In file included from /home/sabbir/sst-elements-org/merlin/hr_router/hr_router.c
 /home/sabbir/sst-elements-org/merlin/hr_router/hr_router.h:65:90: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
         {"vn_remap", "Array that specifies the vn remapping for each node in the systsm."},
                                                                                          ^
-/home/sabbir/sst-elements-org/merlin/hr_router/hr_router.cc:228:10: warning: unused variable 'oql_track_remote' [-Wunused-variable]
-    bool oql_track_remote = params.find<bool>("oql_track_remote", "false");
-         ^
 /home/sabbir/sst-elements-org/merlin/hr_router/hr_router.cc:227:10: warning: unused variable 'oql_track_port' [-Wunused-variable]
     bool oql_track_port = params.find<bool>("oql_track_port", "false");
+         ^
+/home/sabbir/sst-elements-org/merlin/hr_router/hr_router.cc:228:10: warning: unused variable 'oql_track_remote' [-Wunused-variable]
+    bool oql_track_remote = params.find<bool>("oql_track_remote", "false");
          ^
 /home/sabbir/sst-elements-org/merlin/hr_router/hr_router.cc:161:31: warning: comparison of integers of different signs: 'int' and 'std::vector::size_type' (aka 'unsigned long') [-Wsign-compare]
             for (int i = 0; i < vec.size(); ++i) {
@@ -1020,10 +1020,10 @@ In file included from /home/sabbir/sst-elements-org/merlin/interfaces/linkContro
 /home/sabbir/sst-elements-org/merlin/interfaces/linkControl.h:56:98: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
         {"output_buf_size", "Size of output buffers specified in b or B (can include SI prefix)."},
                                                                                                  ^
-/home/sabbir/sst-elements-org/merlin/interfaces/linkControl.cc:34:77: warning: field 'start_block' will be initialized after field 'idle_start' [-Wreorder]
+/home/sabbir/sst-elements-org/merlin/interfaces/linkControl.cc:34:77: warning: field 'start_block' will be initialized after field 'idle_start' [-Wreorder-ctor]
       nid_map(nullptr), curr_out_vn(0), waiting(true), have_packets(false), start_block(0), idle_start(0),
                                                                             ^
-/home/sabbir/sst-elements-org/merlin/interfaces/linkControl.cc:35:69: warning: field 'network_initialized' will be initialized after field 'output' [-Wreorder]
+/home/sabbir/sst-elements-org/merlin/interfaces/linkControl.cc:35:69: warning: field 'network_initialized' will be initialized after field 'output' [-Wreorder-ctor]
       is_idle(true), receiveFunctor(nullptr), sendFunctor(nullptr), network_initialized(false),
                                                                     ^
 /home/sabbir/sst-elements-org/merlin/interfaces/linkControl.cc:96:31: warning: comparison of integers of different signs: 'std::vector::size_type' (aka 'unsigned long') and 'int' [-Wsign-compare]
@@ -1091,7 +1091,7 @@ In file included from /home/sabbir/sst-elements-org/merlin/interfaces/reorderLin
 /home/sabbir/sst-elements-org/merlin/interfaces/../router.h:459:42: warning: unused parameter 'stream' [-Wunused-parameter]
     virtual void dumpState(std::ostream &stream){};
                                          ^
-/home/sabbir/sst-elements-org/merlin/interfaces/reorderLinkControl.cc:30:27: warning: field 'receiveFunctor' will be initialized after field 'vns' [-Wreorder]
+/home/sabbir/sst-elements-org/merlin/interfaces/reorderLinkControl.cc:30:27: warning: field 'receiveFunctor' will be initialized after field 'vns' [-Wreorder-ctor]
     : SimpleNetwork(cid), receiveFunctor(nullptr), vns(vns) {
                           ^
 18 warnings generated.
@@ -1186,7 +1186,7 @@ In file included from /home/sabbir/sst-elements-org/merlin/interfaces/portContro
 /home/sabbir/sst-elements-org/merlin/interfaces/output_arb_qos_multi.h:235:34: warning: unused parameter 'stream' [-Wunused-parameter]
     void dumpState(std::ostream &stream) override {}
                                  ^
-/home/sabbir/sst-elements-org/merlin/interfaces/portControl.cc:136:33: warning: field 'ongoing_transmit' will be initialized after field 'is_idle' [-Wreorder]
+/home/sabbir/sst-elements-org/merlin/interfaces/portControl.cc:136:33: warning: field 'ongoing_transmit' will be initialized after field 'is_idle' [-Wreorder-ctor]
       sai_port_disabled(false), ongoing_transmit(false), is_idle(true), is_active(false), waiting(true),
                                 ^
 28 warnings generated.
