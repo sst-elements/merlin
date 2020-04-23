@@ -1,0 +1,1240 @@
+In file included from /home/sabbir/sst-elements-org/merlin/merlin.cc:24:
+In file included from /home/sabbir/sst-elements-org/merlin/hr_router/xbar_arb_age.h:27:
+/home/sabbir/sst-elements-org/merlin/hr_router/../router.h:153:70: warning: format specifies type 'long long' but the argument has type 'SST::Interfaces::SimpleNetwork::nid_t' (aka 'long') [-Wformat]
+                   header.c_str(), getDeliveryTime(), getPriority(), trusted_src, request->src, request->dest);
+                                                                     ^~~~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/hr_router/../router.h:153:83: warning: format specifies type 'long long' but the argument has type 'SST::Interfaces::SimpleNetwork::nid_t' (aka 'long') [-Wformat]
+                   header.c_str(), getDeliveryTime(), getPriority(), trusted_src, request->src, request->dest);
+                                                                                  ^~~~~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/hr_router/../router.h:153:97: warning: format specifies type 'long long' but the argument has type 'SST::Interfaces::SimpleNetwork::nid_t' (aka 'long') [-Wformat]
+                   header.c_str(), getDeliveryTime(), getPriority(), trusted_src, request->src, request->dest);
+                                                                                                ^~~~~~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/hr_router/../router.h:371:56: warning: unused parameter 'array' [-Wunused-parameter]
+    virtual void setOutputBufferCreditArray(int const *array, int vcs){};
+                                                       ^
+/home/sabbir/sst-elements-org/merlin/hr_router/../router.h:371:67: warning: unused parameter 'vcs' [-Wunused-parameter]
+    virtual void setOutputBufferCreditArray(int const *array, int vcs){};
+                                                                  ^
+/home/sabbir/sst-elements-org/merlin/hr_router/../router.h:372:56: warning: unused parameter 'array' [-Wunused-parameter]
+    virtual void setOutputQueueLengthsArray(int const *array, int vcs){};
+                                                       ^
+/home/sabbir/sst-elements-org/merlin/hr_router/../router.h:372:67: warning: unused parameter 'vcs' [-Wunused-parameter]
+    virtual void setOutputQueueLengthsArray(int const *array, int vcs){};
+                                                                  ^
+/home/sabbir/sst-elements-org/merlin/hr_router/../router.h:376:40: warning: unused parameter 'port' [-Wunused-parameter]
+    virtual void recvTopologyEvent(int port, TopologyEvent *ev){};
+                                       ^
+/home/sabbir/sst-elements-org/merlin/hr_router/../router.h:376:61: warning: unused parameter 'ev' [-Wunused-parameter]
+    virtual void recvTopologyEvent(int port, TopologyEvent *ev){};
+                                                            ^
+/home/sabbir/sst-elements-org/merlin/hr_router/../router.h:423:18: warning: 'SST::Merlin::PortInterface::printStatus' hides overloaded virtual function [-Woverloaded-virtual]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                 ^
+/usr/local/include/sst/core/baseComponent.h:102:18: note: hidden overloaded virtual function 'SST::BaseComponent::printStatus' declared here: different number of parameters (1 vs 3)
+    virtual void printStatus(Output &UNUSED(out)) { return; }
+                 ^
+In file included from /home/sabbir/sst-elements-org/merlin/merlin.cc:24:
+In file included from /home/sabbir/sst-elements-org/merlin/hr_router/xbar_arb_age.h:27:
+/home/sabbir/sst-elements-org/merlin/hr_router/../router.h:422:42: warning: unused parameter 'stream' [-Wunused-parameter]
+    virtual void dumpState(std::ostream &stream) {}
+                                         ^
+/home/sabbir/sst-elements-org/merlin/hr_router/../router.h:423:38: warning: unused parameter 'out' [-Wunused-parameter]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                                     ^
+/home/sabbir/sst-elements-org/merlin/hr_router/../router.h:423:47: warning: unused parameter 'out_port_busy' [-Wunused-parameter]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                                              ^
+/home/sabbir/sst-elements-org/merlin/hr_router/../router.h:423:66: warning: unused parameter 'in_port_busy' [-Wunused-parameter]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                                                                 ^
+/home/sabbir/sst-elements-org/merlin/hr_router/../router.h:439:46: warning: unused parameter 'stream' [-Wunused-parameter]
+        virtual void dumpState(std::ostream &stream){};
+                                             ^
+/home/sabbir/sst-elements-org/merlin/hr_router/../router.h:458:46: warning: unused parameter 'cycles' [-Wunused-parameter]
+    virtual void reportSkippedCycles(Cycle_t cycles){};
+                                             ^
+/home/sabbir/sst-elements-org/merlin/hr_router/../router.h:459:42: warning: unused parameter 'stream' [-Wunused-parameter]
+    virtual void dumpState(std::ostream &stream){};
+                                         ^
+In file included from /home/sabbir/sst-elements-org/merlin/merlin.cc:24:
+/home/sabbir/sst-elements-org/merlin/hr_router/xbar_arb_age.h:209:38: warning: unused parameter 'cycles' [-Wunused-parameter]
+    void reportSkippedCycles(Cycle_t cycles) override {}
+                                     ^
+/home/sabbir/sst-elements-org/merlin/hr_router/xbar_arb_age.h:211:34: warning: unused parameter 'stream' [-Wunused-parameter]
+    void dumpState(std::ostream &stream) override {
+                                 ^
+In file included from /home/sabbir/sst-elements-org/merlin/merlin.cc:25:
+/home/sabbir/sst-elements-org/merlin/hr_router/xbar_arb_lru.h:180:38: warning: unused parameter 'cycles' [-Wunused-parameter]
+    void reportSkippedCycles(Cycle_t cycles) override {}
+                                     ^
+/home/sabbir/sst-elements-org/merlin/hr_router/xbar_arb_lru.h:182:34: warning: unused parameter 'stream' [-Wunused-parameter]
+    void dumpState(std::ostream &stream) override {
+                                 ^
+In file included from /home/sabbir/sst-elements-org/merlin/merlin.cc:26:
+/home/sabbir/sst-elements-org/merlin/hr_router/xbar_arb_lru_infx.h:167:38: warning: unused parameter 'cycles' [-Wunused-parameter]
+    void reportSkippedCycles(Cycle_t cycles) override {}
+                                     ^
+/home/sabbir/sst-elements-org/merlin/hr_router/xbar_arb_lru_infx.h:169:34: warning: unused parameter 'stream' [-Wunused-parameter]
+    void dumpState(std::ostream &stream) override {
+                                 ^
+In file included from /home/sabbir/sst-elements-org/merlin/merlin.cc:27:
+/home/sabbir/sst-elements-org/merlin/hr_router/xbar_arb_rand.h:201:38: warning: unused parameter 'cycles' [-Wunused-parameter]
+    void reportSkippedCycles(Cycle_t cycles) override {}
+                                     ^
+/home/sabbir/sst-elements-org/merlin/hr_router/xbar_arb_rand.h:203:34: warning: unused parameter 'stream' [-Wunused-parameter]
+    void dumpState(std::ostream &stream) override {
+                                 ^
+25 warnings generated.
+/home/sabbir/sst-elements-org/merlin/inspectors/circuitCounter.cc:45:35: warning: comparison of integers of different signs: 'int' and 'const typename basic_string<char, char_traits<char>, allocator<char> >::size_type' (aka 'const unsigned long') [-Wsign-compare]
+        const string &key = index == string::npos ? fullname : fullname.substr(0, index);
+                            ~~~~~ ^  ~~~~~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/inspectors/circuitCounter.cc:75:35: warning: comparison of integers of different signs: 'int' and 'const typename basic_string<char, char_traits<char>, allocator<char> >::size_type' (aka 'const unsigned long') [-Wsign-compare]
+        const string &key = index == string::npos ? fullname : fullname.substr(0, index);
+                            ~~~~~ ^  ~~~~~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/inspectors/circuitCounter.cc:111:37: warning: format specifies type 'unsigned long' but the argument has type 'unsigned long long' [-Wformat]
+                                    (unsigned long long)i.second->size());
+                                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+3 warnings generated.
+In file included from /home/sabbir/sst-elements-org/merlin/offeredload/offered_load.cc:16:
+In file included from /home/sabbir/sst-elements-org/merlin/offeredload/offered_load.h:36:
+/home/sabbir/sst-elements-org/merlin/offeredload/../target_generator/target_generator.h:34:33: warning: unused parameter 'id' [-Wunused-parameter]
+    virtual void initialize(int id, int num_peers) {}
+                                ^
+/home/sabbir/sst-elements-org/merlin/offeredload/../target_generator/target_generator.h:34:41: warning: unused parameter 'num_peers' [-Wunused-parameter]
+    virtual void initialize(int id, int num_peers) {}
+                                        ^
+/home/sabbir/sst-elements-org/merlin/offeredload/../target_generator/target_generator.h:36:32: warning: unused parameter 'val' [-Wunused-parameter]
+    virtual void seed(uint32_t val) {}
+                               ^
+In file included from /home/sabbir/sst-elements-org/merlin/offeredload/offered_load.cc:16:
+/home/sabbir/sst-elements-org/merlin/offeredload/offered_load.h:103:82: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+    SST_ELI_DOCUMENT_PARAMS({"num_peers", "Total number of endpoints in network."},
+                                                                                 ^
+/home/sabbir/sst-elements-org/merlin/offeredload/offered_load.h:105:116: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+                             "Bandwidth of the router link specified in either b/s or B/s (can include SI prefix)."},
+                                                                                                                   ^
+/home/sabbir/sst-elements-org/merlin/offeredload/offered_load.h:111:117: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+                            {"offered_load", "Load to be offered to network.  Valid range: 0 < offered_load <= 1.0."},
+                                                                                                                    ^
+/home/sabbir/sst-elements-org/merlin/offeredload/offered_load.cc:236:91: warning: format specifies type 'long long' but the argument has type 'SST::Interfaces::SimpleNetwork::nid_t' (aka 'long') [-Wformat]
+        out.fatal(CALL_INFO, -1, "Endpoint %d received a packet intended for %lld\n", id, req->dest);
+                                                                             ~~~~         ^~~~~~~~~
+                                                                             %ld
+In file included from /home/sabbir/sst-elements-org/merlin/offeredload/offered_load.cc:16:
+/home/sabbir/sst-elements-org/merlin/offeredload/offered_load.h:154:14: warning: private field 'packets_sent' is not used [-Wunused-private-field]
+    uint64_t packets_sent;
+             ^
+/home/sabbir/sst-elements-org/merlin/offeredload/offered_load.h:155:14: warning: private field 'packets_recd' is not used [-Wunused-private-field]
+    uint64_t packets_recd;
+             ^
+9 warnings generated.
+In file included from /home/sabbir/sst-elements-org/merlin/target_generator/target_generator.cc:19:
+In file included from /home/sabbir/sst-elements-org/merlin/target_generator/bit_complement.h:21:
+/home/sabbir/sst-elements-org/merlin/target_generator/target_generator.h:34:33: warning: unused parameter 'id' [-Wunused-parameter]
+    virtual void initialize(int id, int num_peers) {}
+                                ^
+/home/sabbir/sst-elements-org/merlin/target_generator/target_generator.h:34:41: warning: unused parameter 'num_peers' [-Wunused-parameter]
+    virtual void initialize(int id, int num_peers) {}
+                                        ^
+/home/sabbir/sst-elements-org/merlin/target_generator/target_generator.h:36:32: warning: unused parameter 'val' [-Wunused-parameter]
+    virtual void seed(uint32_t val) {}
+                               ^
+In file included from /home/sabbir/sst-elements-org/merlin/target_generator/target_generator.cc:19:
+/home/sabbir/sst-elements-org/merlin/target_generator/bit_complement.h:49:24: warning: unused parameter 'val' [-Wunused-parameter]
+    void seed(uint32_t val) override {}
+                       ^
+4 warnings generated.
+In file included from /home/sabbir/sst-elements-org/merlin/topology/dragonfly2.cc:21:
+In file included from /home/sabbir/sst-elements-org/merlin/topology/dragonfly2.h:26:
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:153:70: warning: format specifies type 'long long' but the argument has type 'SST::Interfaces::SimpleNetwork::nid_t' (aka 'long') [-Wformat]
+                   header.c_str(), getDeliveryTime(), getPriority(), trusted_src, request->src, request->dest);
+                                                                     ^~~~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:153:83: warning: format specifies type 'long long' but the argument has type 'SST::Interfaces::SimpleNetwork::nid_t' (aka 'long') [-Wformat]
+                   header.c_str(), getDeliveryTime(), getPriority(), trusted_src, request->src, request->dest);
+                                                                                  ^~~~~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:153:97: warning: format specifies type 'long long' but the argument has type 'SST::Interfaces::SimpleNetwork::nid_t' (aka 'long') [-Wformat]
+                   header.c_str(), getDeliveryTime(), getPriority(), trusted_src, request->src, request->dest);
+                                                                                                ^~~~~~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:371:56: warning: unused parameter 'array' [-Wunused-parameter]
+    virtual void setOutputBufferCreditArray(int const *array, int vcs){};
+                                                       ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:371:67: warning: unused parameter 'vcs' [-Wunused-parameter]
+    virtual void setOutputBufferCreditArray(int const *array, int vcs){};
+                                                                  ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:372:56: warning: unused parameter 'array' [-Wunused-parameter]
+    virtual void setOutputQueueLengthsArray(int const *array, int vcs){};
+                                                       ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:372:67: warning: unused parameter 'vcs' [-Wunused-parameter]
+    virtual void setOutputQueueLengthsArray(int const *array, int vcs){};
+                                                                  ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:376:40: warning: unused parameter 'port' [-Wunused-parameter]
+    virtual void recvTopologyEvent(int port, TopologyEvent *ev){};
+                                       ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:376:61: warning: unused parameter 'ev' [-Wunused-parameter]
+    virtual void recvTopologyEvent(int port, TopologyEvent *ev){};
+                                                            ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:423:18: warning: 'SST::Merlin::PortInterface::printStatus' hides overloaded virtual function [-Woverloaded-virtual]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                 ^
+/usr/local/include/sst/core/baseComponent.h:102:18: note: hidden overloaded virtual function 'SST::BaseComponent::printStatus' declared here: different number of parameters (1 vs 3)
+    virtual void printStatus(Output &UNUSED(out)) { return; }
+                 ^
+In file included from /home/sabbir/sst-elements-org/merlin/topology/dragonfly2.cc:21:
+In file included from /home/sabbir/sst-elements-org/merlin/topology/dragonfly2.h:26:
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:422:42: warning: unused parameter 'stream' [-Wunused-parameter]
+    virtual void dumpState(std::ostream &stream) {}
+                                         ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:423:38: warning: unused parameter 'out' [-Wunused-parameter]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                                     ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:423:47: warning: unused parameter 'out_port_busy' [-Wunused-parameter]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                                              ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:423:66: warning: unused parameter 'in_port_busy' [-Wunused-parameter]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                                                                 ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:439:46: warning: unused parameter 'stream' [-Wunused-parameter]
+        virtual void dumpState(std::ostream &stream){};
+                                             ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:458:46: warning: unused parameter 'cycles' [-Wunused-parameter]
+    virtual void reportSkippedCycles(Cycle_t cycles){};
+                                             ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:459:42: warning: unused parameter 'stream' [-Wunused-parameter]
+    virtual void dumpState(std::ostream &stream){};
+                                         ^
+In file included from /home/sabbir/sst-elements-org/merlin/topology/dragonfly2.cc:21:
+/home/sabbir/sst-elements-org/merlin/topology/dragonfly2.h:70:83: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"dragonfly:hosts_per_router", "Number of hosts connected to each router."},
+                                                                                  ^
+/home/sabbir/sst-elements-org/merlin/topology/dragonfly2.h:71:100: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"dragonfly:routers_per_group", "Number of links used to connect to routers in same group."},
+                                                                                                   ^
+/home/sabbir/sst-elements-org/merlin/topology/dragonfly2.h:72:100: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"dragonfly:intergroup_per_router", "Number of links per router connected to other groups."},
+                                                                                                   ^
+/home/sabbir/sst-elements-org/merlin/topology/dragonfly2.h:73:86: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"dragonfly:intergroup_links", "Number of links between each pair of groups."},
+                                                                                     ^
+/home/sabbir/sst-elements-org/merlin/topology/dragonfly2.h:74:64: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"dragonfly:num_groups", "Number of groups in network."},
+                                                               ^
+/home/sabbir/sst-elements-org/merlin/topology/dragonfly2.h:77:111: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"dragonfly:global_link_map", "Array specifying connectivity of global links in each dragonfly group."},
+                                                                                                              ^
+/home/sabbir/sst-elements-org/merlin/topology/dragonfly2.h:81:73: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"hosts_per_router", "Number of hosts connected to each router."},
+                                                                        ^
+/home/sabbir/sst-elements-org/merlin/topology/dragonfly2.h:82:90: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"routers_per_group", "Number of links used to connect to routers in same group."},
+                                                                                         ^
+/home/sabbir/sst-elements-org/merlin/topology/dragonfly2.h:83:90: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"intergroup_per_router", "Number of links per router connected to other groups."},
+                                                                                         ^
+/home/sabbir/sst-elements-org/merlin/topology/dragonfly2.h:84:76: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"intergroup_links", "Number of links between each pair of groups."},
+                                                                           ^
+/home/sabbir/sst-elements-org/merlin/topology/dragonfly2.h:85:54: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"num_groups", "Number of groups in network."},
+                                                     ^
+/home/sabbir/sst-elements-org/merlin/topology/dragonfly2.h:88:101: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"global_link_map", "Array specifying connectivity of global links in each dragonfly group."},
+                                                                                                    ^
+/home/sabbir/sst-elements-org/merlin/topology/dragonfly2.cc:102:23: warning: comparison of integers of different signs: 'int' and 'std::vector::size_type' (aka 'unsigned long') [-Wsign-compare]
+    for (int i = 0; i < global_link_map.size(); i++) {
+                    ~ ^ ~~~~~~~~~~~~~~~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/topology/dragonfly2.cc:225:14: warning: comparison of integers of different signs: 'int' and 'uint32_t' (aka 'unsigned int') [-Wsign-compare]
+    if (port >= params.p && port < (params.p + params.a - 1))
+        ~~~~ ^  ~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/topology/dragonfly2.cc:225:34: warning: comparison of integers of different signs: 'int' and 'unsigned int' [-Wsign-compare]
+    if (port >= params.p && port < (params.p + params.a - 1))
+                            ~~~~ ^  ~~~~~~~~~~~~~~~~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/topology/dragonfly2.cc:231:14: warning: comparison of integers of different signs: 'int' and 'uint32_t' (aka 'unsigned int') [-Wsign-compare]
+    if (port < params.p && td_ev->dest.group == group_id) {
+        ~~~~ ^ ~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/topology/dragonfly2.cc:300:14: warning: comparison of integers of different signs: 'int' and 'unsigned int' [-Wsign-compare]
+    if (port >= (params.p + params.a - 1)) {
+        ~~~~ ^   ~~~~~~~~~~~~~~~~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/topology/dragonfly2.cc:344:38: warning: missing field 'host' initializer [-Wmissing-field-initializers]
+    dgnfly2Addr dstAddr = {0, 0, 0, 0};
+                                     ^
+35 warnings generated.
+In file included from /home/sabbir/sst-elements-org/merlin/topology/hyperx.cc:15:
+In file included from /home/sabbir/sst-elements-org/merlin/topology/hyperx.h:29:
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:153:70: warning: format specifies type 'long long' but the argument has type 'SST::Interfaces::SimpleNetwork::nid_t' (aka 'long') [-Wformat]
+                   header.c_str(), getDeliveryTime(), getPriority(), trusted_src, request->src, request->dest);
+                                                                     ^~~~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:153:83: warning: format specifies type 'long long' but the argument has type 'SST::Interfaces::SimpleNetwork::nid_t' (aka 'long') [-Wformat]
+                   header.c_str(), getDeliveryTime(), getPriority(), trusted_src, request->src, request->dest);
+                                                                                  ^~~~~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:153:97: warning: format specifies type 'long long' but the argument has type 'SST::Interfaces::SimpleNetwork::nid_t' (aka 'long') [-Wformat]
+                   header.c_str(), getDeliveryTime(), getPriority(), trusted_src, request->src, request->dest);
+                                                                                                ^~~~~~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:371:56: warning: unused parameter 'array' [-Wunused-parameter]
+    virtual void setOutputBufferCreditArray(int const *array, int vcs){};
+                                                       ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:371:67: warning: unused parameter 'vcs' [-Wunused-parameter]
+    virtual void setOutputBufferCreditArray(int const *array, int vcs){};
+                                                                  ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:372:56: warning: unused parameter 'array' [-Wunused-parameter]
+    virtual void setOutputQueueLengthsArray(int const *array, int vcs){};
+                                                       ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:372:67: warning: unused parameter 'vcs' [-Wunused-parameter]
+    virtual void setOutputQueueLengthsArray(int const *array, int vcs){};
+                                                                  ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:376:40: warning: unused parameter 'port' [-Wunused-parameter]
+    virtual void recvTopologyEvent(int port, TopologyEvent *ev){};
+                                       ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:376:61: warning: unused parameter 'ev' [-Wunused-parameter]
+    virtual void recvTopologyEvent(int port, TopologyEvent *ev){};
+                                                            ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:423:18: warning: 'SST::Merlin::PortInterface::printStatus' hides overloaded virtual function [-Woverloaded-virtual]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                 ^
+/usr/local/include/sst/core/baseComponent.h:102:18: note: hidden overloaded virtual function 'SST::BaseComponent::printStatus' declared here: different number of parameters (1 vs 3)
+    virtual void printStatus(Output &UNUSED(out)) { return; }
+                 ^
+In file included from /home/sabbir/sst-elements-org/merlin/topology/hyperx.cc:15:
+In file included from /home/sabbir/sst-elements-org/merlin/topology/hyperx.h:29:
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:422:42: warning: unused parameter 'stream' [-Wunused-parameter]
+    virtual void dumpState(std::ostream &stream) {}
+                                         ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:423:38: warning: unused parameter 'out' [-Wunused-parameter]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                                     ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:423:47: warning: unused parameter 'out_port_busy' [-Wunused-parameter]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                                              ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:423:66: warning: unused parameter 'in_port_busy' [-Wunused-parameter]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                                                                 ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:439:46: warning: unused parameter 'stream' [-Wunused-parameter]
+        virtual void dumpState(std::ostream &stream){};
+                                             ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:458:46: warning: unused parameter 'cycles' [-Wunused-parameter]
+    virtual void reportSkippedCycles(Cycle_t cycles){};
+                                             ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:459:42: warning: unused parameter 'stream' [-Wunused-parameter]
+    virtual void dumpState(std::ostream &stream){};
+                                         ^
+In file included from /home/sabbir/sst-elements-org/merlin/topology/hyperx.cc:15:
+/home/sabbir/sst-elements-org/merlin/topology/hyperx.h:142:115: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+                         "is separated by a colon.  For example, 4x4x2x2.  Any number of dimensions is supported."},
+                                                                                                                  ^
+/home/sabbir/sst-elements-org/merlin/topology/hyperx.h:144:116: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+                         "For example, 2x2x1 denotes 2 links in the x and y dimensions and one in the z dimension."},
+                                                                                                                   ^
+/home/sabbir/sst-elements-org/merlin/topology/hyperx.h:145:78: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"hyperx:local_ports", "Number of endpoints attached to each router."},
+                                                                             ^
+/home/sabbir/sst-elements-org/merlin/topology/hyperx.h:149:105: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+                  "separated by a colon.  For example, 4x4x2x2.  Any number of dimensions is supported."},
+                                                                                                        ^
+/home/sabbir/sst-elements-org/merlin/topology/hyperx.h:151:105: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+                  "example, 2x2x1 denotes 2 links in the x and y dimensions and one in the z dimension."},
+                                                                                                        ^
+/home/sabbir/sst-elements-org/merlin/topology/hyperx.h:152:71: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"local_ports", "Number of endpoints attached to each router."},
+                                                                      ^
+/home/sabbir/sst-elements-org/merlin/topology/hyperx.cc:570:22: warning: comparison of integers of different signs: 'std::vector::size_type' (aka 'unsigned long') and 'int' [-Wsign-compare]
+    if (udims.size() == vcs_per_vn - start_vc - 1) {
+        ~~~~~~~~~~~~ ^  ~~~~~~~~~~~~~~~~~~~~~~~~~
+24 warnings generated.
+In file included from /home/sabbir/sst-elements-org/merlin/topology/dragonfly.cc:21:
+In file included from /home/sabbir/sst-elements-org/merlin/topology/dragonfly.h:26:
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:153:70: warning: format specifies type 'long long' but the argument has type 'SST::Interfaces::SimpleNetwork::nid_t' (aka 'long') [-Wformat]
+                   header.c_str(), getDeliveryTime(), getPriority(), trusted_src, request->src, request->dest);
+                                                                     ^~~~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:153:83: warning: format specifies type 'long long' but the argument has type 'SST::Interfaces::SimpleNetwork::nid_t' (aka 'long') [-Wformat]
+                   header.c_str(), getDeliveryTime(), getPriority(), trusted_src, request->src, request->dest);
+                                                                                  ^~~~~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:153:97: warning: format specifies type 'long long' but the argument has type 'SST::Interfaces::SimpleNetwork::nid_t' (aka 'long') [-Wformat]
+                   header.c_str(), getDeliveryTime(), getPriority(), trusted_src, request->src, request->dest);
+                                                                                                ^~~~~~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:371:56: warning: unused parameter 'array' [-Wunused-parameter]
+    virtual void setOutputBufferCreditArray(int const *array, int vcs){};
+                                                       ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:371:67: warning: unused parameter 'vcs' [-Wunused-parameter]
+    virtual void setOutputBufferCreditArray(int const *array, int vcs){};
+                                                                  ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:372:56: warning: unused parameter 'array' [-Wunused-parameter]
+    virtual void setOutputQueueLengthsArray(int const *array, int vcs){};
+                                                       ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:372:67: warning: unused parameter 'vcs' [-Wunused-parameter]
+    virtual void setOutputQueueLengthsArray(int const *array, int vcs){};
+                                                                  ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:376:40: warning: unused parameter 'port' [-Wunused-parameter]
+    virtual void recvTopologyEvent(int port, TopologyEvent *ev){};
+                                       ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:376:61: warning: unused parameter 'ev' [-Wunused-parameter]
+    virtual void recvTopologyEvent(int port, TopologyEvent *ev){};
+                                                            ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:423:18: warning: 'SST::Merlin::PortInterface::printStatus' hides overloaded virtual function [-Woverloaded-virtual]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                 ^
+/usr/local/include/sst/core/baseComponent.h:102:18: note: hidden overloaded virtual function 'SST::BaseComponent::printStatus' declared here: different number of parameters (1 vs 3)
+    virtual void printStatus(Output &UNUSED(out)) { return; }
+                 ^
+In file included from /home/sabbir/sst-elements-org/merlin/topology/dragonfly.cc:21:
+In file included from /home/sabbir/sst-elements-org/merlin/topology/dragonfly.h:26:
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:422:42: warning: unused parameter 'stream' [-Wunused-parameter]
+    virtual void dumpState(std::ostream &stream) {}
+                                         ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:423:38: warning: unused parameter 'out' [-Wunused-parameter]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                                     ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:423:47: warning: unused parameter 'out_port_busy' [-Wunused-parameter]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                                              ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:423:66: warning: unused parameter 'in_port_busy' [-Wunused-parameter]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                                                                 ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:439:46: warning: unused parameter 'stream' [-Wunused-parameter]
+        virtual void dumpState(std::ostream &stream){};
+                                             ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:458:46: warning: unused parameter 'cycles' [-Wunused-parameter]
+    virtual void reportSkippedCycles(Cycle_t cycles){};
+                                             ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:459:42: warning: unused parameter 'stream' [-Wunused-parameter]
+    virtual void dumpState(std::ostream &stream){};
+                                         ^
+In file included from /home/sabbir/sst-elements-org/merlin/topology/dragonfly.cc:21:
+/home/sabbir/sst-elements-org/merlin/topology/dragonfly.h:70:83: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"dragonfly:hosts_per_router", "Number of hosts connected to each router."},
+                                                                                  ^
+/home/sabbir/sst-elements-org/merlin/topology/dragonfly.h:71:100: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"dragonfly:routers_per_group", "Number of links used to connect to routers in same group."},
+                                                                                                   ^
+/home/sabbir/sst-elements-org/merlin/topology/dragonfly.h:72:100: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"dragonfly:intergroup_per_router", "Number of links per router connected to other groups."},
+                                                                                                   ^
+/home/sabbir/sst-elements-org/merlin/topology/dragonfly.h:73:86: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"dragonfly:intergroup_links", "Number of links between each pair of groups."},
+                                                                                     ^
+/home/sabbir/sst-elements-org/merlin/topology/dragonfly.h:74:64: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"dragonfly:num_groups", "Number of groups in network."},
+                                                               ^
+/home/sabbir/sst-elements-org/merlin/topology/dragonfly.h:77:111: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"dragonfly:global_link_map", "Array specifying connectivity of global links in each dragonfly group."},
+                                                                                                              ^
+/home/sabbir/sst-elements-org/merlin/topology/dragonfly.h:81:73: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"hosts_per_router", "Number of hosts connected to each router."},
+                                                                        ^
+/home/sabbir/sst-elements-org/merlin/topology/dragonfly.h:82:90: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"routers_per_group", "Number of links used to connect to routers in same group."},
+                                                                                         ^
+/home/sabbir/sst-elements-org/merlin/topology/dragonfly.h:83:90: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"intergroup_per_router", "Number of links per router connected to other groups."},
+                                                                                         ^
+/home/sabbir/sst-elements-org/merlin/topology/dragonfly.h:84:76: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"intergroup_links", "Number of links between each pair of groups."},
+                                                                           ^
+/home/sabbir/sst-elements-org/merlin/topology/dragonfly.h:85:54: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"num_groups", "Number of groups in network."},
+                                                     ^
+/home/sabbir/sst-elements-org/merlin/topology/dragonfly.h:88:101: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"global_link_map", "Array specifying connectivity of global links in each dragonfly group."},
+                                                                                                    ^
+/home/sabbir/sst-elements-org/merlin/topology/dragonfly.cc:96:23: warning: comparison of integers of different signs: 'int' and 'std::vector::size_type' (aka 'unsigned long') [-Wsign-compare]
+    for (int i = 0; i < global_link_map.size(); i++) {
+                    ~ ^ ~~~~~~~~~~~~~~~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/topology/dragonfly.cc:219:14: warning: comparison of integers of different signs: 'int' and 'uint32_t' (aka 'unsigned int') [-Wsign-compare]
+    if (port >= params.p && port < (params.p + params.a - 1))
+        ~~~~ ^  ~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/topology/dragonfly.cc:219:34: warning: comparison of integers of different signs: 'int' and 'unsigned int' [-Wsign-compare]
+    if (port >= params.p && port < (params.p + params.a - 1))
+                            ~~~~ ^  ~~~~~~~~~~~~~~~~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/topology/dragonfly.cc:225:14: warning: comparison of integers of different signs: 'int' and 'uint32_t' (aka 'unsigned int') [-Wsign-compare]
+    if (port < params.p && td_ev->dest.group == group_id) {
+        ~~~~ ^ ~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/topology/dragonfly.cc:294:14: warning: comparison of integers of different signs: 'int' and 'unsigned int' [-Wsign-compare]
+    if (port >= (params.p + params.a - 1)) {
+        ~~~~ ^   ~~~~~~~~~~~~~~~~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/topology/dragonfly.cc:338:37: warning: missing field 'host' initializer [-Wmissing-field-initializers]
+    dgnflyAddr dstAddr = {0, 0, 0, 0};
+                                    ^
+35 warnings generated.
+In file included from /home/sabbir/sst-elements-org/merlin/topology/singlerouter.cc:21:
+In file included from /home/sabbir/sst-elements-org/merlin/topology/singlerouter.h:25:
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:153:70: warning: format specifies type 'long long' but the argument has type 'SST::Interfaces::SimpleNetwork::nid_t' (aka 'long') [-Wformat]
+                   header.c_str(), getDeliveryTime(), getPriority(), trusted_src, request->src, request->dest);
+                                                                     ^~~~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:153:83: warning: format specifies type 'long long' but the argument has type 'SST::Interfaces::SimpleNetwork::nid_t' (aka 'long') [-Wformat]
+                   header.c_str(), getDeliveryTime(), getPriority(), trusted_src, request->src, request->dest);
+                                                                                  ^~~~~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:153:97: warning: format specifies type 'long long' but the argument has type 'SST::Interfaces::SimpleNetwork::nid_t' (aka 'long') [-Wformat]
+                   header.c_str(), getDeliveryTime(), getPriority(), trusted_src, request->src, request->dest);
+                                                                                                ^~~~~~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:371:56: warning: unused parameter 'array' [-Wunused-parameter]
+    virtual void setOutputBufferCreditArray(int const *array, int vcs){};
+                                                       ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:371:67: warning: unused parameter 'vcs' [-Wunused-parameter]
+    virtual void setOutputBufferCreditArray(int const *array, int vcs){};
+                                                                  ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:372:56: warning: unused parameter 'array' [-Wunused-parameter]
+    virtual void setOutputQueueLengthsArray(int const *array, int vcs){};
+                                                       ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:372:67: warning: unused parameter 'vcs' [-Wunused-parameter]
+    virtual void setOutputQueueLengthsArray(int const *array, int vcs){};
+                                                                  ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:376:40: warning: unused parameter 'port' [-Wunused-parameter]
+    virtual void recvTopologyEvent(int port, TopologyEvent *ev){};
+                                       ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:376:61: warning: unused parameter 'ev' [-Wunused-parameter]
+    virtual void recvTopologyEvent(int port, TopologyEvent *ev){};
+                                                            ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:423:18: warning: 'SST::Merlin::PortInterface::printStatus' hides overloaded virtual function [-Woverloaded-virtual]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                 ^
+/usr/local/include/sst/core/baseComponent.h:102:18: note: hidden overloaded virtual function 'SST::BaseComponent::printStatus' declared here: different number of parameters (1 vs 3)
+    virtual void printStatus(Output &UNUSED(out)) { return; }
+                 ^
+In file included from /home/sabbir/sst-elements-org/merlin/topology/singlerouter.cc:21:
+In file included from /home/sabbir/sst-elements-org/merlin/topology/singlerouter.h:25:
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:422:42: warning: unused parameter 'stream' [-Wunused-parameter]
+    virtual void dumpState(std::ostream &stream) {}
+                                         ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:423:38: warning: unused parameter 'out' [-Wunused-parameter]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                                     ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:423:47: warning: unused parameter 'out_port_busy' [-Wunused-parameter]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                                              ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:423:66: warning: unused parameter 'in_port_busy' [-Wunused-parameter]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                                                                 ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:439:46: warning: unused parameter 'stream' [-Wunused-parameter]
+        virtual void dumpState(std::ostream &stream){};
+                                             ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:458:46: warning: unused parameter 'cycles' [-Wunused-parameter]
+    virtual void reportSkippedCycles(Cycle_t cycles){};
+                                             ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:459:42: warning: unused parameter 'stream' [-Wunused-parameter]
+    virtual void dumpState(std::ostream &stream){};
+                                         ^
+/home/sabbir/sst-elements-org/merlin/topology/singlerouter.cc:25:26: warning: named variadic macros are a GNU extension [-Wvariadic-macros]
+#define DPRINTF(fmt, args...) __DBG(DBG_NETWORK, topo_singlerouter, fmt, ##args)
+                         ^
+18 warnings generated.
+In file included from /home/sabbir/sst-elements-org/merlin/topology/fattree.cc:15:
+In file included from /home/sabbir/sst-elements-org/merlin/topology/fattree.h:25:
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:153:70: warning: format specifies type 'long long' but the argument has type 'SST::Interfaces::SimpleNetwork::nid_t' (aka 'long') [-Wformat]
+                   header.c_str(), getDeliveryTime(), getPriority(), trusted_src, request->src, request->dest);
+                                                                     ^~~~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:153:83: warning: format specifies type 'long long' but the argument has type 'SST::Interfaces::SimpleNetwork::nid_t' (aka 'long') [-Wformat]
+                   header.c_str(), getDeliveryTime(), getPriority(), trusted_src, request->src, request->dest);
+                                                                                  ^~~~~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:153:97: warning: format specifies type 'long long' but the argument has type 'SST::Interfaces::SimpleNetwork::nid_t' (aka 'long') [-Wformat]
+                   header.c_str(), getDeliveryTime(), getPriority(), trusted_src, request->src, request->dest);
+                                                                                                ^~~~~~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:371:56: warning: unused parameter 'array' [-Wunused-parameter]
+    virtual void setOutputBufferCreditArray(int const *array, int vcs){};
+                                                       ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:371:67: warning: unused parameter 'vcs' [-Wunused-parameter]
+    virtual void setOutputBufferCreditArray(int const *array, int vcs){};
+                                                                  ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:372:56: warning: unused parameter 'array' [-Wunused-parameter]
+    virtual void setOutputQueueLengthsArray(int const *array, int vcs){};
+                                                       ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:372:67: warning: unused parameter 'vcs' [-Wunused-parameter]
+    virtual void setOutputQueueLengthsArray(int const *array, int vcs){};
+                                                                  ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:376:40: warning: unused parameter 'port' [-Wunused-parameter]
+    virtual void recvTopologyEvent(int port, TopologyEvent *ev){};
+                                       ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:376:61: warning: unused parameter 'ev' [-Wunused-parameter]
+    virtual void recvTopologyEvent(int port, TopologyEvent *ev){};
+                                                            ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:423:18: warning: 'SST::Merlin::PortInterface::printStatus' hides overloaded virtual function [-Woverloaded-virtual]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                 ^
+/usr/local/include/sst/core/baseComponent.h:102:18: note: hidden overloaded virtual function 'SST::BaseComponent::printStatus' declared here: different number of parameters (1 vs 3)
+    virtual void printStatus(Output &UNUSED(out)) { return; }
+                 ^
+In file included from /home/sabbir/sst-elements-org/merlin/topology/fattree.cc:15:
+In file included from /home/sabbir/sst-elements-org/merlin/topology/fattree.h:25:
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:422:42: warning: unused parameter 'stream' [-Wunused-parameter]
+    virtual void dumpState(std::ostream &stream) {}
+                                         ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:423:38: warning: unused parameter 'out' [-Wunused-parameter]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                                     ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:423:47: warning: unused parameter 'out_port_busy' [-Wunused-parameter]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                                              ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:423:66: warning: unused parameter 'in_port_busy' [-Wunused-parameter]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                                                                 ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:439:46: warning: unused parameter 'stream' [-Wunused-parameter]
+        virtual void dumpState(std::ostream &stream){};
+                                             ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:458:46: warning: unused parameter 'cycles' [-Wunused-parameter]
+    virtual void reportSkippedCycles(Cycle_t cycles){};
+                                             ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:459:42: warning: unused parameter 'stream' [-Wunused-parameter]
+    virtual void dumpState(std::ostream &stream){};
+                                         ^
+In file included from /home/sabbir/sst-elements-org/merlin/topology/fattree.cc:15:
+/home/sabbir/sst-elements-org/merlin/topology/fattree.h:36:69: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+    SST_ELI_DOCUMENT_PARAMS({"fattree:shape", "Shape of the fattree"},
+                                                                    ^
+/home/sabbir/sst-elements-org/merlin/topology/fattree.h:40:94: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+                             "Threshold used to determine if a packet will adaptively route."},
+                                                                                             ^
+/home/sabbir/sst-elements-org/merlin/topology/fattree.h:42:61: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+                            {"shape", "Shape of the fattree"},
+                                                            ^
+/home/sabbir/sst-elements-org/merlin/topology/fattree.h:44:116: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+                            {"adaptive_threshold", "Threshold used to determine if a packet will adaptively route."})
+                                                                                                                   ^
+21 warnings generated.
+In file included from /home/sabbir/sst-elements-org/merlin/topology/dragonfly_legacy.cc:17:
+In file included from /home/sabbir/sst-elements-org/merlin/topology/dragonfly_legacy.h:25:
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:153:70: warning: format specifies type 'long long' but the argument has type 'SST::Interfaces::SimpleNetwork::nid_t' (aka 'long') [-Wformat]
+                   header.c_str(), getDeliveryTime(), getPriority(), trusted_src, request->src, request->dest);
+                                                                     ^~~~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:153:83: warning: format specifies type 'long long' but the argument has type 'SST::Interfaces::SimpleNetwork::nid_t' (aka 'long') [-Wformat]
+                   header.c_str(), getDeliveryTime(), getPriority(), trusted_src, request->src, request->dest);
+                                                                                  ^~~~~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:153:97: warning: format specifies type 'long long' but the argument has type 'SST::Interfaces::SimpleNetwork::nid_t' (aka 'long') [-Wformat]
+                   header.c_str(), getDeliveryTime(), getPriority(), trusted_src, request->src, request->dest);
+                                                                                                ^~~~~~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:371:56: warning: unused parameter 'array' [-Wunused-parameter]
+    virtual void setOutputBufferCreditArray(int const *array, int vcs){};
+                                                       ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:371:67: warning: unused parameter 'vcs' [-Wunused-parameter]
+    virtual void setOutputBufferCreditArray(int const *array, int vcs){};
+                                                                  ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:372:56: warning: unused parameter 'array' [-Wunused-parameter]
+    virtual void setOutputQueueLengthsArray(int const *array, int vcs){};
+                                                       ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:372:67: warning: unused parameter 'vcs' [-Wunused-parameter]
+    virtual void setOutputQueueLengthsArray(int const *array, int vcs){};
+                                                                  ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:376:40: warning: unused parameter 'port' [-Wunused-parameter]
+    virtual void recvTopologyEvent(int port, TopologyEvent *ev){};
+                                       ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:376:61: warning: unused parameter 'ev' [-Wunused-parameter]
+    virtual void recvTopologyEvent(int port, TopologyEvent *ev){};
+                                                            ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:423:18: warning: 'SST::Merlin::PortInterface::printStatus' hides overloaded virtual function [-Woverloaded-virtual]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                 ^
+/usr/local/include/sst/core/baseComponent.h:102:18: note: hidden overloaded virtual function 'SST::BaseComponent::printStatus' declared here: different number of parameters (1 vs 3)
+    virtual void printStatus(Output &UNUSED(out)) { return; }
+                 ^
+In file included from /home/sabbir/sst-elements-org/merlin/topology/dragonfly_legacy.cc:17:
+In file included from /home/sabbir/sst-elements-org/merlin/topology/dragonfly_legacy.h:25:
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:422:42: warning: unused parameter 'stream' [-Wunused-parameter]
+    virtual void dumpState(std::ostream &stream) {}
+                                         ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:423:38: warning: unused parameter 'out' [-Wunused-parameter]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                                     ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:423:47: warning: unused parameter 'out_port_busy' [-Wunused-parameter]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                                              ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:423:66: warning: unused parameter 'in_port_busy' [-Wunused-parameter]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                                                                 ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:439:46: warning: unused parameter 'stream' [-Wunused-parameter]
+        virtual void dumpState(std::ostream &stream){};
+                                             ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:458:46: warning: unused parameter 'cycles' [-Wunused-parameter]
+    virtual void reportSkippedCycles(Cycle_t cycles){};
+                                             ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:459:42: warning: unused parameter 'stream' [-Wunused-parameter]
+    virtual void dumpState(std::ostream &stream){};
+                                         ^
+In file included from /home/sabbir/sst-elements-org/merlin/topology/dragonfly_legacy.cc:17:
+/home/sabbir/sst-elements-org/merlin/topology/dragonfly_legacy.h:41:83: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"dragonfly:hosts_per_router", "Number of hosts connected to each router."},
+                                                                                  ^
+/home/sabbir/sst-elements-org/merlin/topology/dragonfly_legacy.h:42:100: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"dragonfly:routers_per_group", "Number of links used to connect to routers in same group."},
+                                                                                                   ^
+/home/sabbir/sst-elements-org/merlin/topology/dragonfly_legacy.h:43:100: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"dragonfly:intergroup_per_router", "Number of links per router connected to other groups."},
+                                                                                                   ^
+/home/sabbir/sst-elements-org/merlin/topology/dragonfly_legacy.h:44:64: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"dragonfly:num_groups", "Number of groups in network."},
+                                                               ^
+21 warnings generated.
+In file included from /home/sabbir/sst-elements-org/merlin/topology/mesh.cc:15:
+In file included from /home/sabbir/sst-elements-org/merlin/topology/mesh.h:27:
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:153:70: warning: format specifies type 'long long' but the argument has type 'SST::Interfaces::SimpleNetwork::nid_t' (aka 'long') [-Wformat]
+                   header.c_str(), getDeliveryTime(), getPriority(), trusted_src, request->src, request->dest);
+                                                                     ^~~~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:153:83: warning: format specifies type 'long long' but the argument has type 'SST::Interfaces::SimpleNetwork::nid_t' (aka 'long') [-Wformat]
+                   header.c_str(), getDeliveryTime(), getPriority(), trusted_src, request->src, request->dest);
+                                                                                  ^~~~~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:153:97: warning: format specifies type 'long long' but the argument has type 'SST::Interfaces::SimpleNetwork::nid_t' (aka 'long') [-Wformat]
+                   header.c_str(), getDeliveryTime(), getPriority(), trusted_src, request->src, request->dest);
+                                                                                                ^~~~~~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:371:56: warning: unused parameter 'array' [-Wunused-parameter]
+    virtual void setOutputBufferCreditArray(int const *array, int vcs){};
+                                                       ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:371:67: warning: unused parameter 'vcs' [-Wunused-parameter]
+    virtual void setOutputBufferCreditArray(int const *array, int vcs){};
+                                                                  ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:372:56: warning: unused parameter 'array' [-Wunused-parameter]
+    virtual void setOutputQueueLengthsArray(int const *array, int vcs){};
+                                                       ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:372:67: warning: unused parameter 'vcs' [-Wunused-parameter]
+    virtual void setOutputQueueLengthsArray(int const *array, int vcs){};
+                                                                  ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:376:40: warning: unused parameter 'port' [-Wunused-parameter]
+    virtual void recvTopologyEvent(int port, TopologyEvent *ev){};
+                                       ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:376:61: warning: unused parameter 'ev' [-Wunused-parameter]
+    virtual void recvTopologyEvent(int port, TopologyEvent *ev){};
+                                                            ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:423:18: warning: 'SST::Merlin::PortInterface::printStatus' hides overloaded virtual function [-Woverloaded-virtual]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                 ^
+/usr/local/include/sst/core/baseComponent.h:102:18: note: hidden overloaded virtual function 'SST::BaseComponent::printStatus' declared here: different number of parameters (1 vs 3)
+    virtual void printStatus(Output &UNUSED(out)) { return; }
+                 ^
+In file included from /home/sabbir/sst-elements-org/merlin/topology/mesh.cc:15:
+In file included from /home/sabbir/sst-elements-org/merlin/topology/mesh.h:27:
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:422:42: warning: unused parameter 'stream' [-Wunused-parameter]
+    virtual void dumpState(std::ostream &stream) {}
+                                         ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:423:38: warning: unused parameter 'out' [-Wunused-parameter]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                                     ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:423:47: warning: unused parameter 'out_port_busy' [-Wunused-parameter]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                                              ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:423:66: warning: unused parameter 'in_port_busy' [-Wunused-parameter]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                                                                 ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:439:46: warning: unused parameter 'stream' [-Wunused-parameter]
+        virtual void dumpState(std::ostream &stream){};
+                                             ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:458:46: warning: unused parameter 'cycles' [-Wunused-parameter]
+    virtual void reportSkippedCycles(Cycle_t cycles){};
+                                             ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:459:42: warning: unused parameter 'stream' [-Wunused-parameter]
+    virtual void dumpState(std::ostream &stream){};
+                                         ^
+In file included from /home/sabbir/sst-elements-org/merlin/topology/mesh.cc:15:
+/home/sabbir/sst-elements-org/merlin/topology/mesh.h:102:113: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+                       "is separated by a colon.  For example, 4x4x2x2.  Any number of dimensions is supported."},
+                                                                                                                ^
+/home/sabbir/sst-elements-org/merlin/topology/mesh.h:104:110: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+                       "example, 2x2x1 denotes 2 links in the x and y dimensions and one in the z dimension."},
+                                                                                                             ^
+/home/sabbir/sst-elements-org/merlin/topology/mesh.h:105:76: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"mesh:local_ports", "Number of endpoints attached to each router."},
+                                                                           ^
+/home/sabbir/sst-elements-org/merlin/topology/mesh.h:108:105: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+                  "separated by a colon.  For example, 4x4x2x2.  Any number of dimensions is supported."},
+                                                                                                        ^
+/home/sabbir/sst-elements-org/merlin/topology/mesh.h:110:105: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+                  "example, 2x2x1 denotes 2 links in the x and y dimensions and one in the z dimension."},
+                                                                                                        ^
+/home/sabbir/sst-elements-org/merlin/topology/mesh.h:111:71: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"local_ports", "Number of endpoints attached to each router."})
+                                                                      ^
+23 warnings generated.
+In file included from /home/sabbir/sst-elements-org/merlin/topology/torus.cc:15:
+In file included from /home/sabbir/sst-elements-org/merlin/topology/torus.h:27:
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:153:70: warning: format specifies type 'long long' but the argument has type 'SST::Interfaces::SimpleNetwork::nid_t' (aka 'long') [-Wformat]
+                   header.c_str(), getDeliveryTime(), getPriority(), trusted_src, request->src, request->dest);
+                                                                     ^~~~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:153:83: warning: format specifies type 'long long' but the argument has type 'SST::Interfaces::SimpleNetwork::nid_t' (aka 'long') [-Wformat]
+                   header.c_str(), getDeliveryTime(), getPriority(), trusted_src, request->src, request->dest);
+                                                                                  ^~~~~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:153:97: warning: format specifies type 'long long' but the argument has type 'SST::Interfaces::SimpleNetwork::nid_t' (aka 'long') [-Wformat]
+                   header.c_str(), getDeliveryTime(), getPriority(), trusted_src, request->src, request->dest);
+                                                                                                ^~~~~~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:371:56: warning: unused parameter 'array' [-Wunused-parameter]
+    virtual void setOutputBufferCreditArray(int const *array, int vcs){};
+                                                       ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:371:67: warning: unused parameter 'vcs' [-Wunused-parameter]
+    virtual void setOutputBufferCreditArray(int const *array, int vcs){};
+                                                                  ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:372:56: warning: unused parameter 'array' [-Wunused-parameter]
+    virtual void setOutputQueueLengthsArray(int const *array, int vcs){};
+                                                       ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:372:67: warning: unused parameter 'vcs' [-Wunused-parameter]
+    virtual void setOutputQueueLengthsArray(int const *array, int vcs){};
+                                                                  ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:376:40: warning: unused parameter 'port' [-Wunused-parameter]
+    virtual void recvTopologyEvent(int port, TopologyEvent *ev){};
+                                       ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:376:61: warning: unused parameter 'ev' [-Wunused-parameter]
+    virtual void recvTopologyEvent(int port, TopologyEvent *ev){};
+                                                            ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:423:18: warning: 'SST::Merlin::PortInterface::printStatus' hides overloaded virtual function [-Woverloaded-virtual]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                 ^
+/usr/local/include/sst/core/baseComponent.h:102:18: note: hidden overloaded virtual function 'SST::BaseComponent::printStatus' declared here: different number of parameters (1 vs 3)
+    virtual void printStatus(Output &UNUSED(out)) { return; }
+                 ^
+In file included from /home/sabbir/sst-elements-org/merlin/topology/torus.cc:15:
+In file included from /home/sabbir/sst-elements-org/merlin/topology/torus.h:27:
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:422:42: warning: unused parameter 'stream' [-Wunused-parameter]
+    virtual void dumpState(std::ostream &stream) {}
+                                         ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:423:38: warning: unused parameter 'out' [-Wunused-parameter]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                                     ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:423:47: warning: unused parameter 'out_port_busy' [-Wunused-parameter]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                                              ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:423:66: warning: unused parameter 'in_port_busy' [-Wunused-parameter]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                                                                 ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:439:46: warning: unused parameter 'stream' [-Wunused-parameter]
+        virtual void dumpState(std::ostream &stream){};
+                                             ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:458:46: warning: unused parameter 'cycles' [-Wunused-parameter]
+    virtual void reportSkippedCycles(Cycle_t cycles){};
+                                             ^
+/home/sabbir/sst-elements-org/merlin/topology/../router.h:459:42: warning: unused parameter 'stream' [-Wunused-parameter]
+    virtual void dumpState(std::ostream &stream){};
+                                         ^
+In file included from /home/sabbir/sst-elements-org/merlin/topology/torus.cc:15:
+/home/sabbir/sst-elements-org/merlin/topology/torus.h:78:111: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+                        "is separated by an x.  For example, 4x4x2x2.  Any number of dimensions is supported."},
+                                                                                                              ^
+/home/sabbir/sst-elements-org/merlin/topology/torus.h:80:115: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+                        "For example, 2x2x1 denotes 2 links in the x and y dimensions and one in the z dimension."},
+                                                                                                                  ^
+/home/sabbir/sst-elements-org/merlin/topology/torus.h:81:77: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"torus:local_ports", "Number of endpoints attached to each router."},
+                                                                            ^
+/home/sabbir/sst-elements-org/merlin/topology/torus.h:84:102: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+                  "separated by an x.  For example, 4x4x2x2.  Any number of dimensions is supported."},
+                                                                                                     ^
+/home/sabbir/sst-elements-org/merlin/topology/torus.h:86:105: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+                  "example, 2x2x1 denotes 2 links in the x and y dimensions and one in the z dimension."},
+                                                                                                        ^
+/home/sabbir/sst-elements-org/merlin/topology/torus.h:87:71: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"local_ports", "Number of endpoints attached to each router."}, )
+                                                                      ^
+23 warnings generated.
+In file included from /home/sabbir/sst-elements-org/merlin/hr_router/hr_router.cc:15:
+In file included from /home/sabbir/sst-elements-org/merlin/hr_router/hr_router.h:30:
+/home/sabbir/sst-elements-org/merlin/hr_router/../router.h:153:70: warning: format specifies type 'long long' but the argument has type 'SST::Interfaces::SimpleNetwork::nid_t' (aka 'long') [-Wformat]
+                   header.c_str(), getDeliveryTime(), getPriority(), trusted_src, request->src, request->dest);
+                                                                     ^~~~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/hr_router/../router.h:153:83: warning: format specifies type 'long long' but the argument has type 'SST::Interfaces::SimpleNetwork::nid_t' (aka 'long') [-Wformat]
+                   header.c_str(), getDeliveryTime(), getPriority(), trusted_src, request->src, request->dest);
+                                                                                  ^~~~~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/hr_router/../router.h:153:97: warning: format specifies type 'long long' but the argument has type 'SST::Interfaces::SimpleNetwork::nid_t' (aka 'long') [-Wformat]
+                   header.c_str(), getDeliveryTime(), getPriority(), trusted_src, request->src, request->dest);
+                                                                                                ^~~~~~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/hr_router/../router.h:371:56: warning: unused parameter 'array' [-Wunused-parameter]
+    virtual void setOutputBufferCreditArray(int const *array, int vcs){};
+                                                       ^
+/home/sabbir/sst-elements-org/merlin/hr_router/../router.h:371:67: warning: unused parameter 'vcs' [-Wunused-parameter]
+    virtual void setOutputBufferCreditArray(int const *array, int vcs){};
+                                                                  ^
+/home/sabbir/sst-elements-org/merlin/hr_router/../router.h:372:56: warning: unused parameter 'array' [-Wunused-parameter]
+    virtual void setOutputQueueLengthsArray(int const *array, int vcs){};
+                                                       ^
+/home/sabbir/sst-elements-org/merlin/hr_router/../router.h:372:67: warning: unused parameter 'vcs' [-Wunused-parameter]
+    virtual void setOutputQueueLengthsArray(int const *array, int vcs){};
+                                                                  ^
+/home/sabbir/sst-elements-org/merlin/hr_router/../router.h:376:40: warning: unused parameter 'port' [-Wunused-parameter]
+    virtual void recvTopologyEvent(int port, TopologyEvent *ev){};
+                                       ^
+/home/sabbir/sst-elements-org/merlin/hr_router/../router.h:376:61: warning: unused parameter 'ev' [-Wunused-parameter]
+    virtual void recvTopologyEvent(int port, TopologyEvent *ev){};
+                                                            ^
+/home/sabbir/sst-elements-org/merlin/hr_router/../router.h:423:18: warning: 'SST::Merlin::PortInterface::printStatus' hides overloaded virtual function [-Woverloaded-virtual]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                 ^
+/usr/local/include/sst/core/baseComponent.h:102:18: note: hidden overloaded virtual function 'SST::BaseComponent::printStatus' declared here: different number of parameters (1 vs 3)
+    virtual void printStatus(Output &UNUSED(out)) { return; }
+                 ^
+In file included from /home/sabbir/sst-elements-org/merlin/hr_router/hr_router.cc:15:
+In file included from /home/sabbir/sst-elements-org/merlin/hr_router/hr_router.h:30:
+/home/sabbir/sst-elements-org/merlin/hr_router/../router.h:422:42: warning: unused parameter 'stream' [-Wunused-parameter]
+    virtual void dumpState(std::ostream &stream) {}
+                                         ^
+/home/sabbir/sst-elements-org/merlin/hr_router/../router.h:423:38: warning: unused parameter 'out' [-Wunused-parameter]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                                     ^
+/home/sabbir/sst-elements-org/merlin/hr_router/../router.h:423:47: warning: unused parameter 'out_port_busy' [-Wunused-parameter]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                                              ^
+/home/sabbir/sst-elements-org/merlin/hr_router/../router.h:423:66: warning: unused parameter 'in_port_busy' [-Wunused-parameter]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                                                                 ^
+/home/sabbir/sst-elements-org/merlin/hr_router/../router.h:439:46: warning: unused parameter 'stream' [-Wunused-parameter]
+        virtual void dumpState(std::ostream &stream){};
+                                             ^
+/home/sabbir/sst-elements-org/merlin/hr_router/../router.h:458:46: warning: unused parameter 'cycles' [-Wunused-parameter]
+    virtual void reportSkippedCycles(Cycle_t cycles){};
+                                             ^
+/home/sabbir/sst-elements-org/merlin/hr_router/../router.h:459:42: warning: unused parameter 'stream' [-Wunused-parameter]
+    virtual void dumpState(std::ostream &stream){};
+                                         ^
+In file included from /home/sabbir/sst-elements-org/merlin/hr_router/hr_router.cc:15:
+/home/sabbir/sst-elements-org/merlin/hr_router/hr_router.h:46:35: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"id", "ID of the router."}, {"num_ports", "Number of ports that the router has"},
+                                  ^
+/home/sabbir/sst-elements-org/merlin/hr_router/hr_router.h:46:89: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"id", "ID of the router."}, {"num_ports", "Number of ports that the router has"},
+                                                                                        ^
+/home/sabbir/sst-elements-org/merlin/hr_router/hr_router.h:47:99: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"topology", "Name of the topology subcomponent that should be loaded to control routing."},
+                                                                                                  ^
+/home/sabbir/sst-elements-org/merlin/hr_router/hr_router.h:49:101: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"link_bw", "Bandwidth of the links specified in either b/s or B/s (can include SI prefix)."},
+                                                                                                    ^
+/home/sabbir/sst-elements-org/merlin/hr_router/hr_router.h:50:86: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"flit_size", "Flit size specified in either b or B (can include SI prefix)."},
+                                                                                     ^
+/home/sabbir/sst-elements-org/merlin/hr_router/hr_router.h:51:104: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"xbar_bw", "Bandwidth of the crossbar specified in either b/s or B/s (can include SI prefix)."},
+                                                                                                       ^
+/home/sabbir/sst-elements-org/merlin/hr_router/hr_router.h:53:107: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+         "Latency of packets entering switch into input buffers.  Specified in s (can include SI prefix)."},
+                                                                                                          ^
+/home/sabbir/sst-elements-org/merlin/hr_router/hr_router.h:55:107: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+         "Latency of packets exiting switch from output buffers.  Specified in s (can include SI prefix)."},
+                                                                                                          ^
+/home/sabbir/sst-elements-org/merlin/hr_router/hr_router.h:56:96: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"input_buf_size", "Size of input buffers specified in b or B (can include SI prefix)."},
+                                                                                               ^
+/home/sabbir/sst-elements-org/merlin/hr_router/hr_router.h:57:98: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"output_buf_size", "Size of output buffers specified in b or B (can include SI prefix)."},
+                                                                                                 ^
+/home/sabbir/sst-elements-org/merlin/hr_router/hr_router.h:65:90: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"vn_remap", "Array that specifies the vn remapping for each node in the systsm."},
+                                                                                         ^
+/home/sabbir/sst-elements-org/merlin/hr_router/hr_router.cc:227:10: warning: unused variable 'oql_track_port' [-Wunused-variable]
+    bool oql_track_port = params.find<bool>("oql_track_port", "false");
+         ^
+/home/sabbir/sst-elements-org/merlin/hr_router/hr_router.cc:228:10: warning: unused variable 'oql_track_remote' [-Wunused-variable]
+    bool oql_track_remote = params.find<bool>("oql_track_remote", "false");
+         ^
+/home/sabbir/sst-elements-org/merlin/hr_router/hr_router.cc:161:31: warning: comparison of integers of different signs: 'int' and 'std::vector::size_type' (aka 'unsigned long') [-Wsign-compare]
+            for (int i = 0; i < vec.size(); ++i) {
+                            ~ ^ ~~~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/hr_router/hr_router.cc:94:20: warning: unused function 'getLogicalGroupParamUA' [-Wunused-function]
+static UnitAlgebra getLogicalGroupParamUA(const Params &params, Topology *topo, int port, std::string param,
+                   ^
+32 warnings generated.
+In file included from /home/sabbir/sst-elements-org/merlin/test/nic.cc:15:
+/home/sabbir/sst-elements-org/merlin/test/nic.h:37:61: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+    SST_ELI_DOCUMENT_PARAMS({"id", "Network ID of endpoint."}, {"num_peers", "Total number of endpoints in network."},
+                                                            ^
+/home/sabbir/sst-elements-org/merlin/test/nic.h:37:117: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+    SST_ELI_DOCUMENT_PARAMS({"id", "Network ID of endpoint."}, {"num_peers", "Total number of endpoints in network."},
+                                                                                                                    ^
+/home/sabbir/sst-elements-org/merlin/test/nic.h:38:98: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+                            {"num_messages", "Total number of messages to send to each endpoint."},
+                                                                                                 ^
+/home/sabbir/sst-elements-org/merlin/test/nic.h:40:115: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+                             "Size of each message to be sent specified in either b or B (can include SI prefix)."},
+                                                                                                                  ^
+/home/sabbir/sst-elements-org/merlin/test/nic.cc:205:95: warning: format specifies type 'long long' but the argument has type 'SST::Interfaces::SimpleNetwork::nid_t' (aka 'long') [-Wformat]
+                    output.output("%d: received event with dest %lld and src %lld\n", net_id, req->dest, req->src);
+                                                                ~~~~                          ^~~~~~~~~
+                                                                %ld
+/home/sabbir/sst-elements-org/merlin/test/nic.cc:205:106: warning: format specifies type 'long long' but the argument has type 'SST::Interfaces::SimpleNetwork::nid_t' (aka 'long') [-Wformat]
+                    output.output("%d: received event with dest %lld and src %lld\n", net_id, req->dest, req->src);
+                                                                             ~~~~                        ^~~~~~~~
+                                                                             %ld
+In file included from /home/sabbir/sst-elements-org/merlin/test/nic.cc:15:
+/home/sabbir/sst-elements-org/merlin/test/nic.h:57:9: warning: private field 'group_offset' is not used [-Wunused-private-field]
+    int group_offset;
+        ^
+/home/sabbir/sst-elements-org/merlin/test/nic.h:58:9: warning: private field 'group_peers' is not used [-Wunused-private-field]
+    int group_peers;
+        ^
+/home/sabbir/sst-elements-org/merlin/test/nic.h:66:10: warning: private field 'initialized' is not used [-Wunused-private-field]
+    bool initialized;
+         ^
+9 warnings generated.
+In file included from /home/sabbir/sst-elements-org/merlin/interfaces/linkControl.cc:18:
+In file included from /home/sabbir/sst-elements-org/merlin/interfaces/linkControl.h:28:
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:153:70: warning: format specifies type 'long long' but the argument has type 'SST::Interfaces::SimpleNetwork::nid_t' (aka 'long') [-Wformat]
+                   header.c_str(), getDeliveryTime(), getPriority(), trusted_src, request->src, request->dest);
+                                                                     ^~~~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:153:83: warning: format specifies type 'long long' but the argument has type 'SST::Interfaces::SimpleNetwork::nid_t' (aka 'long') [-Wformat]
+                   header.c_str(), getDeliveryTime(), getPriority(), trusted_src, request->src, request->dest);
+                                                                                  ^~~~~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:153:97: warning: format specifies type 'long long' but the argument has type 'SST::Interfaces::SimpleNetwork::nid_t' (aka 'long') [-Wformat]
+                   header.c_str(), getDeliveryTime(), getPriority(), trusted_src, request->src, request->dest);
+                                                                                                ^~~~~~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:371:56: warning: unused parameter 'array' [-Wunused-parameter]
+    virtual void setOutputBufferCreditArray(int const *array, int vcs){};
+                                                       ^
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:371:67: warning: unused parameter 'vcs' [-Wunused-parameter]
+    virtual void setOutputBufferCreditArray(int const *array, int vcs){};
+                                                                  ^
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:372:56: warning: unused parameter 'array' [-Wunused-parameter]
+    virtual void setOutputQueueLengthsArray(int const *array, int vcs){};
+                                                       ^
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:372:67: warning: unused parameter 'vcs' [-Wunused-parameter]
+    virtual void setOutputQueueLengthsArray(int const *array, int vcs){};
+                                                                  ^
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:376:40: warning: unused parameter 'port' [-Wunused-parameter]
+    virtual void recvTopologyEvent(int port, TopologyEvent *ev){};
+                                       ^
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:376:61: warning: unused parameter 'ev' [-Wunused-parameter]
+    virtual void recvTopologyEvent(int port, TopologyEvent *ev){};
+                                                            ^
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:423:18: warning: 'SST::Merlin::PortInterface::printStatus' hides overloaded virtual function [-Woverloaded-virtual]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                 ^
+/usr/local/include/sst/core/baseComponent.h:102:18: note: hidden overloaded virtual function 'SST::BaseComponent::printStatus' declared here: different number of parameters (1 vs 3)
+    virtual void printStatus(Output &UNUSED(out)) { return; }
+                 ^
+In file included from /home/sabbir/sst-elements-org/merlin/interfaces/linkControl.cc:18:
+In file included from /home/sabbir/sst-elements-org/merlin/interfaces/linkControl.h:28:
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:422:42: warning: unused parameter 'stream' [-Wunused-parameter]
+    virtual void dumpState(std::ostream &stream) {}
+                                         ^
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:423:38: warning: unused parameter 'out' [-Wunused-parameter]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                                     ^
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:423:47: warning: unused parameter 'out_port_busy' [-Wunused-parameter]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                                              ^
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:423:66: warning: unused parameter 'in_port_busy' [-Wunused-parameter]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                                                                 ^
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:439:46: warning: unused parameter 'stream' [-Wunused-parameter]
+        virtual void dumpState(std::ostream &stream){};
+                                             ^
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:458:46: warning: unused parameter 'cycles' [-Wunused-parameter]
+    virtual void reportSkippedCycles(Cycle_t cycles){};
+                                             ^
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:459:42: warning: unused parameter 'stream' [-Wunused-parameter]
+    virtual void dumpState(std::ostream &stream){};
+                                         ^
+In file included from /home/sabbir/sst-elements-org/merlin/interfaces/linkControl.cc:18:
+/home/sabbir/sst-elements-org/merlin/interfaces/linkControl.h:54:101: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"link_bw", "Bandwidth of the links specified in either b/s or B/s (can include SI prefix)."},
+                                                                                                    ^
+/home/sabbir/sst-elements-org/merlin/interfaces/linkControl.h:55:96: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"input_buf_size", "Size of input buffers specified in b or B (can include SI prefix)."},
+                                                                                               ^
+/home/sabbir/sst-elements-org/merlin/interfaces/linkControl.h:56:98: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"output_buf_size", "Size of output buffers specified in b or B (can include SI prefix)."},
+                                                                                                 ^
+/home/sabbir/sst-elements-org/merlin/interfaces/linkControl.cc:34:77: warning: field 'start_block' will be initialized after field 'idle_start' [-Wreorder-ctor]
+      nid_map(nullptr), curr_out_vn(0), waiting(true), have_packets(false), start_block(0), idle_start(0),
+                                                                            ^
+/home/sabbir/sst-elements-org/merlin/interfaces/linkControl.cc:35:69: warning: field 'network_initialized' will be initialized after field 'output' [-Wreorder-ctor]
+      is_idle(true), receiveFunctor(nullptr), sendFunctor(nullptr), network_initialized(false),
+                                                                    ^
+/home/sabbir/sst-elements-org/merlin/interfaces/linkControl.cc:96:31: warning: comparison of integers of different signs: 'std::vector::size_type' (aka 'unsigned long') and 'int' [-Wsign-compare]
+        if (vn_map_vec.size() != req_vns) {
+            ~~~~~~~~~~~~~~~~~ ^  ~~~~~~~
+/home/sabbir/sst-elements-org/merlin/interfaces/linkControl.cc:356:19: warning: unused variable 'init_ev' [-Wunused-variable]
+    RtrInitEvent *init_ev;
+                  ^
+24 warnings generated.
+In file included from /home/sabbir/sst-elements-org/merlin/interfaces/reorderLinkControl.cc:18:
+In file included from /home/sabbir/sst-elements-org/merlin/interfaces/reorderLinkControl.h:26:
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:153:70: warning: format specifies type 'long long' but the argument has type 'SST::Interfaces::SimpleNetwork::nid_t' (aka 'long') [-Wformat]
+                   header.c_str(), getDeliveryTime(), getPriority(), trusted_src, request->src, request->dest);
+                                                                     ^~~~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:153:83: warning: format specifies type 'long long' but the argument has type 'SST::Interfaces::SimpleNetwork::nid_t' (aka 'long') [-Wformat]
+                   header.c_str(), getDeliveryTime(), getPriority(), trusted_src, request->src, request->dest);
+                                                                                  ^~~~~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:153:97: warning: format specifies type 'long long' but the argument has type 'SST::Interfaces::SimpleNetwork::nid_t' (aka 'long') [-Wformat]
+                   header.c_str(), getDeliveryTime(), getPriority(), trusted_src, request->src, request->dest);
+                                                                                                ^~~~~~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:371:56: warning: unused parameter 'array' [-Wunused-parameter]
+    virtual void setOutputBufferCreditArray(int const *array, int vcs){};
+                                                       ^
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:371:67: warning: unused parameter 'vcs' [-Wunused-parameter]
+    virtual void setOutputBufferCreditArray(int const *array, int vcs){};
+                                                                  ^
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:372:56: warning: unused parameter 'array' [-Wunused-parameter]
+    virtual void setOutputQueueLengthsArray(int const *array, int vcs){};
+                                                       ^
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:372:67: warning: unused parameter 'vcs' [-Wunused-parameter]
+    virtual void setOutputQueueLengthsArray(int const *array, int vcs){};
+                                                                  ^
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:376:40: warning: unused parameter 'port' [-Wunused-parameter]
+    virtual void recvTopologyEvent(int port, TopologyEvent *ev){};
+                                       ^
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:376:61: warning: unused parameter 'ev' [-Wunused-parameter]
+    virtual void recvTopologyEvent(int port, TopologyEvent *ev){};
+                                                            ^
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:423:18: warning: 'SST::Merlin::PortInterface::printStatus' hides overloaded virtual function [-Woverloaded-virtual]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                 ^
+/usr/local/include/sst/core/baseComponent.h:102:18: note: hidden overloaded virtual function 'SST::BaseComponent::printStatus' declared here: different number of parameters (1 vs 3)
+    virtual void printStatus(Output &UNUSED(out)) { return; }
+                 ^
+In file included from /home/sabbir/sst-elements-org/merlin/interfaces/reorderLinkControl.cc:18:
+In file included from /home/sabbir/sst-elements-org/merlin/interfaces/reorderLinkControl.h:26:
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:422:42: warning: unused parameter 'stream' [-Wunused-parameter]
+    virtual void dumpState(std::ostream &stream) {}
+                                         ^
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:423:38: warning: unused parameter 'out' [-Wunused-parameter]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                                     ^
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:423:47: warning: unused parameter 'out_port_busy' [-Wunused-parameter]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                                              ^
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:423:66: warning: unused parameter 'in_port_busy' [-Wunused-parameter]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                                                                 ^
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:439:46: warning: unused parameter 'stream' [-Wunused-parameter]
+        virtual void dumpState(std::ostream &stream){};
+                                             ^
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:458:46: warning: unused parameter 'cycles' [-Wunused-parameter]
+    virtual void reportSkippedCycles(Cycle_t cycles){};
+                                             ^
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:459:42: warning: unused parameter 'stream' [-Wunused-parameter]
+    virtual void dumpState(std::ostream &stream){};
+                                         ^
+/home/sabbir/sst-elements-org/merlin/interfaces/reorderLinkControl.cc:30:27: warning: field 'receiveFunctor' will be initialized after field 'vns' [-Wreorder-ctor]
+    : SimpleNetwork(cid), receiveFunctor(nullptr), vns(vns) {
+                          ^
+18 warnings generated.
+In file included from /home/sabbir/sst-elements-org/merlin/interfaces/portControl.cc:18:
+In file included from /home/sabbir/sst-elements-org/merlin/interfaces/portControl.h:32:
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:153:70: warning: format specifies type 'long long' but the argument has type 'SST::Interfaces::SimpleNetwork::nid_t' (aka 'long') [-Wformat]
+                   header.c_str(), getDeliveryTime(), getPriority(), trusted_src, request->src, request->dest);
+                                                                     ^~~~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:153:83: warning: format specifies type 'long long' but the argument has type 'SST::Interfaces::SimpleNetwork::nid_t' (aka 'long') [-Wformat]
+                   header.c_str(), getDeliveryTime(), getPriority(), trusted_src, request->src, request->dest);
+                                                                                  ^~~~~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:153:97: warning: format specifies type 'long long' but the argument has type 'SST::Interfaces::SimpleNetwork::nid_t' (aka 'long') [-Wformat]
+                   header.c_str(), getDeliveryTime(), getPriority(), trusted_src, request->src, request->dest);
+                                                                                                ^~~~~~~~~~~~~
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:371:56: warning: unused parameter 'array' [-Wunused-parameter]
+    virtual void setOutputBufferCreditArray(int const *array, int vcs){};
+                                                       ^
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:371:67: warning: unused parameter 'vcs' [-Wunused-parameter]
+    virtual void setOutputBufferCreditArray(int const *array, int vcs){};
+                                                                  ^
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:372:56: warning: unused parameter 'array' [-Wunused-parameter]
+    virtual void setOutputQueueLengthsArray(int const *array, int vcs){};
+                                                       ^
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:372:67: warning: unused parameter 'vcs' [-Wunused-parameter]
+    virtual void setOutputQueueLengthsArray(int const *array, int vcs){};
+                                                                  ^
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:376:40: warning: unused parameter 'port' [-Wunused-parameter]
+    virtual void recvTopologyEvent(int port, TopologyEvent *ev){};
+                                       ^
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:376:61: warning: unused parameter 'ev' [-Wunused-parameter]
+    virtual void recvTopologyEvent(int port, TopologyEvent *ev){};
+                                                            ^
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:423:18: warning: 'SST::Merlin::PortInterface::printStatus' hides overloaded virtual function [-Woverloaded-virtual]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                 ^
+/usr/local/include/sst/core/baseComponent.h:102:18: note: hidden overloaded virtual function 'SST::BaseComponent::printStatus' declared here: different number of parameters (1 vs 3)
+    virtual void printStatus(Output &UNUSED(out)) { return; }
+                 ^
+In file included from /home/sabbir/sst-elements-org/merlin/interfaces/portControl.cc:18:
+In file included from /home/sabbir/sst-elements-org/merlin/interfaces/portControl.h:32:
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:422:42: warning: unused parameter 'stream' [-Wunused-parameter]
+    virtual void dumpState(std::ostream &stream) {}
+                                         ^
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:423:38: warning: unused parameter 'out' [-Wunused-parameter]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                                     ^
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:423:47: warning: unused parameter 'out_port_busy' [-Wunused-parameter]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                                              ^
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:423:66: warning: unused parameter 'in_port_busy' [-Wunused-parameter]
+    virtual void printStatus(Output &out, int out_port_busy, int in_port_busy) {}
+                                                                 ^
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:439:46: warning: unused parameter 'stream' [-Wunused-parameter]
+        virtual void dumpState(std::ostream &stream){};
+                                             ^
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:458:46: warning: unused parameter 'cycles' [-Wunused-parameter]
+    virtual void reportSkippedCycles(Cycle_t cycles){};
+                                             ^
+/home/sabbir/sst-elements-org/merlin/interfaces/../router.h:459:42: warning: unused parameter 'stream' [-Wunused-parameter]
+    virtual void dumpState(std::ostream &stream){};
+                                         ^
+In file included from /home/sabbir/sst-elements-org/merlin/interfaces/portControl.cc:18:
+/home/sabbir/sst-elements-org/merlin/interfaces/portControl.h:51:101: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"link_bw", "Bandwidth of the links specified in either b/s or B/s (can include SI prefix)."},
+                                                                                                    ^
+/home/sabbir/sst-elements-org/merlin/interfaces/portControl.h:52:81: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"flit_size", "Size of a flit in either b or B (can include SI prefix)."}, {"input_latency", "", "0ns"},
+                                                                                ^
+/home/sabbir/sst-elements-org/merlin/interfaces/portControl.h:54:96: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"input_buf_size", "Size of input buffers specified in b or B (can include SI prefix)."},
+                                                                                               ^
+/home/sabbir/sst-elements-org/merlin/interfaces/portControl.h:55:98: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"output_buf_size", "Size of output buffers specified in b or B (can include SI prefix)."},
+                                                                                                 ^
+/home/sabbir/sst-elements-org/merlin/interfaces/portControl.h:57:28: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"dlink_thresh", ""},
+                           ^
+/home/sabbir/sst-elements-org/merlin/interfaces/portControl.h:58:103: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"num_vns", "Number of VNs set in router or python file (-1 if not set in the parent router)."},
+                                                                                                      ^
+/home/sabbir/sst-elements-org/merlin/interfaces/portControl.h:61:30: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"oql_track_port", ""}, {"oql_track_remote", ""},
+                             ^
+/home/sabbir/sst-elements-org/merlin/interfaces/portControl.h:61:56: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"oql_track_port", ""}, {"oql_track_remote", ""},
+                                                       ^
+In file included from /home/sabbir/sst-elements-org/merlin/interfaces/portControl.cc:20:
+/home/sabbir/sst-elements-org/merlin/interfaces/output_arb_basic.h:80:34: warning: unused parameter 'stream' [-Wunused-parameter]
+    void dumpState(std::ostream &stream) override {}
+                                 ^
+In file included from /home/sabbir/sst-elements-org/merlin/interfaces/portControl.cc:21:
+/home/sabbir/sst-elements-org/merlin/interfaces/output_arb_qos_multi.h:235:34: warning: unused parameter 'stream' [-Wunused-parameter]
+    void dumpState(std::ostream &stream) override {}
+                                 ^
+/home/sabbir/sst-elements-org/merlin/interfaces/portControl.cc:136:33: warning: field 'ongoing_transmit' will be initialized after field 'is_idle' [-Wreorder-ctor]
+      sai_port_disabled(false), ongoing_transmit(false), is_idle(true), is_active(false), waiting(true),
+                                ^
+28 warnings generated.
+In file included from /home/sabbir/sst-elements-org/merlin/background_traffic/background_traffic.cc:16:
+In file included from /home/sabbir/sst-elements-org/merlin/background_traffic/background_traffic.h:36:
+/home/sabbir/sst-elements-org/merlin/background_traffic/../target_generator/target_generator.h:34:33: warning: unused parameter 'id' [-Wunused-parameter]
+    virtual void initialize(int id, int num_peers) {}
+                                ^
+/home/sabbir/sst-elements-org/merlin/background_traffic/../target_generator/target_generator.h:34:41: warning: unused parameter 'num_peers' [-Wunused-parameter]
+    virtual void initialize(int id, int num_peers) {}
+                                        ^
+/home/sabbir/sst-elements-org/merlin/background_traffic/../target_generator/target_generator.h:36:32: warning: unused parameter 'val' [-Wunused-parameter]
+    virtual void seed(uint32_t val) {}
+                               ^
+In file included from /home/sabbir/sst-elements-org/merlin/background_traffic/background_traffic.cc:16:
+/home/sabbir/sst-elements-org/merlin/background_traffic/background_traffic.h:60:82: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+    SST_ELI_DOCUMENT_PARAMS({"num_peers", "Total number of endpoints in network."},
+                                                                                 ^
+/home/sabbir/sst-elements-org/merlin/background_traffic/background_traffic.h:63:117: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+                            {"offered_load", "Load to be offered to network.  Valid range: 0 < offered_load <= 1.0."}, )
+                                                                                                                    ^
+/home/sabbir/sst-elements-org/merlin/background_traffic/background_traffic.h:93:14: warning: private field 'packets_sent' is not used [-Wunused-private-field]
+    uint64_t packets_sent;
+             ^
+/home/sabbir/sst-elements-org/merlin/background_traffic/background_traffic.h:94:14: warning: private field 'packets_recd' is not used [-Wunused-private-field]
+    uint64_t packets_recd;
+             ^
+7 warnings generated.
+In file included from /home/sabbir/sst-elements-org/merlin/trafficgen/trafficgen.cc:16:
+/home/sabbir/sst-elements-org/merlin/trafficgen/trafficgen.h:50:41: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"id", "Network ID of endpoint."}, {"num_peers", "Total number of endpoints in network."},
+                                        ^
+/home/sabbir/sst-elements-org/merlin/trafficgen/trafficgen.h:50:97: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"id", "Network ID of endpoint."}, {"num_peers", "Total number of endpoints in network."},
+                                                                                                ^
+/home/sabbir/sst-elements-org/merlin/trafficgen/trafficgen.h:51:60: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"num_vns", "Number of requested virtual networks."},
+                                                           ^
+/home/sabbir/sst-elements-org/merlin/trafficgen/trafficgen.h:52:107: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"link_bw", "Bandwidth of the router link specified in either b/s or B/s (can include SI prefix)."},
+                                                                                                          ^
+/home/sabbir/sst-elements-org/merlin/trafficgen/trafficgen.h:53:99: warning: missing field 'defaultValue' initializer [-Wmissing-field-initializers]
+        {"topology", "Name of the topology subcomponent that should be loaded to control routing."},
+                                                                                                  ^
+/home/sabbir/sst-elements-org/merlin/trafficgen/trafficgen.h:265:28: warning: unused parameter 'val' [-Wunused-parameter]
+        void seed(uint32_t val) override {
+                           ^
+/home/sabbir/sst-elements-org/merlin/trafficgen/trafficgen.h:255:13: warning: private field 'minValue' is not used [-Wunused-private-field]
+        int minValue;
+            ^
+7 warnings generated.

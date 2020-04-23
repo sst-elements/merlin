@@ -69,7 +69,7 @@ class ReorderRequest : public SST::Interfaces::SimpleNetwork::Request {
         bool operator()(ReorderRequest *const &lhs, ReorderRequest *const &rhs) { return lhs->seq > rhs->seq; }
     };
 
-    typedef std::priority_queue<ReorderRequest *, std::vector<ReorderRequest *>, Priority> PriorityQueue;
+    using PriorityQueue = std::priority_queue<ReorderRequest *, std::vector<ReorderRequest *>, Priority>;
 
     void serialize_order(SST::Core::Serialization::serializer &ser) override {
         SST::Interfaces::SimpleNetwork::Request::serialize_order(ser);

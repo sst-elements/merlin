@@ -83,7 +83,7 @@ class LinkControl : public SST::Interfaces::SimpleNetwork {
 
         output_queue_bundle_t()
 
-        {}
+            = default;
     };
 
     // Link to router
