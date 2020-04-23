@@ -57,7 +57,7 @@ class pt2pt_test : public Component {
         SimTime_t end_arrival{0};
         int packets_recd{0};
 
-        recv_data() {}
+        recv_data() = default;
     };
 
     int id;

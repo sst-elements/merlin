@@ -398,6 +398,7 @@ bool LinkControl::send(SimpleNetwork::Request *req, int vn) {
     // Check to see if the VN is in range
     if (vn >= req_vns)
         return false;
+    req->vn = vn;
 
     // Check to see if we need to do a nid translation
     if (nid_map)

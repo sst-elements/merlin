@@ -1,7 +1,7 @@
 #! /bin/sh
 
 find . -type f -exec sed -i "s/\"router.h\"/\"..\/router.h\"/g" {} \;
-find . -type f -exec sed -i "s/<router.h>/\"..\/router.h\"/g" {} \;
+find . -type f -exec sed -i "s/"../router.h"/\"..\/router.h\"/g" {} \;
 find . -type f -exec sed -i "s/\"arbitration\/single_arb.h\"/\"single_arb.h\"/g" {} \;
 find . -type f -exec sed -i "s/<arbitration\/single_arb.h>/\"..\/arbitration\/single_arb.h\"/g" {} \;
 find . -type f -exec sed -i "s/\"target_generator\/target_generator.h\"/\"..\/target_generator\/target_generator.h\"/g" {} \;

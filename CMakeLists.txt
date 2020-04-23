@@ -64,6 +64,7 @@ macro(octal_dump _name)
 endmacro()
 octal_dump(pymerlin)
 octal_dump(pymerlin-base)
+octal_dump(pymerlin-endpoint)
 octal_dump(topology/pymerlin-topology)
 
 set(

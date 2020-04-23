@@ -55,10 +55,12 @@ class xbar_arb_age : public XbarArbitration {
 
         priority_entry_t()
 
-        {}
+            = default;
 
         priority_entry_t(uint16_t port, uint16_t vc)
-            : port(port), vc(vc), next_port(0), next_vc(0), injection_time(0), size_in_flits(0) {}
+            : port(port), vc(vc)
+
+        {}
     };
 
     /** To use with STL priority queues, that order in reverse. */
