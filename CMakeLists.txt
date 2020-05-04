@@ -7,7 +7,8 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 # add compiler warnings
 add_compile_options(-Wall -Wextra -Wpedantic)
-set(EXTRA_INCLUDES "")
+set(INCLUDES "")
+set(LIBRARIES "")
 
 # -------------------- SST CONFIGS --------------------
 execute_process(
@@ -36,9 +37,9 @@ execute_process(
 macro(_sst_compile_link _name)
     if (TARGET ${_name})
         target_compile_definitions(${_name} PRIVATE)
-        target_compile_options(${_name} PRIVATE ${SST_FLAGS} ${EXTRA_INCLUDES})
-        target_link_options(${_name} PRIVATE ${SST_LDFLAGS})
-        execute_process(COMMAND ${SST_REGISTER} ${CMAKE_PROJECT_NAME} ${CMAKE_PROJECT_NAME}_LIBDIR=${CMAKE_CURRENT_SOURCE_DIR})
+        target_compile_options(${_name} PRIVATE ${SST_FLAGS} ${INCLUDES})
+        target_link_options(${_name} PRIVATE ${SST_LDFLAGS} ${LIBRARIES})
+        execute_process(COMMAND ${SST_REGISTER} ${CMAKE_PROJECT_NAME} ${CMAKE_PROJECT_NAME}_LIBDIR=${CMAKE_CURRENT_SOURCE_DIR}/build)
     endif ()
 endmacro()
 
