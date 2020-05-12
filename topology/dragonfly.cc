@@ -14,9 +14,9 @@
 // distribution.
 //
 
-#include "sst/core/rng/xorshift.h"
-#include <sst/core/sharedRegion.h>
 #include <sst/core/sst_config.h>
+#include <sst/core/sharedRegion.h>
+#include "sst/core/rng/xorshift.h"
 
 #include "dragonfly.h"
 

@@ -13,8 +13,8 @@
 // information, see the LICENSE file in the top level directory of the
 // distribution.
 
-#include "bridge.h"
 #include <sst/core/sst_config.h>
+#include "bridge.h"
 
 using namespace SST::Merlin;
 

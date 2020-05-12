@@ -12,11 +12,11 @@
 // This file is part of the SST software package. For license
 // information, see the LICENSE file in the top level directory of the
 // distribution.
-#include "route_test.h"
 #include <sst/core/sst_config.h>
+#include "route_test.h"
 
-#include <csignal>
 #include <unistd.h>
+#include <csignal>
 
 #include <sst/core/event.h>
 #include <sst/core/params.h>

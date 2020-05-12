@@ -14,8 +14,8 @@
 // distribution.
 //
 
-#include "dragonfly_legacy.h"
 #include <sst/core/sst_config.h>
+#include "dragonfly_legacy.h"
 
 #include <cstdlib>
 

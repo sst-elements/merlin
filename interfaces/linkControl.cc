@@ -17,8 +17,8 @@
 
 #include "linkControl.h"
 
-#include <sst/core/sharedRegion.h>
 #include <sst/core/simulation.h>
+#include <sst/core/sharedRegion.h>
 
 #include "../merlin.h"
 

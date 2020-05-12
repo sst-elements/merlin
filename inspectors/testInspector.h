@@ -16,8 +16,8 @@
 #ifndef COMPONENTS_MERLIN_TESTINSPECTOR_H
 #define COMPONENTS_MERLIN_TESTINSPECTOR_H
 
-#include <sst/core/interfaces/simpleNetwork.h>
 #include <sst/core/subcomponent.h>
+#include <sst/core/interfaces/simpleNetwork.h>
 #include <sst/core/threadsafe.h>
 
 using namespace std;

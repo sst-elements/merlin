@@ -20,18 +20,18 @@
 
 #include <cstdlib>
 
+#include <sst/core/rng/mersenne.h>
+#include <sst/core/rng/gaussian.h>
 #include <sst/core/rng/discrete.h>
 #include <sst/core/rng/expon.h>
-#include <sst/core/rng/gaussian.h>
-#include <sst/core/rng/mersenne.h>
 #include <sst/core/rng/uniform.h>
 
 #include <sst/core/component.h>
 #include <sst/core/event.h>
-#include <sst/core/interfaces/simpleNetwork.h>
 #include <sst/core/link.h>
-#include <sst/core/output.h>
 #include <sst/core/timeConverter.h>
+#include <sst/core/output.h>
+#include <sst/core/interfaces/simpleNetwork.h>
 
 #include "../merlin.h"
 

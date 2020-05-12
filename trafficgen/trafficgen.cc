@@ -13,11 +13,11 @@
 // information, see the LICENSE file in the top level directory of the
 // distribution.
 
+#include <sst/core/sst_config.h>
 #include "trafficgen.h"
+#include <unistd.h>
 #include <climits>
 #include <csignal>
-#include <sst/core/sst_config.h>
-#include <unistd.h>
 
 #include <sst/core/params.h>
 #include <sst/core/simulation.h>

@@ -14,8 +14,8 @@
 // distribution.
 #include <sst/core/sst_config.h>
 
-#include "../merlin.h"
 #include "portControl.h"
+#include "../merlin.h"
 
 #include "output_arb_basic.h"
 #include "output_arb_qos_multi.h"

@@ -21,8 +21,8 @@
 #include <sst/core/link.h>
 #include <sst/core/timeConverter.h>
 
-#include <queue>
 #include <vector>
+#include <queue>
 
 #include "../router.h"
 

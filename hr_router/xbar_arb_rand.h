@@ -19,11 +19,11 @@
 #include <sst/core/component.h>
 #include <sst/core/event.h>
 #include <sst/core/link.h>
-#include <sst/core/rng/xorshift.h>
 #include <sst/core/timeConverter.h>
+#include <sst/core/rng/xorshift.h>
 
-#include <queue>
 #include <vector>
+#include <queue>
 
 #include "../router.h"
 

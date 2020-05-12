@@ -19,10 +19,10 @@
 #define COMPONENTS_MERLIN_MERLIN_H
 
 #include <cctype>
-#include <sst/core/output.h>
+#include <string>
 #include <sst/core/simulation.h>
 #include <sst/core/timeConverter.h>
-#include <string>
+#include <sst/core/output.h>
 
 using namespace SST;
 

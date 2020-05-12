@@ -16,8 +16,8 @@
 // distribution.
 #include <sst/core/sst_config.h>
 
-#include "bit_complement.h"
 #include "uniform.h"
+#include "bit_complement.h"
 
 namespace SST {
 namespace Merlin {} // namespace Merlin
